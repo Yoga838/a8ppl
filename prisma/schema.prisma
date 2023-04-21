@@ -1,0 +1,46 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Visitor {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Mitra {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String    @unique
+  password  String
+  no        String
+  alamat    String
+  usaha     String
+  pribadi   String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  aproval   aproval[]
+}
+
+model aproval {
+  id    Int   @id @default(autoincrement())
+  accid Int
+  acc   Mitra @relation(fields: [accid], references: [id])
+}
+
+model Admin {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

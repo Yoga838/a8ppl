@@ -1,107 +1,147 @@
-:root {
-  --max-width: 1100px;
-  --border-radius: 12px;
-  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
-    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
-    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
-
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-
-  --primary-glow: conic-gradient(
-    from 180deg at 50% 50%,
-    #16abff33 0deg,
-    #0885ff33 55deg,
-    #54d6ff33 120deg,
-    #0071ff33 160deg,
-    transparent 360deg
-  );
-  --secondary-glow: radial-gradient(
-    rgba(255, 255, 255, 1),
-    rgba(255, 255, 255, 0)
-  );
-
-  --tile-start-rgb: 239, 245, 249;
-  --tile-end-rgb: 228, 232, 233;
-  --tile-border: conic-gradient(
-    #00000080,
-    #00000040,
-    #00000030,
-    #00000020,
-    #00000010,
-    #00000010,
-    #00000080
-  );
-
-  --callout-rgb: 238, 240, 241;
-  --callout-border-rgb: 172, 175, 176;
-  --card-rgb: 180, 185, 188;
-  --card-border-rgb: 131, 134, 135;
+.text-color-yellow{
+  color: #FFD93D !important;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-
-    --primary-glow: radial-gradient(rgba(1, 65, 255, 0.4), rgba(1, 65, 255, 0));
-    --secondary-glow: linear-gradient(
-      to bottom right,
-      rgba(1, 65, 255, 0),
-      rgba(1, 65, 255, 0),
-      rgba(1, 65, 255, 0.3)
-    );
-
-    --tile-start-rgb: 2, 13, 46;
-    --tile-end-rgb: 2, 5, 19;
-    --tile-border: conic-gradient(
-      #ffffff80,
-      #ffffff40,
-      #ffffff30,
-      #ffffff20,
-      #ffffff10,
-      #ffffff10,
-      #ffffff80
-    );
-
-    --callout-rgb: 20, 20, 20;
-    --callout-border-rgb: 108, 108, 108;
-    --card-rgb: 100, 100, 100;
-    --card-border-rgb: 200, 200, 200;
-  }
+.body{
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+.bg-color-yellow{
+  background-color: #FFD93D !important;
 }
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;700&display=swap');
+.poppins{
+  font-family: 'Poppins',sans-serif !important;
+}
+.nav-color{
+  background-color: #FFFFFF !important;
+}
+.color-brown{
+  background-color: #EFEFEF !important;
+}
+.mt-8{
+  margin-top: 8% !important;
+}
+.mt-section{
+  margin-top: 15% !important;
+}
+.mt-login{
+  margin-top: 15% !important;
+}
+.mb-section{
+  margin-bottom: 5% !important;
+}
+.text-space-h1{
+  letter-spacing: 3px !important;
+}
+.text-space-p{
+  letter-spacing: 1px !important;
+}
+.word-space-p{
+  word-spacing: 2px;
+}
+.image{
+  width: 70% !important;
+}
+.image2{
+  width: 70% !important;
+}
+.side{
+  width: 100%;
+  height: auto;
+}
+.hover{
+  cursor: pointer;
+}
+.set-width{
+  width: 410px !important;
+}
+.center{
+  margin-left: 20% !important;
+}
+.center-image{
+  margin-top: 25% !important;
+}
+.rounded1{
+  border-radius: 15px !important;
+}
+.width-form{
+  width: 60% !important;
+}
+.width-form-1{
+  width: 80% !important;
+}
+.width-form-2{
+  width: 60% !important;
+}
+.center-button{
+  margin-left: 33% !important ;
+}
+.width-button{
+  width: 70% !important;
+}
+.width-button-2{
+  width: 60% !important;
+}
+.height-button{
+  height: 10% !important;
+}
+.margin-end{
+  margin-left: 18% !important;
+}
+.my-center{
+  margin-top: 50% !important;
+}
+.m-left{
+  margin-left: 13% !important;
+}
+.m-left-2{
+  margin-left: 14% !important;
+}
+.card{
+  width: 40%;
+  margin: 17% auto;
+  border-radius: 50px !important;
 
-html,
-body {
-  max-width: 100vw;
+}
+.button{
+  width: 120px;
+}
+.sidebar-left{
+  height: auto !important;
+}
+.circle{
+  width: 70px !important;
+  height: 70px !important;
+  background-color: black !important;
+  border-radius: 50%;
+}
+.btn-admin{
+  width: 300px;
+}
+.content{
   overflow-x: hidden;
 }
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.button-edit img{
+  width: 25px;
 }
-
-a {
-  color: inherit;
-  text-decoration: none;
+.button-edit{
+  position: fixed;
+  width: 200px !important;
+  right: 4%;
+  bottom: 5%;
 }
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+.column-name p{
+  margin-top: 15px;
+ margin-left: 20px;
+}
+.column-name img{
+  width: 35px;
+  margin-right: 20px;
+}
+.screen{
+  padding-bottom: 10%; 
+}
+.screen2{
+  margin-bottom: 5.7%; 
 }
