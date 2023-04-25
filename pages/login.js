@@ -73,6 +73,9 @@ export default function login() {
       }
       // Router.replace('/dashboard');
     }
+    else{
+      alert(data.message)
+    }
 
     setProgress(false);
 
