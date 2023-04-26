@@ -80,15 +80,17 @@ export default function profil() {
     </nav>
     <div className="content">
       <div className="row">
-        <div className="sidebar-left bg-color-yellow col-md-4 pt-5 d-flex flex-column align-items-center gap-2">
-          <div className="circle mt-5" />
-          <h4 >{data.name}</h4>
-          <div className="button-item d-flex flex-column align-items-center gap-4">
-            <Link href='/admin/pengajuan'><button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Pengajuan
-              Akun</button></Link>
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Pengajuan
-              Premium</button>
-            <button type="button" onClick={logout} className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
+        <div className="sidebar-left bg-color-yellow col-md-4 pt-5 ">
+          <div className='content1 d-flex flex-column align-items-center gap-2'>
+            <div className="circle mt-5" />
+            <h4 >{data.name}</h4>
+            <div className="button-item d-flex flex-column align-items-center gap-4">
+              <Link href='/admin/pengajuan'><button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Pengajuan
+                Akun</button></Link>
+              <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Pengajuan
+                Premium</button>
+              <button type="button" onClick={logout} className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
+            </div>
           </div>
         </div>
         <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
@@ -103,6 +105,24 @@ export default function profil() {
             posuere cubilia curae; Donec vel nunc lectus. Maecenas vehicula luctus enim, eu gravida tellus
             bibendum quis. Nam at lobortis leo. Sed ut nisi id ipsum lobortis blandit. Etiam ac odio eu magna
             pellentesque pellentesque. Maecenas fermentum vel sapien id suscipit.</p>
+          <p>   Praesent finibus varius turpis, eget dignissim lorem sagittis sed. Nullam laoreet ipsum in metus
+            consequat consequat. Donec eget metus eget nisi semper molestie eu eu dui. Fusce luctus mauris sed
+            dolor faucibus sagittis. Suspendisse consectetur sapien sed ligula placerat rhoncus. Sed bibendum
+            nisl at ex faucibus, eu accumsan urna convallis. Aenean sit amet elit arcu. Sed consectetur
+            convallis bibendum. In auctor diam a massa lacinia, vitae convallis purus bibendum. Sed efficitur
+            mauris mauris, ac convallis lorem euismod non. Donec viverra libero a mauris convallis sagittis.
+            Duis imperdiet tellus a augue vehicula maximus. Aenean a urna dolor. Aliquam vel purus id nulla
+            congue rutrum. Sed sit amet felis urna.
+          </p>
+          <p>   Praesent finibus varius turpis, eget dignissim lorem sagittis sed. Nullam laoreet ipsum in metus
+            consequat consequat. Donec eget metus eget nisi semper molestie eu eu dui. Fusce luctus mauris sed
+            dolor faucibus sagittis. Suspendisse consectetur sapien sed ligula placerat rhoncus. Sed bibendum
+            nisl at ex faucibus, eu accumsan urna convallis. Aenean sit amet elit arcu. Sed consectetur
+            convallis bibendum. In auctor diam a massa lacinia, vitae convallis purus bibendum. Sed efficitur
+            mauris mauris, ac convallis lorem euismod non. Donec viverra libero a mauris convallis sagittis.
+            Duis imperdiet tellus a augue vehicula maximus. Aenean a urna dolor. Aliquam vel purus id nulla
+            congue rutrum. Sed sit amet felis urna.
+          </p>
           <p>   Praesent finibus varius turpis, eget dignissim lorem sagittis sed. Nullam laoreet ipsum in metus
             consequat consequat. Donec eget metus eget nisi semper molestie eu eu dui. Fusce luctus mauris sed
             dolor faucibus sagittis. Suspendisse consectetur sapien sed ligula placerat rhoncus. Sed bibendum

@@ -38,9 +38,12 @@ export async function getServerSideProps(ctx){
   }
   
 
+
+
 export default function pengajuan() {
 
     const [data,setdata] = useState([]);
+    const [data2,setdata2] = useState([]);
   useEffect(() => {
     const cookie = nookies.get('token');
     const cookies = cookie.token;
@@ -56,7 +59,18 @@ export default function pengajuan() {
       .catch(error => {
         console.log(error);
       });
+
+    axios.get('/api/approval' ,{headers} )
+      .then(response => {
+        setdata2(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
   }, []);
+  console.log("ini data belum ke approve "+ data2)
+  console.log("ini data user" + data)
 
   return (
     <div>
@@ -72,6 +86,7 @@ export default function pengajuan() {
     <div className="content">
       <div className="row">
         <div className="sidebar-left bg-color-yellow col-md-4 pt-5 d-flex flex-column align-items-center gap-2">
+        <div className='content2 d-flex flex-column align-items-center gap-2'>
           <div className="circle mt-5" />
           <h4>{data.name}</h4>
           <div className="button-item d-flex flex-column align-items-center gap-4">
@@ -81,45 +96,24 @@ export default function pengajuan() {
               Premium</button>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
           </div>
+          </div>
         </div>
         <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
           <h1 className="poppins fw-bold  text-center">Pengajuan Akun Mitra</h1>
           <div className="d-flex flex-column gap-4">
             {/* content for loop entar     */}
-            <div className=" column-name d-flex justify-content-between align-items-center  bg-color-yellow rounded-pill poppins fw-bold">
-              <p>Eren Yeager</p>
+
+            {data2.map((dat,index) =>(
+            <div key={dat.id} className=" column-name d-flex justify-content-between align-items-center  bg-color-yellow rounded-pill poppins fw-bold">
+              <p>{dat.name}</p>
               <img src="/images/icon-pengajuan-akun.png" alt="" />
             </div>
+            
+            ))}
+
+          
             {/* end content for loop entar*/}
-            <div className=" column-name d-flex justify-content-between align-items-center  bg-color-yellow rounded-pill poppins fw-bold">
-              <p>Eren Yeager</p>
-              <img src="/images/icon-pengajuan-akun.png" alt="" />
-            </div><div className=" column-name d-flex justify-content-between align-items-center  bg-color-yellow rounded-pill poppins fw-bold">
-              <p>Eren Yeager</p>
-              <img src="/images/icon-pengajuan-akun.png" alt="" />
-            </div><div className=" column-name d-flex justify-content-between align-items-center  bg-color-yellow rounded-pill poppins fw-bold">
-              <p>Eren Yeager</p>
-              <img src="/images/icon-pengajuan-akun.png" alt="" />
-            </div><div className=" column-name d-flex justify-content-between align-items-center  bg-color-yellow rounded-pill poppins fw-bold">
-              <p>Eren Yeager</p>
-              <img src="/images/icon-pengajuan-akun.png" alt="" />
-            </div><div className=" column-name d-flex justify-content-between align-items-center  bg-color-yellow rounded-pill poppins fw-bold">
-              <p>Eren Yeager</p>
-              <img src="/images/icon-pengajuan-akun.png" alt="" />
-            </div>
-            <div className=" column-name d-flex justify-content-between align-items-center  bg-color-yellow rounded-pill poppins fw-bold">
-              <p>Eren Yeager</p>
-              <img src="/images/icon-pengajuan-akun.png" alt="" />
-            </div><div className=" column-name d-flex justify-content-between align-items-center  bg-color-yellow rounded-pill poppins fw-bold">
-              <p>Eren Yeager</p>
-              <img src="/images/icon-pengajuan-akun.png" alt="" />
-            </div><div className=" column-name d-flex justify-content-between align-items-center  bg-color-yellow rounded-pill poppins fw-bold">
-              <p>Eren Yeager</p>
-              <img src="/images/icon-pengajuan-akun.png" alt="" />
-            </div><div className=" column-name d-flex justify-content-between align-items-center  bg-color-yellow rounded-pill poppins fw-bold">
-              <p>Eren Yeager</p>
-              <img src="/images/icon-pengajuan-akun.png" alt="" />
-            </div>
+           
           </div>
         </div>
         <button className="poppins fw-bold button-edit bg-color-yellow btn btn-lg rounded-pill">Edit Profil&nbsp;<img src="/images/button_icon_edit.png" alt="" /></button>

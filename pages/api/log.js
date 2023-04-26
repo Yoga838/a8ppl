@@ -43,6 +43,10 @@ export default async function handler(req, res){
             if (!passwordMatch) {
                 return res.status(401).json({ message: 'Invalid password' });
             }
+            const approv = await prisma.aproval.findFirst({where:{accid:mitra.id}})
+            if(!approv){
+                return res.status(200).json({message:"akun anda belum di approve oleh admin"})
+            }
             const user = "mitra";
             const token = sign({ userId: mitra.id }, JWT_SECRET, { expiresIn: '7d' });
             return res.status(200).json({ token,user });

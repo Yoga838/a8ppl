@@ -1,7 +1,11 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @next/next/no-css-tags */
 import Link from 'next/link'
 import React from 'react'
 import nookies from 'nookies'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import Router from 'next/router'
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -34,6 +38,33 @@ export async function getServerSideProps(ctx){
 }
 
 export default function mitra_page() {
+
+  const [data,setdata] = useState([]);
+  useEffect(() => {
+    const cookie = nookies.get('token');
+    const cookies = cookie.token;
+  
+    const headers ={
+      'Authorization': `Bearer ${cookies}`,
+      'Content-Type': 'application/json',
+    };
+    axios.get('/api/getmitra' ,{headers} )
+      .then(response => {
+        setdata(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+
+  function logout(){
+    nookies.destroy(null,'token');
+    nookies.destroy(null,'role');
+    alert("berhasil logout")
+    Router.replace('/');
+}
+console.log(data)
+
   return (
     <div>
     <meta charSet="UTF-8" />
@@ -53,25 +84,25 @@ export default function mitra_page() {
       <div className="row">
         <div className="sidebar-left bg-color-yellow col-md-4 pt-5 d-flex flex-column align-items-center gap-2">
           <div className="circle mt-5" />
-          <h4>Eren Yeager</h4>
+          <h4>{data.name}</h4>
           <div className="button-item d-flex flex-column align-items-center gap-4">
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Home</button>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Pegawai</button>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Tracking</button>
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
+            <button onClick={logout} type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
           </div>
         </div>
         <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
           <div className="circle mx-auto " />
-          <h4 className="text-center">Eren Yeager</h4>
+          <h4 className="text-center">{data.name}</h4>
           <p className="poppins">Nama Lengkap:</p>
-          <p className="poppins fw-bold">Eren Yeager</p>
+          <p className="poppins fw-bold">{data.name}</p>
           <p className="poppins">No Telp:</p>
-          <p className="poppins fw-bold">034569521348</p>
+          <p className="poppins fw-bold">{data.no}</p>
           <p className="poppins">Alamat Lengkap:</p>
-          <p className="poppins fw-bold">RT.001 RW.999 Districk Shiganshina, Wall Maria, Pulau Paradise</p>
+          <p className="poppins fw-bold">{data.alamat}</p>
           <p className="poppins">Email:</p>
-          <p className="poppins fw-bold">sasageyosarangheyodattebayo@gmail.com</p>
+          <p className="poppins fw-bold">{data.email}</p>
           <p className="poppins">password:</p>
           <p className="poppins fw-bold">********************</p>
         </div>

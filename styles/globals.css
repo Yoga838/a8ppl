@@ -109,7 +109,8 @@ background-color: #FF0000 !important
   width: 120px;
 }
 .sidebar-left{
-  height: auto !important;
+  height: 100vh !important;
+  
 }
 .circle{
   width: 70px !important;
@@ -219,4 +220,12 @@ background-color: #FF0000 !important
   width: 100%;
   height: 100%;
   position: absolute;
+}
+.content1{
+  position: fixed;
+  margin-left: 4%;
+}
+.content2{
+  position: fixed;
+ 
 }
