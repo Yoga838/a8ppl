@@ -80,7 +80,7 @@ export default function pengajuan() {
     <title>Tem.u</title>
     <link rel="stylesheet" href="style.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossOrigin="anonymous" />
-    <nav>
+    <nav className='navbar fixed-top navbar-light bg-light'>
       <h2 className="ms-3 mt-3 fw-bold poppins text-color-yellow">Tem.u</h2>
     </nav>
     <div className="content">
@@ -98,7 +98,7 @@ export default function pengajuan() {
           </div>
           </div>
         </div>
-        <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
+        <div className="col-md-8 pe-5 sidebar-right color-brown pt-5 pb-5">
           <h1 className="poppins fw-bold  text-center">Pengajuan Akun Mitra</h1>
           <div className="d-flex flex-column gap-4">
             {/* content for loop entar     */}

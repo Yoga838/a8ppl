@@ -109,7 +109,7 @@ background-color: #FF0000 !important
   width: 120px;
 }
 .sidebar-left{
-  height: 100vh !important;
+  background-attachment: fixed;
   
 }
 .circle{
@@ -221,11 +221,11 @@ background-color: #FF0000 !important
   height: 100%;
   position: absolute;
 }
-.content1{
-  position: fixed;
-  margin-left: 4%;
-}
+
 .content2{
   position: fixed;
- 
+}
+nav{
+  position: sticky !important;
+  top: 3px;
 }

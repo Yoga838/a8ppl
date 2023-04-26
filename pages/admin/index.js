@@ -75,13 +75,20 @@ export default function profil() {
     <title>Tem.u</title>
     <link rel="stylesheet" href="style.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossOrigin="anonymous" />
-    <nav>
-      <h2 className="ms-3 mt-3 fw-bold poppins text-color-yellow">Tem.u</h2>
+    <nav className='navbar fixed-top navbar-light bg-light'>
+      <div class="container-fluid">
+        <h2 className="navbar-brand ms-3 mt-3 fw-bold poppins text-color-yellow">Tem.u</h2>
+      </div>
     </nav>
+    {/* <nav class="navbar fixed-top navbar-light bg-light">
+      <div class="container-fluid">
+        <h2 className="navbar-brand ms-3 mt-3 fw-bold poppins text-color-yellow">Tem.u</h2>
+      </div>
+    </nav> */}
     <div className="content">
       <div className="row">
-        <div className="sidebar-left bg-color-yellow col-md-4 pt-5 ">
-          <div className='content1 d-flex flex-column align-items-center gap-2'>
+        <div className="sidebar-left bg-color-yellow col-md-4 pt-5 d-flex flex-column align-items-center gap-2">
+          <div className='content2 d-flex flex-column align-items-center gap-2'>
             <div className="circle mt-5" />
             <h4 >{data.name}</h4>
             <div className="button-item d-flex flex-column align-items-center gap-4">
