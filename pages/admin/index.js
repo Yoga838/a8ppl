@@ -80,11 +80,6 @@ export default function profil() {
         <h2 className="navbar-brand ms-3 mt-3 fw-bold poppins text-color-yellow">Tem.u</h2>
       </div>
     </nav>
-    {/* <nav class="navbar fixed-top navbar-light bg-light">
-      <div class="container-fluid">
-        <h2 className="navbar-brand ms-3 mt-3 fw-bold poppins text-color-yellow">Tem.u</h2>
-      </div>
-    </nav> */}
     <div className="content">
       <div className="row">
         <div className="sidebar-left bg-color-yellow col-md-4 pt-5 d-flex flex-column align-items-center gap-2">

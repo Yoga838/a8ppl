@@ -109,7 +109,7 @@ background-color: #FF0000 !important
   width: 120px;
 }
 .sidebar-left{
-  background-attachment: fixed;
+  
   
 }
 .circle{
@@ -228,4 +228,22 @@ background-color: #FF0000 !important
 nav{
   position: sticky !important;
   top: 3px;
+}
+.content1{
+  height: 100vh !important;
+}
+
+.column-acc{
+  padding: 3%;
+  padding-left: 4%;
+  border-radius: 5%;
+  margin-top: 4%;
+  width: 90%;
+  margin-left: 7%;    
+}
+.tombol-approve{
+  width: 40%;
+}
+.tombol{
+  padding-left: 3% !important;
 }

@@ -3,10 +3,60 @@
 /* eslint-disable @next/next/no-css-tags */
 import React from 'react'
 import Script from 'next/script'
+import nookies from 'nookies'
+import Router from 'next/router'
+import axios from 'axios'
+import { useState } from 'react'
+
+export async function getServerSideProps(ctx){
+  const cookies = nookies.get(ctx)
+
+  if(!cookies.role){
+    return{
+      redirect:{
+        destination : '/'
+    }
+    }
+  }
+    else if(cookies.role == 'admin'){
+      return{
+        redirect:{
+          destination : '/admin'
+        }
+      }
+    }
+    else if(cookies.role == 'visitor'){
+      return{
+        redirect:{
+          destination : '/visitor'
+        }
+      }
+    }
+  
+  return{
+    props: {}
+  }
+}
 
 export default function cuaca() {
-
+  const [data,setdata] = useState([]);
     React.useEffect(() => {
+      const cookie = nookies.get('token');
+    const cookies = cookie.token;
+  
+    const headers ={
+      'Authorization': `Bearer ${cookies}`,
+      'Content-Type': 'application/json',
+    };
+    axios.get('/api/getmitralog' ,{headers} )
+      .then(response => {
+        setdata(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+
             if(navigator.geolocation){
                 navigator.geolocation.getCurrentPosition((position)=>{
                     let lon= position.coords.longitude;
@@ -128,6 +178,13 @@ export default function cuaca() {
         }
     } 
     
+    function logout(){
+      nookies.destroy(null,'token');
+      nookies.destroy(null,'role');
+      alert("berhasil logout")
+      Router.replace('/');
+      console.log(nookies.get(null,'token'))
+  }
 
   return (
     <>
@@ -137,29 +194,40 @@ export default function cuaca() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Tem.u</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossOrigin="anonymous" />
-        <nav className="d-flex justify-content-between">
+        {/* <nav className="d-flex justify-content-between">
           <h2 className="ms-3 mt-3 fw-bold poppins text-color-yellow">Tem.u</h2>
           <div className="tombol d-flex gap-4 align-items-center me-5">
             <a className="poppins tombol-nav btn bg-color-yellow rounded-pill  shadow text-dark" href="login.html" role="button">Cuaca</a>
             <a className="poppins tombol-nav btn bg-color-yellow rounded-pill  shadow text-dark" href="login.html" role="button">Pencatatan</a>
           </div>
-        </nav>
+        </nav> */}
+         <nav className="d-flex justify-content-between navbar fixed-top navbar-light bg-light">
+            <div class="container-fluid">
+                <h2 className="ms-3 mt-3 fw-bold poppins text-color-yellow">Tem.u</h2>
+                <div className="tombol d-flex gap-4 align-items-center">
+                  <button className="poppins tombol-nav btn bg-color-yellow rounded-pill  shadow text-dark"  role="button">Cuaca</button>
+                  <button className="poppins tombol-nav btn bg-color-yellow rounded-pill  shadow text-dark"  role="button">Pencatatan</button>
+                </div>
+              </div>
+          </nav>
         <div className="content">
           <div className="row">
             <div className="sidebar-left bg-color-yellow col-md-4 pt-5 pb-5 d-flex flex-column align-items-center gap-2">
+            <div className='content2 d-flex flex-column align-items-center gap-2'>
               <div className="circle mt-5" />
-              <h4>Eren Yeager</h4>
+              <h4>{data.name}</h4>
               <div className="button-item d-flex pb-2 flex-column align-items-center gap-4">
                 <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Home</button>
                 <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Pegawai</button>
                 <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Tracking</button>
-                <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
+                <button onClick={logout} type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
               </div>
+            </div>
             </div>
             <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
               <div>
                 <input className="rounded-pill border border-warning ps-3 p-1" type="text" name id="input" placeholder="cari kota" />
-                <button className="poppins px-3 py-1 rounded-pill border bg-color-yellow" id="search" onClick={searchByCity}>Cari</button>
+                <button className="poppins ms-2 px-3 py-1 rounded-pill border bg-color-yellow" id="search" onClick={searchByCity}>Cari</button>
               </div>
               <div className="bg-color-black kota rounded-pill text-white pt-3 px-4 mt-4">
                 <h5 className="poppins" id="city">Bondowoso</h5>

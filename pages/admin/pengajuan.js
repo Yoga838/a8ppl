@@ -5,6 +5,8 @@ import React from 'react'
 import nookies from 'nookies'
 import { useState,useEffect } from 'react'
 import axios from 'axios'
+import Router from 'next/router'
+import Link from 'next/link'
 
 
 export async function getServerSideProps(ctx){
@@ -69,8 +71,27 @@ export default function pengajuan() {
       });
 
   }, []);
-  console.log("ini data belum ke approve "+ data2)
-  console.log("ini data user" + data)
+  function logout(){
+    nookies.destroy(null,'token');
+    nookies.destroy(null,'role');
+    alert("berhasil logout")
+    Router.replace('/');
+  }
+
+  
+  const handleButtonClick = (item) => {
+    senddata(item.id,item.name)
+  };
+  function senddata(setId,setName){
+    Router.push({
+      pathname : "/admin/approve",
+      query: {
+        id:setId,
+        name:setName
+      }
+    })
+  }
+
 
   return (
     <div>
@@ -85,8 +106,8 @@ export default function pengajuan() {
     </nav>
     <div className="content">
       <div className="row">
-        <div className="sidebar-left bg-color-yellow col-md-4 pt-5 d-flex flex-column align-items-center gap-2">
-        <div className='content2 d-flex flex-column align-items-center gap-2'>
+        <div className="sidebar-left content1 bg-color-yellow col-md-4 pt-5 d-flex flex-column align-items-center gap-2">
+        <div className='content2  d-flex flex-column align-items-center gap-2'>
           <div className="circle mt-5" />
           <h4>{data.name}</h4>
           <div className="button-item d-flex flex-column align-items-center gap-4">
@@ -94,7 +115,7 @@ export default function pengajuan() {
               Akun</button>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Pengajuan
               Premium</button>
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
+            <button onClick={logout} type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
           </div>
           </div>
         </div>
@@ -106,7 +127,10 @@ export default function pengajuan() {
             {data2.map((dat,index) =>(
             <div key={dat.id} className=" column-name d-flex justify-content-between align-items-center  bg-color-yellow rounded-pill poppins fw-bold">
               <p>{dat.name}</p>
-              <img src="/images/icon-pengajuan-akun.png" alt="" />
+              <button className='btn btn-sm' onClick={(e) => {
+                e.stopPropagation();
+                handleButtonClick(dat)
+              }}><img src="/images/icon-pengajuan-akun.png" alt="" /></button>
             </div>
             
             ))}
@@ -116,7 +140,6 @@ export default function pengajuan() {
            
           </div>
         </div>
-        <button className="poppins fw-bold button-edit bg-color-yellow btn btn-lg rounded-pill">Edit Profil&nbsp;<img src="/images/button_icon_edit.png" alt="" /></button>
       </div>
     </div>
   </div>

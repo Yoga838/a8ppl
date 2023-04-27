@@ -18,7 +18,7 @@ export default authMiddleware(async function handler(req,res){
                 accid:id
             }
         });
-        return res.status(200).json({message: "berhasil dibuat"})
+        return res.status(200).json({message: "berhasil disetujui"})
     }
     if(req.method === "GET"){
         const userId = req.user.userId;
@@ -34,4 +34,5 @@ export default authMiddleware(async function handler(req,res){
         });
         return res.send(data)
     }
+  
 })
