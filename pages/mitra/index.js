@@ -59,18 +59,17 @@ export default function mitra_page() {
   }, []);
 
   function logout(){
-    let yakin = confirm("apakah anda yakin untuk logout??")
-    if(!yakin){
-      //do nothing
-    }
-    else{
       nookies.destroy(null,'token');
       nookies.destroy(null,'role');
-      alert("berhasil logout")
       Router.replace('/');
-    }
-}
-console.log(data)
+  }
+const [tampil2,setTampil2] = useState(false)
+const pop = () => {
+  setTampil2(true)
+} 
+const notpop = () => {
+  setTampil2(false)
+} 
 
   return (
     <div>
@@ -100,7 +99,7 @@ console.log(data)
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Pegawai</button>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Konfirmasi Pendistribusian</button>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Tracking</button>
-            <button onClick={logout} type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
+            <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
           </div>
         </div> 
         </div>
@@ -118,6 +117,18 @@ console.log(data)
           <p className="poppins">password:</p>
           <p className="poppins fw-bold">********************</p>
         </div>
+        {tampil2 &&(  
+            <div className='status'>
+              <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+                <img src="/images/centang.png" alt="" />
+                <h1 className="poppins fw-bold text-dark">Apakah Anda Ingin Keluar?</h1>
+                <div className='d-flex gap-3 pb-2'>
+                <button className="btn  set btn-success rounded-pill text-white" onClick={logout}>Iya</button>
+                <button className="btn  set btn-danger rounded-pill text-white" onClick={notpop}>Tidak</button>
+                </div>
+              </div>
+            </div>
+          )}
         <Link href='/mitra/editprofil'><button className="poppins fw-bold button-edit bg-color-yellow btn btn-lg rounded-pill">Edit Profil&nbsp;<img src="/images/button_icon_edit.png" alt="" /></button></Link>
       </div>
     </div>

@@ -197,6 +197,14 @@ export default function approve({}) {
               <button type="button" className="btn tombol-approve btn-danger poppins rounded-pill text-white  btn-lg">Tolak</button>
               <button type="button" onClick={approve} className="btn ms-2 tombol-approve btn-success poppins rounded-pill text-white  btn-lg">Setuju</button>
             </div>
+            <div className='status'>
+              <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+                <img src="/images/centang.png" alt="" />
+                <h1 className="poppins fw-bold text-dark">{pesan}</h1>
+                <button className="btn btn-lg btn-warning rounded-pill text-white" onClick={success}>OK</button>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

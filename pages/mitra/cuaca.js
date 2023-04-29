@@ -212,7 +212,7 @@ export default function cuaca() {
           </nav>
         <div className="content">
           <div className="row">
-            <div className="sidebar-left bg-color-yellow col-md-4 pt-5 pb-5 d-flex flex-column align-items-center gap-2">
+            <div className="sidebar-left bg-color-yellow col-md-4  pb-5 d-flex flex-column align-items-center gap-2">
             <div className='content2 d-flex flex-column align-items-center gap-2'>
               <Link href='/mitra'><div className="circle mt-5" /></Link>
               <h4>{data.name}</h4>
