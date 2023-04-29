@@ -13,6 +13,8 @@ export default function visitor_regist() {
 const [name, setName] = useState('');
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
+const [alamat, setAlamat] = useState('');
+const [no, setNo] = useState('');
 
 const doregister = async (e) => {
   e.preventDefault(); // prevent form from submitting normally
@@ -70,6 +72,14 @@ try {
                 <div className="input-Password mt-2">
                   <label htmlFor="inputPassword" className="poppins form-label">Password</label>
                   <input type="password" id="inputPassword"  className="width-form-2 rounded1 form-control" value={password} onChange={(e) => setPassword(e.target.value)} />
+                </div>
+                <div className="input-alamat mt-2">
+                  <label htmlFor="inputalamat" className="poppins form-label">Alamat Lengkap</label>
+                  <input type="text" id="inputalamat"  className="width-form-2 rounded1 form-control" value={alamat} onChange={(e) => setAlamat(e.target.value)} />
+                </div>
+                <div className="input-no mt-2">
+                  <label htmlFor="inputno" className="poppins form-label">No.Telp</label>
+                  <input type="text" id="inputno"  className="width-form-2 rounded1 form-control" value={no} onChange={(e) => setNo(e.target.value)} />
                 </div>
                 <button type='submit' className="text-white poppins btn ms-2 bg-color-yellow mt-4  rounded-pill width-button-2 heigth-button shadow " role="button">Sign Up</button>
               </form>
