@@ -63,13 +63,13 @@ export default function mitra_page() {
       nookies.destroy(null,'role');
       Router.replace('/');
   }
-const [tampil2,setTampil2] = useState(false)
-const pop = () => {
-  setTampil2(true)
-} 
-const notpop = () => {
-  setTampil2(false)
-} 
+  const [tampil2,setTampil2] = useState(false)
+  const pop = () => {
+    setTampil2(true)
+  } 
+  const notpop = () => {
+    setTampil2(false)
+  } 
 
   return (
     <div>

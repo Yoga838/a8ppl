@@ -100,12 +100,6 @@ export default function approve({}) {
       });
 
   }, [router]);
-  function logout(){
-    nookies.destroy(null,'token');
-    nookies.destroy(null,'role');
-    alert("berhasil logout")
-    Router.replace('/');
-  }
   const approve = async (e) => {
     e.preventDefault(); // prevent form from submitting normally
     const cookie = nookies.get('token');
@@ -121,28 +115,37 @@ export default function approve({}) {
       'Content-Type': 'application/json',
     }
 };
-    let setuju = confirm("apakah anda yakin?");
-    if(!setuju){
-      //do nothing
-    }
-    else{
+    
       const res = await axios.post('/api/approval' ,send,config )
       const data = await res.data
-      alert(data.message)
       router.replace('/admin/pengajuan')
-    }
+    
   }
   function logout(){
-    let yakin = confirm("apakah anda yakin untuk logout??")
-    if(!yakin){
-      //do nothing
-    }
-    else{
-      nookies.destroy(null,'token');
-      nookies.destroy(null,'role');
-      alert("berhasil logout")
-      Router.replace('/');
-    }
+    nookies.destroy(null,'token');
+    nookies.destroy(null,'role');
+    Router.replace('/');
+}
+const [tampil,setTampil] = useState(false)
+const [tampil2,setTampil2] = useState(false)
+const [tampil3,setTampil3] = useState(false)
+const pop = () => {
+  setTampil2(true)
+} 
+const notpop = () => {
+  setTampil2(false)
+} 
+const pop2 = () => {
+  setTampil3(true)
+} 
+const notpop2 = () => {
+  setTampil3(false)
+} 
+const success = () => {
+  setTampil(true)
+}
+const notsuccess = () => {
+  setTampil(false)
 }
 
   return (
@@ -168,7 +171,7 @@ export default function approve({}) {
               Akun</button>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Pengajuan
               Premium</button>
-            <button onClick={logout} type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
+            <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
           </div>
           </div>
         </div>
@@ -194,16 +197,44 @@ export default function approve({}) {
             </div>
             {/* end content*/}
             <div className="tombol mb-5 mt-3  justify-content center">
-              <button type="button" className="btn tombol-approve btn-danger poppins rounded-pill text-white  btn-lg">Tolak</button>
-              <button type="button" onClick={approve} className="btn ms-2 tombol-approve btn-success poppins rounded-pill text-white  btn-lg">Setuju</button>
+              <button type="button" onClick={success} className="btn tombol-approve btn-danger poppins rounded-pill text-white  btn-lg">Tolak</button>
+              <button type="button" onClick={pop2} className="btn ms-2 tombol-approve btn-success poppins rounded-pill text-white  btn-lg">Setuju</button>
             </div>
+
+
+            {/*pop up setuju */}
+            {tampil3 &&(  
             <div className='status'>
               <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
                 <img src="/images/centang.png" alt="" />
-                <h1 className="poppins fw-bold text-dark">{pesan}</h1>
-                <button className="btn btn-lg btn-warning rounded-pill text-white" onClick={success}>OK</button>
+                <h1 className="poppins fw-bold text-dark">Pengajuan Berhasil Disetujui</h1>
+                <button className="btn  set btn-warning rounded-pill text-white" onClick={approve}>OK</button>
               </div>
             </div>
+          )}
+            {/*pop up setuju */}
+            {tampil &&(  
+            <div className='status'>
+              <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+                <img src="/images/alert.png" alt="" />
+                <h1 className="poppins fw-bold text-dark">Pengajuan Berhasil Ditolak</h1>
+                <button className="btn  set btn-warning rounded-pill text-white" onClick={notsuccess}>OK</button>
+              </div>
+            </div>
+          )}
+            {/*pop up logout */}
+            {tampil2 &&(  
+            <div className='status'>
+              <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+                <img src="/images/centang.png" alt="" />
+                <h1 className="poppins fw-bold text-dark">Apakah Anda Ingin Keluar?</h1>
+                <div className='d-flex gap-3 pb-2'>
+                <button className="btn  set btn-success rounded-pill text-white" onClick={logout}>Iya</button>
+                <button className="btn  set btn-danger rounded-pill text-white" onClick={notpop}>Tidak</button>
+                </div>
+              </div>
+            </div>
+          )}
 
           </div>
         </div>

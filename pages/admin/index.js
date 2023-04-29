@@ -60,18 +60,17 @@ export default function profil() {
   }, []);
 
   function logout(){
-    let yakin = confirm("apakah anda yakin untuk logout??")
-    if(!yakin){
-      //do nothing
-    }
-    else{
       nookies.destroy(null,'token');
       nookies.destroy(null,'role');
-      alert("berhasil logout")
       Router.replace('/');
-    }
-}
-  
+  }
+  const [tampil2,setTampil2] = useState(false)
+  const pop = () => {
+    setTampil2(true)
+  } 
+  const notpop = () => {
+    setTampil2(false)
+  } 
   
   return (
     <div>
@@ -97,7 +96,7 @@ export default function profil() {
                 Akun</button></Link>
               <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Pengajuan
                 Premium</button>
-              <button type="button" onClick={logout} className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
+              <button type="button" onClick={pop} className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
             </div>
           </div>
         </div>
@@ -144,6 +143,18 @@ export default function profil() {
         <button className="poppins fw-bold button-edit bg-color-yellow btn btn-lg rounded-pill">Edit Profil&nbsp;<img src="/images/button_icon_edit.png" alt="" /></button>
       </div>
     </div>
+    {tampil2 &&(  
+            <div className='status'>
+              <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+                <img src="/images/centang.png" alt="" />
+                <h1 className="poppins fw-bold text-dark">Apakah Anda Ingin Keluar?</h1>
+                <div className='d-flex gap-3 pb-2'>
+                <button className="btn  set btn-success rounded-pill text-white" onClick={logout}>Iya</button>
+                <button className="btn  set btn-danger rounded-pill text-white" onClick={notpop}>Tidak</button>
+                </div>
+              </div>
+            </div>
+          )}
   </div>
   )
 }
