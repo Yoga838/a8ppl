@@ -72,11 +72,17 @@ export default function pengajuan() {
 
   }, []);
   function logout(){
-    nookies.destroy(null,'token');
-    nookies.destroy(null,'role');
-    alert("berhasil logout")
-    Router.replace('/');
-  }
+    let yakin = confirm("apakah anda yakin untuk logout??")
+    if(!yakin){
+      //do nothing
+    }
+    else{
+      nookies.destroy(null,'token');
+      nookies.destroy(null,'role');
+      alert("berhasil logout")
+      Router.replace('/');
+    }
+}
 
   
   const handleButtonClick = (item) => {
@@ -108,7 +114,7 @@ export default function pengajuan() {
       <div className="row">
         <div className="sidebar-left content1 bg-color-yellow col-md-4 pt-5 d-flex flex-column align-items-center gap-2">
         <div className='content2  d-flex flex-column align-items-center gap-2'>
-          <div className="circle mt-5" />
+          <Link href='/admin'><div className="circle mt-5" /></Link>
           <h4>{data.name}</h4>
           <div className="button-item d-flex flex-column align-items-center gap-4">
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill text-warning  btn-lg">Pengajuan
@@ -125,12 +131,13 @@ export default function pengajuan() {
             {/* content for loop entar     */}
 
             {data2.map((dat,index) =>(
-            <div key={dat.id} className=" column-name d-flex justify-content-between align-items-center  bg-color-yellow rounded-pill poppins fw-bold">
+              
+            <div key={dat.id} className=" column-name d-flex justify-content-between align-items-center  bg-color-yellow rounded-pill poppins fw-bold" onClick={(e) => {
+              e.stopPropagation();
+              handleButtonClick(dat)
+            }}>
               <p>{dat.name}</p>
-              <button className='btn btn-sm' onClick={(e) => {
-                e.stopPropagation();
-                handleButtonClick(dat)
-              }}><img src="/images/icon-pengajuan-akun.png" alt="" /></button>
+             <img src="/images/icon-pengajuan-akun.png" alt="" />
             </div>
             
             ))}

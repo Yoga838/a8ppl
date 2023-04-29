@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable @next/next/no-css-tags */
@@ -7,6 +8,7 @@ import nookies from 'nookies'
 import Router from 'next/router'
 import axios from 'axios'
 import { useState } from 'react'
+import Link from 'next/link'
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -179,11 +181,16 @@ export default function cuaca() {
     } 
     
     function logout(){
-      nookies.destroy(null,'token');
-      nookies.destroy(null,'role');
-      alert("berhasil logout")
-      Router.replace('/');
-      console.log(nookies.get(null,'token'))
+      let yakin = confirm("apakah anda yakin untuk logout??")
+      if(!yakin){
+        //do nothing
+      }
+      else{
+        nookies.destroy(null,'token');
+        nookies.destroy(null,'role');
+        alert("berhasil logout")
+        Router.replace('/');
+      }
   }
 
   return (
@@ -194,13 +201,6 @@ export default function cuaca() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Tem.u</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossOrigin="anonymous" />
-        {/* <nav className="d-flex justify-content-between">
-          <h2 className="ms-3 mt-3 fw-bold poppins text-color-yellow">Tem.u</h2>
-          <div className="tombol d-flex gap-4 align-items-center me-5">
-            <a className="poppins tombol-nav btn bg-color-yellow rounded-pill  shadow text-dark" href="login.html" role="button">Cuaca</a>
-            <a className="poppins tombol-nav btn bg-color-yellow rounded-pill  shadow text-dark" href="login.html" role="button">Pencatatan</a>
-          </div>
-        </nav> */}
          <nav className="d-flex justify-content-between navbar fixed-top navbar-light bg-light">
             <div class="container-fluid">
                 <h2 className="ms-3 mt-3 fw-bold poppins text-color-yellow">Tem.u</h2>
@@ -214,7 +214,7 @@ export default function cuaca() {
           <div className="row">
             <div className="sidebar-left bg-color-yellow col-md-4 pt-5 pb-5 d-flex flex-column align-items-center gap-2">
             <div className='content2 d-flex flex-column align-items-center gap-2'>
-              <div className="circle mt-5" />
+              <Link href='/mitra'><div className="circle mt-5" /></Link>
               <h4>{data.name}</h4>
               <div className="button-item d-flex pb-2 flex-column align-items-center gap-4">
                 <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Home</button>

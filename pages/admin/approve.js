@@ -5,13 +5,9 @@ import { useState,useEffect } from 'react'
 import axios from 'axios'
 import Router from 'next/router'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
-// approve.getInitialProps = ({ query }) => {
-//     return{
-//         id : query.id,
-//         name : query.name
-//     }
-// }
+
 
 export async function getServerSideProps(ctx){
     const cookies = nookies.get(ctx)
@@ -125,12 +121,29 @@ export default function approve({}) {
       'Content-Type': 'application/json',
     }
 };
-    
-    const res = await axios.post('/api/approval' ,send,config )
-    const data = await res.data
-    alert(data.message)
-
+    let setuju = confirm("apakah anda yakin?");
+    if(!setuju){
+      //do nothing
+    }
+    else{
+      const res = await axios.post('/api/approval' ,send,config )
+      const data = await res.data
+      alert(data.message)
+      router.replace('/admin/pengajuan')
+    }
   }
+  function logout(){
+    let yakin = confirm("apakah anda yakin untuk logout??")
+    if(!yakin){
+      //do nothing
+    }
+    else{
+      nookies.destroy(null,'token');
+      nookies.destroy(null,'role');
+      alert("berhasil logout")
+      Router.replace('/');
+    }
+}
 
   return (
     <div>
@@ -139,20 +152,24 @@ export default function approve({}) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tem.u</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossOrigin="anonymous" />
-    <nav>
-      <h2 className="ms-3 mt-3 fw-bold poppins text-color-yellow">Tem.u</h2>
+    <nav className='navbar fixed-top navbar-light bg-light'>
+      <div class="container-fluid">
+        <h2 className="navbar-brand ms-3 mt-3 fw-bold poppins text-color-yellow">Tem.u</h2>
+      </div>
     </nav>
     <div className="content">
       <div className="row">
         <div className="sidebar-left bg-color-yellow col-md-4 pt-5 d-flex flex-column align-items-center gap-2">
-          <div className="circle mt-5" />
+        <div className='content2  d-flex flex-column align-items-center gap-2'>
+          <Link href='/admin'><div className="circle mt-5" /></Link>
           <h4>{data.name}</h4>
           <div className="button-item d-flex flex-column align-items-center gap-4">
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill text-warning  btn-lg">Pengajuan
               Akun</button>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Pengajuan
               Premium</button>
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
+            <button onClick={logout} type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
+          </div>
           </div>
         </div>
         <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">

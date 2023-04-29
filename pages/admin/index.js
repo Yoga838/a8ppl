@@ -60,10 +60,16 @@ export default function profil() {
   }, []);
 
   function logout(){
-    nookies.destroy(null,'token');
-    nookies.destroy(null,'role');
-    alert("berhasil logout")
-    Router.replace('/');
+    let yakin = confirm("apakah anda yakin untuk logout??")
+    if(!yakin){
+      //do nothing
+    }
+    else{
+      nookies.destroy(null,'token');
+      nookies.destroy(null,'role');
+      alert("berhasil logout")
+      Router.replace('/');
+    }
 }
   
   

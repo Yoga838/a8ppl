@@ -133,6 +133,9 @@ background-color: #FF0000 !important
   right: 4%;
   bottom: 5%;
 }
+.column-name{
+  cursor: pointer;
+}
 .column-name p{
   margin-top: 15px;
  margin-left: 20px;

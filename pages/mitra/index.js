@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @next/next/no-css-tags */
 import Link from 'next/link'
@@ -58,10 +59,16 @@ export default function mitra_page() {
   }, []);
 
   function logout(){
-    nookies.destroy(null,'token');
-    nookies.destroy(null,'role');
-    alert("berhasil logout")
-    Router.replace('/');
+    let yakin = confirm("apakah anda yakin untuk logout??")
+    if(!yakin){
+      //do nothing
+    }
+    else{
+      nookies.destroy(null,'token');
+      nookies.destroy(null,'role');
+      alert("berhasil logout")
+      Router.replace('/');
+    }
 }
 console.log(data)
 
