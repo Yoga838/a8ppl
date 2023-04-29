@@ -91,13 +91,14 @@ console.log(data)
     </nav>
     <div className="content">
       <div className="row">
-        <div className="sidebar-left content1 bg-color-yellow col-md-4 pt-5 d-flex flex-column align-items-center gap-2">
+        <div className="sidebar-left content1 bg-color-yellow col-md-4  d-flex flex-column align-items-center gap-2">
         <div className='content2 d-flex flex-column align-items-center gap-2'>
           <div className="circle mt-5" />
           <h4>{data.name}</h4>
           <div className="button-item d-flex flex-column align-items-center gap-4">
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Home</button>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Pegawai</button>
+            <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Konfirmasi Pendistribusian</button>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Tracking</button>
             <button onClick={logout} type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
           </div>
@@ -117,7 +118,7 @@ console.log(data)
           <p className="poppins">password:</p>
           <p className="poppins fw-bold">********************</p>
         </div>
-        <button className="poppins fw-bold button-edit bg-color-yellow btn btn-lg rounded-pill">Edit Profil&nbsp;<img src="/images/button_icon_edit.png" alt="" /></button>
+        <Link href='/mitra/editprofil'><button className="poppins fw-bold button-edit bg-color-yellow btn btn-lg rounded-pill">Edit Profil&nbsp;<img src="/images/button_icon_edit.png" alt="" /></button></Link>
       </div>
     </div>
   </div>

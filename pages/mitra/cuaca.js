@@ -219,6 +219,7 @@ export default function cuaca() {
               <div className="button-item d-flex pb-2 flex-column align-items-center gap-4">
                 <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Home</button>
                 <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Pegawai</button>
+                <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Konfirmasi Pendistribusian</button>
                 <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Tracking</button>
                 <button onClick={logout} type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
               </div>
