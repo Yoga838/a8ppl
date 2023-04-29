@@ -44,6 +44,7 @@ export default function login() {
   const [password, setPassword] = useState('');
   const [success, setSuccess] = useState(false);
   const [progress, setProgress]= useState(false);
+  const [pesan, setPesan] = useState('');
 
   const dologin = async (e) => {
     e.preventDefault(); // prevent form from submitting normally
@@ -74,12 +75,21 @@ export default function login() {
       // Router.replace('/dashboard');
     }
     else{
-      alert(data.message)
+      setPesan(data.message)
+      pop()
+      // alert(data.message)
     }
 
     setProgress(false);
 
-  };
+  };  
+  const [tampil2,setTampil2] = useState(false)
+  const pop = () => {
+    setTampil2(true)
+  } 
+  const notpop = () => {
+    setTampil2(false)
+  } 
 
   return (
     <div>
@@ -110,6 +120,16 @@ export default function login() {
             </div>
           </div>
         </div>
+        {tampil2 &&(pesan != ''&&(
+            <div className='status'>
+              <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+                <img src="/images/alert.png" alt="" />
+                <h1 className="poppins fw-bold text-dark text-center">{pesan}</h1>
+                <button className="btn  set btn-warning rounded-pill text-white" onClick={notpop}>OK</button>
+              </div>
+            </div>
+        )
+          )}
         </div>
     </div>
   )
