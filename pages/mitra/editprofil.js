@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/rules-of-hooks */
 import Link from 'next/link'
 import React from 'react'
@@ -71,16 +72,8 @@ export default function editprofil() {
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
 
-    
+    const [pesan,setPesan] = useState('')
     const updatemitra = async (e) => {
-        
-        // if (!name||!email||!password||!no||!alamat){
-        // setAlamat(data.alamat)
-        // setEmail(data.email)
-        // setName(data.name)
-        // setNo(data.no)
-        // setPassword(data.password)
-        // }
         e.preventDefault(); // prevent form from submitting normally
         const res = await fetch('/api/editmitra', {
           method: 'POST',
@@ -92,13 +85,10 @@ export default function editprofil() {
         });
         
         const data = await res.json();
-        console.log(data);
+        setPesan(data.message)
+        setTampil(true)
         
-        alert (data.message)
-        if (data.message == "berhasil diupdate"){
-          Router.push('/mitra');
-        }
-        
+  
       }
 
       function handleInputFocus(event) {
@@ -125,7 +115,14 @@ export default function editprofil() {
           Router.replace('/');
         }
     }
-    
+    const [tampil,setTampil] = useState(false)
+    const success = () => {
+      setTampil(false)
+      Router.replace('/mitra');
+    }
+    const notsuccess = () => {
+      setTampil(false)
+    }
   return (
     <div>
     <meta charSet="UTF-8" />
@@ -184,6 +181,28 @@ export default function editprofil() {
             <button onClick={batal} className="btn btn-lg rounded-pill poppins btn-danger tombol-profil">batal</button>
             <button onClick={updatemitra} className="btn btn-lg rounded-pill poppins btn-success tombol-profil">simpan</button>
           </div>
+          {tampil &&( pesan == "Data berhasil disimpan" ?(
+            <div className='status'>
+            <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+              <img src="/images/centang.png" alt="" />
+              <h1 className="poppins fw-bold text-dark">{pesan}</h1>
+              <button className="btn btn-lg btn-warning rounded-pill text-white" onClick={success}>OK</button>
+            </div>
+        </div>
+          )
+          :(
+            <div className='status'>
+              <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+                <img src="/images/alert.png" alt="" />
+                <h1 className="poppins fw-bold text-dark">{pesan}</h1>
+                <button className="btn btn-lg btn-warning rounded-pill text-white" onClick={notsuccess}>OK</button>
+              </div>
+            </div>
+          )
+            
+          ) 
+
+          }
         </div>
       </div>
     </div>

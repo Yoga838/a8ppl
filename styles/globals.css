@@ -253,3 +253,10 @@ nav{
 .tombol-profil{
   width: 20%;
 }
+.pop-up{
+  width: 50% !important;
+  border-radius: 30px !important;
+}
+.pop-up button{
+  width: 20%;
+}
