@@ -142,7 +142,7 @@ export default function editprofil() {
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Home</button>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Pegawai</button>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Tracking</button>
-            <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
+            <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Keluar</button>
           </div>
         </div>
         </div>

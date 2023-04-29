@@ -171,7 +171,7 @@ const notsuccess = () => {
               Akun</button>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Pengajuan
               Premium</button>
-            <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
+            <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Keluar</button>
           </div>
           </div>
         </div>

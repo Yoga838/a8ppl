@@ -16,7 +16,7 @@ const [no,setNo] = useState('');
 const [alamat,setAlamat] = useState('');
 const [usaha,setUsaha] = useState('');
 const [pribadi,setPribadi] = useState('');
-
+const [pesan, setPesan] = useState('');
 
 
 const doregister = async (e) => {
@@ -32,18 +32,25 @@ try {
   
   const data = await res.json();
   console.log(data);
+  setPesan(data.message)
+  pop()
   
-  alert (data.message)
-  if (data.message == "berhasil dibuat"){
-    Router.push('/login');
-  }
   
 } catch (error) {
   console.log("error mas")
 
   };
 }
-
+function pindah (){
+  Router.replace('/')
+}
+const [tampil2,setTampil2] = useState(false)
+const pop = () => {
+  setTampil2(true)
+} 
+const notpop = () => {
+  setTampil2(false)
+} 
   return (
     <div>
     {/* Required meta tags */}
@@ -70,23 +77,23 @@ try {
                 <div className="col-md-6">
                   <div className="input-Name mt-4 ">
                     <label htmlFor="inputName" className="poppins form-label">Nama Lengkap</label>
-                    <input type="Text" id="inputName" value={name} onChange={(e) => setName(e.target.value)} required className="width-form-1 rounded1 form-control" />
+                    <input type="Text" id="inputName" value={name} onChange={(e) => setName(e.target.value)}  className="width-form-1 rounded1 form-control" />
                   </div>
                   <div className="input-NoTelp mt-2">
                     <label htmlFor="inputNoTelp" className="poppins form-label">No. Telp</label>
-                    <input type="Text" id="inputNoTelp" value={no} onChange={(e) => setNo(e.target.value)} required className="width-form-1 rounded1 form-control" />
+                    <input type="Text" id="inputNoTelp" value={no} onChange={(e) => setNo(e.target.value)}  className="width-form-1 rounded1 form-control" />
                   </div>
                   <div className="input-Alamat mt-2">
                     <label htmlFor="inputAlamat" className="poppins form-label">Alamat Lengkap</label>
-                    <input type="Text" id="inputAlamat" value={alamat} onChange={(e) => setAlamat(e.target.value)} required className="width-form-1 rounded1 form-control" />
+                    <input type="Text" id="inputAlamat" value={alamat} onChange={(e) => setAlamat(e.target.value)}  className="width-form-1 rounded1 form-control" />
                   </div>
                   <div className="input-Email mt-2">
                     <label htmlFor="inputEmail" className="poppins form-label">Email</label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="inputEmail" required className="width-form-1 rounded1 form-control" />
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="inputEmail"  className="width-form-1 rounded1 form-control" />
                   </div> 
                   <div className="input-Password mt-2">
                     <label htmlFor="inputPassword" className="poppins form-label">Password</label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="inputPassword" required className="width-form-1 rounded1 form-control" />
+                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="inputPassword"  className="width-form-1 rounded1 form-control" />
                   </div>    
                 </div>
                 <div className="col-md-6">
@@ -109,6 +116,23 @@ try {
           </form>
         </div>
       </div>
+      {tampil2 &&(pesan != 'Data berhasil dikirim.Mohon tunggu 1x24 jam untuk pengajuan anda' ?(
+            <div className='status'>
+              <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+                <img src="/images/alert.png" alt="" />
+                <h1 className="poppins fw-bold text-dark text-center">{pesan}</h1>
+                <button className="btn  set btn-warning rounded-pill text-white" onClick={notpop}>OK</button>
+              </div>
+            </div>
+          ):( 
+          <div className='status'>
+            <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+              <img src="/images/centang.png" alt="" />
+              <h1 className="poppins fw-bold text-dark text-center">{pesan}</h1>
+              <button className="btn  set btn-warning rounded-pill text-white" onClick={pindah}>OK</button>
+            </div>
+          </div>)
+          )}
     </div>
     {/* Bootstrap Bundle with Popper */}
   </div>

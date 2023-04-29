@@ -15,7 +15,7 @@ const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 const [alamat, setAlamat] = useState('');
 const [no, setNo] = useState('');
-
+const [pesan, setPesan] = useState('')
 const doregister = async (e) => {
   e.preventDefault(); // prevent form from submitting normally
 try {
@@ -24,24 +24,33 @@ try {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ email, name, password })
+    body: JSON.stringify({ email, name, password,alamat,no })
   });
   
   const data = await res.json();
-  console.log(data);
-  
-  alert (data.message)
-  if (data.message == "berhasil dibuat"){
-    Router.push('/login');
-  }
+  // console.log(data);
+  setPesan(data.message)
+  pop()
+  // if (data.message == "berhasil dibuat"){
+  //   Router.push('/login');
+  // }
   
 } catch (error) {
   console.log("error mas")
 
   };
 }
+function pindah (){
+  Router.replace('login')
+}
 
-
+const [tampil2,setTampil2] = useState(false)
+const pop = () => {
+  setTampil2(true)
+} 
+const notpop = () => {
+  setTampil2(false)
+} 
   return (
     <div>
         {/* Required meta tags */}
@@ -81,10 +90,27 @@ try {
                   <label htmlFor="inputno" className="poppins form-label">No.Telp</label>
                   <input type="text" id="inputno"  className="width-form-2 rounded1 form-control" value={no} onChange={(e) => setNo(e.target.value)} />
                 </div>
-                <button type='submit' className="text-white poppins btn ms-2 bg-color-yellow mt-4  rounded-pill width-button-2 heigth-button shadow " role="button">Sign Up</button>
+                <button type='submit' className="text-white poppins btn ms-2 bg-color-yellow mt-4  rounded-pill width-button-2 heigth-button shadow " role="button">Daftar</button>
               </form>
               </div>
           </div>
+          {tampil2 &&(pesan != 'Registrasi berhasil' ?(
+            <div className='status'>
+              <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+                <img src="/images/alert.png" alt="" />
+                <h1 className="poppins fw-bold text-dark text-center">{pesan}</h1>
+                <button className="btn  set btn-warning rounded-pill text-white" onClick={notpop}>OK</button>
+              </div>
+            </div>
+          ):( 
+          <div className='status'>
+            <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+              <img src="/images/centang.png" alt="" />
+              <h1 className="poppins fw-bold text-dark">{pesan}</h1>
+              <button className="btn  set btn-warning rounded-pill text-white" onClick={pindah}>OK</button>
+            </div>
+          </div>)
+          )}
         </div>
         {/* Bootstrap Bundle with Popper */}
       </div>

@@ -96,7 +96,7 @@ export default function profil() {
                 Akun</button></Link>
               <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Pengajuan
                 Premium</button>
-              <button type="button" onClick={pop} className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
+              <button type="button" onClick={pop} className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Keluar</button>
             </div>
           </div>
         </div>

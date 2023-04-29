@@ -16,8 +16,8 @@ export default function choose_regist() {
         <div className="wrap mx-auto">
           <h4 className="poppins text-center">Daftar sebagai?</h4>
           <div className="d-flex ">
-            <Link href="mitra_regist"><button className=" text-white poppins fw-bold btn bg-color-yellow rounded-pill button shadow"  role="button">Mitra</button> </Link>
-           <Link href="visitor_regist"> <button className="poppins btn ms-2 fw-bold rounded-pill bg-color-yellow button shadow text-white" role="button">User</button></Link>
+            <Link href="mitra_regist"><button className=" text-dark poppins fw-bold btn bg-color-yellow rounded-pill button shadow"  role="button">Mitra</button> </Link>
+           <Link href="visitor_regist"> <button className="poppins btn ms-2 fw-bold rounded-pill bg-color-yellow button shadow text-dark" role="button">User</button></Link>
           </div>
         </div>
       </div>

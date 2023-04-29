@@ -99,7 +99,7 @@ export default function mitra_page() {
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Pegawai</button>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Konfirmasi Pendistribusian</button>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Tracking</button>
-            <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
+            <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Keluar</button>
           </div>
         </div> 
         </div>

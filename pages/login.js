@@ -104,7 +104,7 @@ export default function login() {
                     <label htmlFor="inputPassword5" className="poppins form-label">Password</label>
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}  id="inputPassword5" className="rounded1 form-control" />
                   </div>
-                  <button className="poppins mt-4 center-button btn bg-color-yellow rounded-pill ps-5 pe-5 mb-5 shadow text-white" tipe="submit"  role="button">Login</button>
+                  <button className="poppins mt-4 center-button btn bg-color-yellow rounded-pill ps-5 pe-5 mb-5 shadow text-white" tipe="submit"  role="button">Masuk</button>
                 </form>
               </div>
             </div>
