@@ -181,17 +181,17 @@ export default function cuaca() {
     } 
     
     function logout(){
-      let yakin = confirm("apakah anda yakin untuk logout??")
-      if(!yakin){
-        //do nothing
-      }
-      else{
-        nookies.destroy(null,'token');
-        nookies.destroy(null,'role');
-        alert("berhasil logout")
-        Router.replace('/');
-      }
+      nookies.destroy(null,'token');
+      nookies.destroy(null,'role');
+      Router.replace('/');
   }
+  const [tampil2,setTampil2] = useState(false)
+  const pop = () => {
+    setTampil2(true)
+  } 
+  const notpop = () => {
+    setTampil2(false)
+  } 
 
   return (
     <>
@@ -221,7 +221,7 @@ export default function cuaca() {
                 <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Pegawai</button>
                 <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Konfirmasi Pendistribusian</button>
                 <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Tracking</button>
-                <button onClick={logout} type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
+                <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
               </div>
             </div>
             </div>
@@ -279,6 +279,18 @@ export default function cuaca() {
             </div>
           </div>
         </div>
+        {tampil2 &&(  
+            <div className='status'>
+              <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+                <img src="/images/centang.png" alt="" />
+                <h1 className="poppins fw-bold text-dark">Apakah Anda Ingin Keluar?</h1>
+                <div className='d-flex gap-3 pb-2'>
+                <button className="btn  set btn-success rounded-pill text-white" onClick={logout}>Iya</button>
+                <button className="btn  set btn-danger rounded-pill text-white" onClick={notpop}>Tidak</button>
+                </div>
+              </div>
+            </div>
+          )}
       </div>
 </>
   )
