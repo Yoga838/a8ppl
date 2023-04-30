@@ -42,14 +42,10 @@ export default function login() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [success, setSuccess] = useState(false);
-  const [progress, setProgress]= useState(false);
   const [pesan, setPesan] = useState('');
 
   const dologin = async (e) => {
     e.preventDefault(); // prevent form from submitting normally
-
-    setProgress(true);
     const res = await fetch('/api/log', {
       method: 'POST',
       headers: {
@@ -79,8 +75,6 @@ export default function login() {
       pop()
       // alert(data.message)
     }
-
-    setProgress(false);
 
   };  
   const [tampil2,setTampil2] = useState(false)
