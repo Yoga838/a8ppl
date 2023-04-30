@@ -115,12 +115,40 @@ export default function approve({}) {
       'Content-Type': 'application/json',
     }
 };
+
     
       const res = await axios.post('/api/approval' ,send,config )
       const data = await res.data
-      router.replace('/admin/pengajuan')
+      router.replace('/admin')
     
   }
+
+  const reject = async (e) => {
+    e.preventDefault(); // prevent form from submitting normally
+    const cookie = nookies.get('token');
+    const cookies = cookie.token;
+
+    const send = {
+        name:data2.name,
+        email:data2.email,
+        password:data2.password,
+        id:accid
+    }
+  
+    const config = {
+        headers :{
+      'Authorization': `Bearer ${cookies}`,
+      'Content-Type': 'application/json',
+    }
+};
+
+    
+      const res = await axios.put('/api/approval' ,send,config )
+      const data = await res.data
+      router.replace('/admin')
+    
+  }
+
   function logout(){
     nookies.destroy(null,'token');
     nookies.destroy(null,'role');
@@ -218,7 +246,7 @@ const notsuccess = () => {
               <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
                 <img src="/images/alert.png" alt="" />
                 <h1 className="poppins fw-bold text-dark">Pengajuan Berhasil Ditolak</h1>
-                <button className="btn  set btn-warning rounded-pill shadow text-white" onClick={notsuccess}>OK</button>
+                <button className="btn  set btn-warning rounded-pill shadow text-white" onClick={reject}>OK</button>
               </div>
             </div>
           )}

@@ -200,8 +200,8 @@ export default function editprofil() {
                 <img src="/images/centang.png" alt="" />
                 <h1 className="poppins fw-bold text-dark">Apakah Anda Ingin Keluar?</h1>
                 <div className='d-flex gap-3 pb-2'>
-                <button className="btn  set bg-color-green rounded-pill shadow text-white" onClick={logout}>Iya</button>
-                <button className="btn  set bg-color-red rounded-pill shadow text-white" onClick={notpop}>Tidak</button>
+                <button className="btn  set bg-color-green rounded-pill shadow text-white" onClick={logout}>IYA</button>
+                <button className="btn  set bg-color-red rounded-pill shadow text-white" onClick={notpop}>TIDAK</button>
                 </div>
               </div>
             </div>

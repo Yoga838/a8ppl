@@ -30,20 +30,33 @@ model Mitra {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   aproval   aproval[]
+  pegawai   pegawai[]
 }
-model Reject {
-  id        Int       @id @default(autoincrement())
+model pegawai {
+  id        Int      @id @default(autoincrement())
+  workAt    Int
+  work      Mitra @relation(fields: [workAt], references: [id])
   name      String
-  email     String    @unique
+  email     String   @unique
   password  String
-  createdAt DateTime  @default(now())
+  no        String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
-
 model aproval {
   id    Int   @id @default(autoincrement())
   accid Int
   acc   Mitra @relation(fields: [accid], references: [id])
 }
+model Reject {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String    
+  password  String
+  createdAt DateTime  @default(now())
+}
+
+
 
 model Admin {
   id        Int      @id @default(autoincrement())
