@@ -43,8 +43,8 @@ export default function Home() {
                 <h1 className="poppins fw-bold text-space-h1">Kembangkan sayap <br />bisnis anda bersama kami</h1>
                 <p className="poppins ">Membantu dalam pengelolaan manajemen keuangan, meningkatkan <br /> kualitas produk, dan melebarkan sayap pemasaran bisnis anda.</p>
                 <div className="d-flex">
-                <Link href="login"><button className="poppins btn bg-color-yellow rounded-pill ps-4 pe-4 shadow text-white"  role="button">Masuk</button></Link>
-                  <Link href="choose_regist"><button className="poppins btn ms-2 rounded-pill ps-4 pe-4 shadow text-color-yellow"  role="button">Daftar</button></Link>
+                <Link href="login"><button className="poppins fw-bold btn bg-color-yellow rounded-pill ps-4 pe-4 shadow text-white"  role="button">Masuk</button></Link>
+                  <Link href="choose_regist"><button className="poppins fw-bold btn ms-2 rounded-pill ps-4 pe-4 shadow text-color-yellow"  role="button">Daftar</button></Link>
                 </div>
               </div>
               <div className="col-md-5">

@@ -260,3 +260,14 @@ nav{
 .set{
   width: 100px !important;
 }
+.column-name-pgw{
+  width: 80%;
+}
+.column-name-pgw p{
+  margin-top: 15px;
+ margin-left: 20px;
+}
+.column-name-pgw img{
+  width: 35px;
+  margin-right: 20px;
+}

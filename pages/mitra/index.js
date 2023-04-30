@@ -96,7 +96,7 @@ export default function mitra_page() {
           <h4>{data.name}</h4>
           <div className="button-item d-flex flex-column align-items-center gap-4">
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Home</button>
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Pegawai</button>
+            <Link href='/mitra/tambahpegawai'><button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Pegawai</button></Link>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Konfirmasi Pendistribusian</button>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Tracking</button>
             <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Keluar</button>
