@@ -95,11 +95,11 @@ export default function mitra_page() {
           <div className="circle mt-4" />
           <h4>{data.name}</h4>
           <div className="button-item d-flex flex-column align-items-center gap-4">
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Home</button>
-            <Link href='/mitra/tambahpegawai'><button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Pegawai</button></Link>
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Konfirmasi Pendistribusian</button>
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Tracking</button>
-            <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Keluar</button>
+            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Home</button>
+            <Link href='/mitra/tambahpegawai'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Pegawai</button></Link>
+            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button>
+            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button>
+            <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Keluar</button>
           </div>
         </div> 
         </div>
@@ -123,8 +123,8 @@ export default function mitra_page() {
                 <img src="/images/centang.png" alt="" />
                 <h1 className="poppins fw-bold text-dark">Apakah Anda Ingin Keluar?</h1>
                 <div className='d-flex gap-3 pb-2'>
-                <button className="btn  set btn-success rounded-pill text-white" onClick={logout}>Iya</button>
-                <button className="btn  set btn-danger rounded-pill text-white" onClick={notpop}>Tidak</button>
+                <button className="btn  set bg-color-green shadow rounded-pill text-white" onClick={logout}>Iya</button>
+                <button className="btn  set bg-color-red shadow rounded-pill text-white" onClick={notpop}>Tidak</button>
                 </div>
               </div>
             </div>

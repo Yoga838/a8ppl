@@ -134,15 +134,16 @@ export default function editprofil() {
     </nav>
     <div className="content">
       <div className="row">
-        <div className="sidebar-left content1 bg-color-yellow col-md-4 pt-5 d-flex flex-column align-items-center gap-2">
+        <div className="sidebar-left content1 bg-color-yellow col-md-4  d-flex flex-column align-items-center gap-2">
         <div className='content2 d-flex flex-column align-items-center gap-2'>
           <Link href='/mitra'><div className="circle mt-4"/></Link>
           <h4>{data.name}</h4>
           <div className="button-item d-flex flex-column align-items-center gap-4">
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Home</button>
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Pegawai</button>
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Tracking</button>
-            <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Keluar</button>
+            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Home</button>
+            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Pegawai</button>
+            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button>
+            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Tracking</button>
+            <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Keluar</button>
           </div>
         </div>
         </div>
@@ -171,15 +172,15 @@ export default function editprofil() {
             </div>
           </div>
           <div className="tombol d-flex justify-content-end gap-4 mt-4 me-5">
-            <button onClick={batal} className="btn btn-lg rounded-pill poppins btn-danger tombol-profil">batal</button>
-            <button onClick={updatemitra} className="btn btn-lg rounded-pill poppins btn-success tombol-profil">simpan</button>
+            <button onClick={batal} className="btn btn-lg rounded-pill poppins bg-color-red shadow text-white tombol-profil">batal</button>
+            <button onClick={updatemitra} className="btn btn-lg rounded-pill poppins bg-color-green shadow text-white tombol-profil">simpan</button>
           </div>
           {tampil &&( pesan == "Data berhasil disimpan" ?(
             <div className='status'>
             <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
               <img src="/images/centang.png" alt="" />
               <h1 className="poppins fw-bold text-dark">{pesan}</h1>
-              <button className="btn btn-lg btn-warning rounded-pill text-white" onClick={success}>OK</button>
+              <button className="btn btn-lg btn-warning rounded-pill shadow text-white" onClick={success}>OK</button>
             </div>
         </div>
           )
@@ -188,7 +189,7 @@ export default function editprofil() {
               <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
                 <img src="/images/alert.png" alt="" />
                 <h1 className="poppins fw-bold text-dark">{pesan}</h1>
-                <button className="btn btn-lg btn-warning rounded-pill text-white" onClick={notsuccess}>OK</button>
+                <button className="btn btn-lg btn-warning rounded-pill shadow text-white" onClick={notsuccess}>OK</button>
               </div>
             </div>
           )      
@@ -199,8 +200,8 @@ export default function editprofil() {
                 <img src="/images/centang.png" alt="" />
                 <h1 className="poppins fw-bold text-dark">Apakah Anda Ingin Keluar?</h1>
                 <div className='d-flex gap-3 pb-2'>
-                <button className="btn  set btn-success rounded-pill text-white" onClick={logout}>Iya</button>
-                <button className="btn  set btn-danger rounded-pill text-white" onClick={notpop}>Tidak</button>
+                <button className="btn  set bg-color-green rounded-pill shadow text-white" onClick={logout}>Iya</button>
+                <button className="btn  set bg-color-red rounded-pill shadow text-white" onClick={notpop}>Tidak</button>
                 </div>
               </div>
             </div>

@@ -254,6 +254,7 @@ nav{
   width: 20%;
 }
 .pop-up{
+  border: 5px solid black !important;
   width: 50% !important;
   border-radius: 30px !important;
 }

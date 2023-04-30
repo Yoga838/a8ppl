@@ -114,7 +114,7 @@ export default function login() {
                     <label htmlFor="inputPassword5" className="poppins form-label">Password</label>
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}  id="inputPassword5" className="rounded1 form-control" />
                   </div>
-                  <button className="poppins mt-4 center-button btn bg-color-yellow rounded-pill ps-5 pe-5 mb-5 shadow text-white" tipe="submit"  role="button">Masuk</button>
+                  <button className="poppins fw-bold mt-4 center-button btn bg-color-yellow rounded-pill ps-5 pe-5 mb-5 shadow text-white" tipe="submit"  role="button">Masuk</button>
                 </form>
               </div>
             </div>
@@ -125,7 +125,7 @@ export default function login() {
               <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
                 <img src="/images/alert.png" alt="" />
                 <h1 className="poppins fw-bold text-dark text-center">{pesan}</h1>
-                <button className="btn  set btn-warning rounded-pill text-white" onClick={notpop}>OK</button>
+                <button className="btn shadow set btn-warning rounded-pill text-white" onClick={notpop}>OK</button>
               </div>
             </div>
         )

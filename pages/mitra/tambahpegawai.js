@@ -23,22 +23,22 @@ export default function tambahpegawai() {
           <Link href='/mitra'><div className="circle mt-4" /></Link>
           <h4>Eren Yeager</h4>
           <div className="button-item d-flex pb-2 flex-column align-items-center gap-4">
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Home</button>
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill text-warning btn-lg">Pegawai</button>
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Konfirmasi Pendistribusian</button>
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Tracking</button>
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Log Out</button>
+            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Home</button>
+            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow text-warning btn-lg">Pegawai</button>
+            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Konfirmasi Pendistribusian</button>
+            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Tracking</button>
+            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Log Out</button>
           </div>
         </div>
         </div>
         <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
           <div className="d-flex justify-content-end me-4">
-            <button className="btn btn-lg bg-color-green rounded-pill ">Pegawai &nbsp;<img src="/images/plus.png" alt="" /></button>
+            <button className="btn btn-lg bg-color-green shadow rounded-pill ">Pegawai &nbsp;<img src="/images/plus.png" alt="" /></button>
           </div>
           <h1 className="poppins fw-bold text-center">Daftar Pegawai</h1>
           <div className="d-flex flex-column gap-4 align-items-center">
             {/* content for loop entar     */}
-            <div className=" column-name-pgw d-flex justify-content-between align-items-center  bg-color-yellow rounded-pill poppins fw-bold">
+            <div className=" column-name-pgw d-flex justify-content-between shadow align-items-center  bg-color-yellow rounded-pill poppins fw-bold">
               <p>Eren Yeager</p>
               <img src="/images/worker.png" alt="" />
             </div>

@@ -164,14 +164,14 @@ const notsuccess = () => {
       <div className="row">
         <div className="sidebar-left bg-color-yellow col-md-4 pt-5 d-flex flex-column align-items-center gap-2">
         <div className='content2  d-flex flex-column align-items-center gap-2'>
-          <Link href='/admin'><div className="circle mt-5" /></Link>
+          <Link href='/admin/profil'><div className="circle mt-5" /></Link>
           <h4>{data.name}</h4>
           <div className="button-item d-flex flex-column align-items-center gap-4">
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill text-warning  btn-lg">Pengajuan
-              Akun</button>
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Pengajuan
+            <Link href='/admin'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow text-warning  btn-lg">Pengajuan
+              Akun</button></Link>
+            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Pengajuan
               Premium</button>
-            <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill  btn-lg">Keluar</button>
+            <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Keluar</button>
           </div>
           </div>
         </div>
@@ -197,8 +197,8 @@ const notsuccess = () => {
             </div>
             {/* end content*/}
             <div className="tombol mb-5 mt-3  justify-content center">
-              <button type="button" onClick={success} className="btn tombol-approve btn-danger poppins rounded-pill text-white  btn-lg">Tolak</button>
-              <button type="button" onClick={pop2} className="btn ms-2 tombol-approve btn-success poppins rounded-pill text-white  btn-lg">Setuju</button>
+              <button type="button" onClick={success} className="btn tombol-approve bg-color-red poppins rounded-pill text-white shadow  btn-lg">Tolak</button>
+              <button type="button" onClick={pop2} className="btn ms-2 tombol-approve bg-color-green poppins rounded-pill text-white shadow  btn-lg">Setuju</button>
             </div>
 
 
@@ -208,7 +208,7 @@ const notsuccess = () => {
               <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
                 <img src="/images/centang.png" alt="" />
                 <h1 className="poppins fw-bold text-dark">Pengajuan Berhasil Disetujui</h1>
-                <button className="btn  set btn-warning rounded-pill text-white" onClick={approve}>OK</button>
+                <button className="btn  set btn-warning rounded-pill shadow text-white" onClick={approve}>OK</button>
               </div>
             </div>
           )}
@@ -218,7 +218,7 @@ const notsuccess = () => {
               <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
                 <img src="/images/alert.png" alt="" />
                 <h1 className="poppins fw-bold text-dark">Pengajuan Berhasil Ditolak</h1>
-                <button className="btn  set btn-warning rounded-pill text-white" onClick={notsuccess}>OK</button>
+                <button className="btn  set btn-warning rounded-pill shadow text-white" onClick={notsuccess}>OK</button>
               </div>
             </div>
           )}
@@ -229,8 +229,8 @@ const notsuccess = () => {
                 <img src="/images/centang.png" alt="" />
                 <h1 className="poppins fw-bold text-dark">Apakah Anda Ingin Keluar?</h1>
                 <div className='d-flex gap-3 pb-2'>
-                <button className="btn  set btn-success rounded-pill text-white" onClick={logout}>Iya</button>
-                <button className="btn  set btn-danger rounded-pill text-white" onClick={notpop}>Tidak</button>
+                <button className="btn  set bg-color-green rounded-pill shadow text-white" onClick={logout}>IYA</button>
+                <button className="btn  set bg-color-red rounded-pill shadow text-white" onClick={notpop}>TIDAK</button>
                 </div>
               </div>
             </div>

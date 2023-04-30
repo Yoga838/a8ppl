@@ -18,7 +18,7 @@ export default function Home() {
         <title>Tem.U</title>
       </Head>
       <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg shadow navbar-light bg-light">
           <div className="container-fluid">
             <a className="navbar-brand poppins ms-3 text-color-yellow fw-bold" href="#">Tem.U</a>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,7 +30,7 @@ export default function Home() {
                   <a className="nav-link poppins text-color-yellow " href="#">Home</a>
                 </li>
                 <li className="nav-item ">
-                  <a className="nav-link poppins text-color-yellow hover " onClick={() => {document.getElementById('AboutUs').scrollIntoView()}}>TentangKami</a>
+                  <a className="nav-link poppins text-color-yellow hover wrap " onClick={() => {document.getElementById('AboutUs').scrollIntoView()}}>Tentang Kami</a>
                 </li>
               </ul>
             </div>

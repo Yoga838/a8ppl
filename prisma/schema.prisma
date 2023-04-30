@@ -31,6 +31,13 @@ model Mitra {
   updatedAt DateTime  @updatedAt
   aproval   aproval[]
 }
+model Reject {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+}
 
 model aproval {
   id    Int   @id @default(autoincrement())
