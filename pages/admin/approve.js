@@ -143,7 +143,7 @@ export default function approve({}) {
 };
 
     
-      const res = await axios.put('/api/approval' ,send,config )
+      const res = await axios.post('/api/reject' ,send,config )
       const data = await res.data
       router.replace('/admin')
     
