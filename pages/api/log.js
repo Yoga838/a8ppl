@@ -14,10 +14,10 @@ export default async function handler(req, res){
         const visitor = await prisma.Visitor.findUnique({ where: { email } });
         const mitra = await prisma.Mitra.findUnique({ where: { email } });
         const admin = await prisma.Admin.findUnique({ where: { email } });
-        // const reject = await prisma.reject.findUnique({ where: { email } });///problem
+        const reject = await prisma.rejected.findUnique({ where: { email } });
         
 
-        if (!visitor&&!mitra&&!admin) {
+        if (!visitor&&!mitra&&!admin&&!reject) {
             return res.status(401).json({ message: 'Email atau password yang anda masukkan salah!' });
         }
         
@@ -52,14 +52,14 @@ export default async function handler(req, res){
             const token = sign({ userId: mitra.id }, JWT_SECRET, { expiresIn: '7d' });
             return res.status(200).json({ token,user });
         }
-        // if (reject){
-        //     const passwordMatch = await compare(password, reject.password);
-        //     if (!passwordMatch) {
-        //         return res.status(401).json({ message: 'Password yang anda masukkan salah!' });
-        //     }
-        //     // const user = "admin";
-        //     // const token = sign({ userId: admin.id }, JWT_SECRET, { expiresIn: '7d' });
-        //     return res.status(200).json({ message:"Akun anda ditolak oleh admin! silahkan coba lagi" });
-        // }
+        if (reject){
+            const passwordMatch = await compare(password, reject.password);
+            if (!passwordMatch) {
+                return res.status(401).json({ message: 'Password yang anda masukkan salah!' });
+            }
+            // const user = "admin";
+            // const token = sign({ userId: admin.id }, JWT_SECRET, { expiresIn: '7d' });
+            return res.status(200).json({ message:"Akun anda ditolak oleh admin! silahkan coba lagi" });
+        }
 }
 }
