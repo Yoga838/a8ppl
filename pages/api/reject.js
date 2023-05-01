@@ -9,11 +9,11 @@ export default authMiddleware(async function handler(req,res){
             return res.status(400).json({message: 'form kurang lengkap'})
         }
         const Rejected = await prisma.reject.findMany({
-            data:{
-                name,
-                email,
-                password
-            }
+            // data:{
+            //     name,
+            //     email,
+            //     password
+            // }
         })
         // const mitra = await prisma.mitra.delete({
         //     where:{
