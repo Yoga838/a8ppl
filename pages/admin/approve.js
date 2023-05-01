@@ -127,13 +127,13 @@ export default function approve({}) {
     e.preventDefault(); // prevent form from submitting normally
     const cookie = nookies.get('token');
     const cookies = cookie.token;
-
     const send = {
         name:data2.name,
         email:data2.email,
         password:data2.password,
         id:accid
-    }
+      }
+      console.log(send)
   
     const config = {
         headers :{
@@ -175,7 +175,7 @@ const success = () => {
 const notsuccess = () => {
   setTampil(false)
 }
-console.log(accid)
+
   return (
     <div>
     <meta charSet="UTF-8" />
