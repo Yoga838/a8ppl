@@ -14,7 +14,7 @@ export default async function handler(req, res){
         const visitor = await prisma.Visitor.findUnique({ where: { email } });
         const mitra = await prisma.Mitra.findUnique({ where: { email } });
         const admin = await prisma.Admin.findUnique({ where: { email } });
-        const reject = await prisma.rejected.findUnique({ where: { email } });
+        const reject = await prisma.rejected.findFirst({ where: { email } });
         
 
         if (!visitor&&!mitra&&!admin&&!reject) {
