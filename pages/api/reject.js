@@ -8,7 +8,7 @@ export default authMiddleware(async function handler(req,res){
         if (!name||!email||!password){
             return res.status(400).json({message: 'form kurang lengkap'})
         }
-        const Reject = await prisma.rejected.create({
+        const Reject = await prisma.Rejected.create({
             data:{
                 name,
                 email,
