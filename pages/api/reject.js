@@ -20,7 +20,7 @@ export default authMiddleware(async function handler(req,res){
         //         id
         //     }
         // })
-        return res.status(200).send({message:"berhasil di reject"})
+        return res.status(200).send({Rejected})
 
         
     }
