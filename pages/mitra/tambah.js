@@ -7,6 +7,43 @@ import nookies from 'nookies'
 import axios from 'axios';
 import Router from 'next/router';
 
+export async function getServerSideProps(ctx){
+  const cookies = nookies.get(ctx)
+
+  if(!cookies.role){
+    return{
+      redirect:{
+        destination : '/'
+    }
+    }
+  }
+    else if(cookies.role == 'admin'){
+      return{
+        redirect:{
+          destination : '/admin'
+        }
+      }
+    }
+    else if(cookies.role == 'visitor'){
+      return{
+        redirect:{
+          destination : '/visitor'
+        }
+      }
+    }
+    else if(cookies.role == 'pegawai'){
+      return{
+        redirect:{
+          destination : '/pegawai'
+        }
+      }
+    }
+  
+  return{
+    props: {}
+  }
+}
+
 export default function tambah() {
     function logout(){
         nookies.destroy(null,'token');

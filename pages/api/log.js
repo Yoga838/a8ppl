@@ -18,7 +18,7 @@ export default async function handler(req, res){
         const reject = await prisma.rejected.findFirst({ where: { email } });
         
 
-        if (!visitor&&!mitra&&!admin&&!reject) {
+        if (!visitor&&!mitra&&!admin&&!reject&&!pegawai) {
             return res.status(401).json({ message: 'Email atau password yang anda masukkan salah!' });
         }
         
@@ -38,6 +38,15 @@ export default async function handler(req, res){
             }
             const user = "admin";
             const token = sign({ userId: admin.id }, JWT_SECRET, { expiresIn: '7d' });
+            return res.status(200).json({ token,user });
+        }
+        if (pegawai){
+            const passwordMatch = await compare(password, pegawai.password);
+            if (!passwordMatch) {
+                return res.status(401).json({ message: 'Password yang anda masukkan salah!' });
+            }
+            const user = "pegawai";
+            const token = sign({ userId: pegawai.id }, JWT_SECRET, { expiresIn: '7d' });
             return res.status(200).json({ token,user });
         }
         if (mitra){

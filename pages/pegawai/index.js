@@ -31,20 +31,20 @@ export async function getServerSideProps(ctx){
         }
       }
     }
-    else if(cookies.role == 'pegawai'){
-      return{
-        redirect:{
-          destination : '/pegawai'
+    else if(cookies.role == 'visitor'){
+        return{
+          redirect:{
+            destination : '/visitor'
+          }
         }
       }
-    }
   
   return{
     props: {}
   }
 }
 
-export default function visitor_page() {
+export default function user_page() {
 
   const [data,setdata] = useState([]);
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function visitor_page() {
       'Authorization': `Bearer ${cookies}`,
       'Content-Type': 'application/json',
     };
-    axios.get('/api/getuser' ,{headers} )
+    axios.get('/api/getpegawai' ,{headers} )
       .then(response => {
         setdata(response.data);
       })
@@ -86,33 +86,20 @@ export default function visitor_page() {
         </nav>
         <div className="content">
           <div className="row">
-            <div className="sidebar-left content1 bg-color-yellow col-md-4 pt-5 pb-5 d-flex flex-column align-items-center gap-2">
+            <div className="sidebar-left bg-color-yellow col-md-4 pt-5 pb-5 d-flex flex-column align-items-center gap-2">
             <div className='content2  d-flex flex-column align-items-center gap-2'>
-              <div className="circle mt-5" />
+              <Link href='/pegawai/profil'><div className="circle mt-5" /></Link>
               <h4>{data.name}</h4>
               <div className="button-item d-flex pb-2 flex-column align-items-center gap-4">
-                <Link href='/visitor'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Home</button></Link>
+                <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Home</button>
                 <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button>
                 <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Log Out</button>
               </div>
             </div>
             </div>
-            <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
-              <div className="circle mx-auto" />
-              <div className="data-wrap ms-5">
-                <p className="poppins">Nama Lengkap:</p>
-                <p className="poppins fw-bold">{data.name}</p>
-                <p className="poppins">No Telp:</p>
-                <p className="poppins fw-bold">{data.no}</p>
-                <p className="poppins">Alamat Lengkap:</p>
-                <p className="poppins fw-bold">{data.alamat}</p>
-                <p className="poppins">Email:</p>
-                <p className="poppins fw-bold">{data.email}</p>
-                <p className="poppins">password:</p>
-                <p className="poppins fw-bold">********************</p>
-              </div>
+            <div className="col-md-8 pe-5 content1 sidebar-right color-brown pt-5">
+              
             </div>
-            <Link href='/visitor/editprofil'><button className="poppins fw-bold button-edit bg-color-yellow btn btn-lg shadow rounded-pill">Edit Profil&nbsp;<img src="/images/button_icon_edit.png" alt="" /></button></Link>
           </div>
         </div>
         {tampil2 &&(  

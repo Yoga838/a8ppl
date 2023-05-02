@@ -32,6 +32,13 @@ export async function getServerSideProps(ctx){
         }
       }
     }
+    else if(cookies.role == 'pegawai'){
+      return{
+        redirect:{
+          destination : '/pegawai'
+        }
+      }
+    }
   
   return{
     props: {}

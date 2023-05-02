@@ -31,7 +31,15 @@ export async function getServerSideProps(ctx){
         }
       }
     }
+    else if(cookies.role == 'pegawai'){
+      return{
+        redirect:{
+          destination : '/pegawai'
+        }
+      }
+    }
   }
+  
   return{
     props: {}
   }
@@ -67,6 +75,9 @@ export default function login() {
       }
       else if(data.user == "mitra"){
         Router.push('/mitra')
+      }
+      else if(data.user == "pegawai"){
+        Router.push('/pegawai')
       }
       // Router.replace('/dashboard');
     }

@@ -31,10 +31,10 @@ export async function getServerSideProps(ctx){
         }
       }
     }
-    else if(cookies.role == 'pegawai'){
+    else if(cookies.role == 'visitor'){
       return{
         redirect:{
-          destination : '/pegawai'
+          destination : '/visitor'
         }
       }
     }
@@ -44,7 +44,7 @@ export async function getServerSideProps(ctx){
   }
 }
 
-export default function visitor_page() {
+export default function pegawai_page() {
 
   const [data,setdata] = useState([]);
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function visitor_page() {
       'Authorization': `Bearer ${cookies}`,
       'Content-Type': 'application/json',
     };
-    axios.get('/api/getuser' ,{headers} )
+    axios.get('/api/getpegawai' ,{headers} )
       .then(response => {
         setdata(response.data);
       })
@@ -88,21 +88,20 @@ export default function visitor_page() {
   }
     const final_name = name !== ''? name : data?.name || ''
     const final_no = no !== ''? no : data?.no || ''
-    const final_alamat = alamat !== ''? alamat : data?.alamat || ''
     const final_email = email !== ''? email : data?.email || ''
 
     const [pesan,setPesan] = useState('')
-    const updateuser = async (e) => {
+    const updatepegawai = async (e) => {
         const cookie = nookies.get('token');
         const cookies = cookie.token;
         e.preventDefault(); // prevent form from submitting normally
-        const res = await fetch('/api/edituser', {
+        const res = await fetch('/api/editpegawai', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${cookies}`,
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ email:final_email, name:final_name, password,no:final_no ,alamat:final_alamat})
+          body: JSON.stringify({ email:final_email, name:final_name, password,no:final_no })
         });
         
         const data = await res.json();
@@ -113,13 +112,13 @@ export default function visitor_page() {
     const [tampil,setTampil] = useState(false)
     const success = () => {
       setTampil(false)
-      Router.replace('/visitor');
+      Router.replace('/pegawai');
     }
     const notsuccess = () => {
       setTampil(false)
     }
     function batal(){
-      Router.replace('/mitra')
+      Router.replace('/pegawai')
   }
 
 
@@ -155,10 +154,6 @@ export default function visitor_page() {
               <input className="rounded-pill border-0 p-1 ps-2" type="text" value={final_no} onChange={(e) => setNo(e.target.value)} onFocus={handleInputFocus}/>
             </div>
             <div className="inp d-flex flex-column gap-1">
-              <label className="poppins" htmlFor>Alamat Lengkap</label>
-              <input className="rounded-pill border-0 p-1 ps-2" type="text" value={final_alamat} onChange={(e) => setAlamat(e.target.value)} onFocus={handleInputFocus}/>
-            </div>
-            <div className="inp d-flex flex-column gap-1">
               <label className="poppins" htmlFor>Email</label>
               <input className="rounded-pill border-0 p-1 ps-2" type="text" value={final_email} onChange={(e) => setEmail(e.target.value)} onFocus={handleInputFocus}/>
             </div>
@@ -168,7 +163,7 @@ export default function visitor_page() {
             </div>
             <div className="tombol d-flex justify-content-end gap-4 mt-5 me-5">
             <button onClick={batal} className="btn btn-lg rounded-pill poppins bg-color-red shadow text-white tombol-profil">batal</button>
-            <button onClick={updateuser} className="btn btn-lg rounded-pill poppins bg-color-green shadow text-white tombol-profil">simpan</button>
+            <button onClick={updatepegawai} className="btn btn-lg rounded-pill poppins bg-color-green shadow text-white tombol-profil">simpan</button>
           </div>
           </div>
             </div>
