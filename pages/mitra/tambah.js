@@ -80,7 +80,9 @@ export default function tambah() {
   const notsuccess = () => {
       setTampil(false)
     }
-
+  const batal = () => {
+    Router.push('/mitra/tambahpegawai')
+  }
   return (
     <div>
     <title>Tem.u</title>
@@ -102,7 +104,7 @@ export default function tambah() {
           <h4>{data.name}</h4>
           <div className="button-item d-flex pb-2 flex-column align-items-center gap-4">
           <Link href='/mitra'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Home</button></Link>
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow text-warning btn-lg">Pegawai</button>
+            <Link href='/mitra/tambahpegawai'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow text-warning btn-lg">Pegawai</button></Link>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Konfirmasi Pendistribusian</button>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Tracking</button>
             <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Log Out</button>
@@ -131,7 +133,7 @@ export default function tambah() {
             </div>
           </div>
           <div className="button-left d-flex justify-content-end gap-4 mb-4">
-            <button type="button" className="btn btn-admin bg-color-red poppins text-white shadow rounded-pill  btn-lg">Batal</button>
+            <button type="button" onClick={batal} className="btn btn-admin bg-color-red poppins text-white shadow rounded-pill  btn-lg">Batal</button>
             <button type="button" onClick={tambah} className="btn btn-admin bg-color-green poppins text-white shadow rounded-pill  btn-lg">Buat</button>
           </div>
         </div>

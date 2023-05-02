@@ -127,10 +127,10 @@ export default function visitor_page() {
           <div className="row">
             <div className="sidebar-left content1 bg-color-yellow col-md-4 pt-5 pb-5 d-flex flex-column align-items-center gap-2">
             <div className='content2  d-flex flex-column align-items-center gap-2'>
-             <Link href='/visitor'> <div className="circle mt-5" /></Link>
+             <Link href='/visitor/profil'> <div className="circle mt-5" /></Link>
               <h4>{data.name}</h4>
               <div className="button-item d-flex pb-2 flex-column align-items-center gap-4">
-                <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Home</button>
+              <Link href='/visitor'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Home</button></Link>
                 <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button>
                 <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Log Out</button>
               </div>

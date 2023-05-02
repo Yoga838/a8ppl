@@ -71,7 +71,41 @@ export default function profil() {
   const notpop = () => {
     setTampil2(false)
   } 
+
+  const [pesan,setPesan] = useState('')
+  const updateadmin = async (e) => {
+    
+    const cookie = nookies.get('token');
+    const cookies = cookie.token;
+    e.preventDefault(); // prevent form from submitting normally
+    const res = await fetch('/api/editadmin', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${cookies}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ deskripsi })
+    });
+    
+    const data = await res.json();
+    setPesan(data.message)
+    setTampil(true)
+    
+  }
+  const [deskripsi,setDeskripsi] = useState('')
+  const [tampil,setTampil] = useState(false)
   
+  function batal(){
+    Router.replace('/mitra/profil')
+  }
+  const success = () => {
+    setTampil(false)
+    Router.replace('/mitra/profil');
+  }
+  const notsuccess = () => {
+    setTampil(false)
+  }
+  console.log(deskripsi)
   return (
     <div>
     <meta charSet="UTF-8" />
@@ -87,7 +121,7 @@ export default function profil() {
     </nav>
     <div className="content">
       <div className="row">
-        <div className="sidebar-left content5 bg-color-yellow col-md-4 pt-5 d-flex flex-column align-items-center gap-2">
+        <div className="sidebar-left bg-color-yellow col-md-4 pt-5 d-flex flex-column align-items-center gap-2">
           <div className='content2 d-flex flex-column align-items-center gap-2'>
             <div className="circle mt-5" />
             <h4 >{data.name}</h4>
@@ -100,14 +134,42 @@ export default function profil() {
             </div>
           </div>
         </div>
-        <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
+        <div className="col-md-8 pe-5 content1 sidebar-right color-brown pt-5">
           <div className="circle mx-auto " />
           <h4 className="text-center">{data.name}</h4>
-          <p>   {data.deskripsi}</p>
+          <div className="content mt-4 ms-5">
+            <div className="inp d-flex flex-column gap-1">
+              <label className="poppins" htmlFor>Deskripsi baru</label>
+              <textarea rows='10' className='deskripsi p-3' col='30' value={deskripsi} onChange={(e) => setDeskripsi(e.target.value)}></textarea>
+            </div>
+          </div>
+          <div className="tombol d-flex justify-content-end gap-4 mt-4 me-5">
+            <button onClick={batal} className="btn btn-lg rounded-pill poppins bg-color-red shadow text-white tombol-profil">batal</button>
+            <button onClick={updateadmin} className="btn btn-lg rounded-pill poppins bg-color-green shadow text-white tombol-profil">simpan</button>
+          </div>
         </div>
-        <Link href='/admin/editprofil'><button className="poppins fw-bold button-edit bg-color-yellow btn btn-lg rounded-pill">Edit Profil&nbsp;<img src="/images/button_icon_edit.png" alt="" /></button></Link>
       </div>
     </div>
+    {tampil &&( pesan == "Data berhasil disimpan" ?(
+            <div className='status'>
+            <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+              <img src="/images/centang.png" alt="" />
+              <h1 className="poppins fw-bold text-dark">{pesan}</h1>
+              <button className="btn btn-lg btn-warning rounded-pill shadow text-white" onClick={success}>OK</button>
+            </div>
+        </div>
+          )
+          :(
+            <div className='status'>
+              <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+                <img src="/images/alert.png" alt="" />
+                <h1 className="poppins fw-bold text-dark">{pesan}</h1>
+                <button className="btn btn-lg btn-warning rounded-pill shadow text-white" onClick={notsuccess}>OK</button>
+              </div>
+            </div>
+          )      
+          )}
+    {/* logout */}
     {tampil2 &&(  
             <div className='status'>
               <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">

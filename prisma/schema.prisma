@@ -68,6 +68,7 @@ model Admin {
   name      String
   email     String   @unique
   password  String
+  deskripsi String? @default("Tem.U merupakan project adpl + ppl yang dikerjakan oleh kelompok a8 Teknologi Informasi")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   approval  aproval[]
