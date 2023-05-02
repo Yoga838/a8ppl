@@ -94,7 +94,7 @@ export default function editprofil() {
 
 
     function batal(){
-        Router.replace('/mitra')
+        Router.replace('/mitra/profil')
     }
     function logout(){
           nookies.destroy(null,'token');
@@ -105,7 +105,7 @@ export default function editprofil() {
     const [tampil2,setTampil2] = useState(false)
     const success = () => {
       setTampil(false)
-      Router.replace('/mitra');
+      Router.replace('/mitra/profil');
     }
     const pop = () => {
       setTampil2(true)
@@ -136,10 +136,10 @@ export default function editprofil() {
       <div className="row">
         <div className="sidebar-left content1 bg-color-yellow col-md-4  d-flex flex-column align-items-center gap-2">
         <div className='content2 d-flex flex-column align-items-center gap-2'>
-          <Link href='/mitra'><div className="circle mt-4"/></Link>
+          <Link href='/mitra/profil'><div className="circle mt-4"/></Link>
           <h4>{data.name}</h4>
           <div className="button-item d-flex flex-column align-items-center gap-4">
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Home</button>
+            <Link href='/mitra'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Home</button></Link>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Pegawai</button>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Tracking</button>
