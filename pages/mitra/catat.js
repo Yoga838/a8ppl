@@ -47,7 +47,7 @@ export async function getServerSideProps(ctx){
 
 
 
-export default function tambahpegawai() {
+export default function Pencatatan() {
   function logout(){
     nookies.destroy(null,'token');
     nookies.destroy(null,'role');
@@ -97,7 +97,7 @@ const [data2,setdata2] = useState([]);
         <h2 className="ms-3 mt-3 fw-bold poppins text-color-yellow">Tem.u</h2>
         <div className="tombol d-flex gap-4 align-items-center">
           <Link href='/mitra/cuaca'><button className="poppins tombol-nav btn bg-color-yellow rounded-pill  shadow text-dark"  role="button">Cuaca</button></Link>
-          <Link href='/mitra/pencatatan'><button className="poppins tombol-nav btn bg-color-yellow rounded-pill  shadow text-dark"  role="button">Pencatatan</button></Link>
+          <Link href='/mitra/pencatatan'><button className="poppins tombol-nav btn bg-color-yellow rounded-pill  shadow text-white"  role="button">Pencatatan</button></Link>
         </div>
       </div>
     </nav>
@@ -117,23 +117,15 @@ const [data2,setdata2] = useState([]);
         </div>
         </div>
         <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
-          <div className="d-flex justify-content-end me-4">
-            <Link href='/mitra/tambah'><button className="btn btn-lg bg-color-green shadow rounded-pill ">Pegawai &nbsp;<img src="/images/plus.png" alt="" /></button></Link>
-          </div>
-          <h1 className="poppins fw-bold text-center">Daftar Pegawai</h1>
-          <div className="d-flex flex-column gap-4 align-items-center">
-            {/* content for loop entar     */}
-            {data2.map((dat,index) =>(
-            <div key={dat.id} className=" column-name-pgw d-flex justify-content-between shadow align-items-center  bg-color-yellow rounded-pill poppins fw-bold" onClick={(e) => {
-              e.stopPropagation();
-              handleButtonClick(dat)
-            }}>
-              <p>{dat.name}</p>
-              <img src="/images/worker.png" alt="" />
+          <h1 className="poppins fw-bold text-center">Tambah Data Pencatatan</h1>
+          <div className="inputan-pencatatn pe-5 pt-4 ">
+            <div className="input d-flex flex-column mb-4">
+              <label className="ms-3  pb-1 poppins">Nama Lengkap</label>
+              <input className="rounded-pill p-1 ps-3" type="text" placeholder="Masukkan nama lengkap pegawai baru anda" id />
             </div>
-            ))}
-            {/* end content for loop entar*/}
           </div>
+          
+          
         </div>
       </div>
     </div>

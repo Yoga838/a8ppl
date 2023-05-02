@@ -213,7 +213,7 @@ export default function cuaca() {
                 <h2 className="ms-3 mt-3 fw-bold poppins text-color-yellow">Tem.u</h2>
                 <div className="tombol d-flex gap-4 align-items-center">
                   <button className="poppins tombol-nav btn bg-color-yellow rounded-pill  shadow text-white"  role="button">Cuaca</button>
-                  <button className="poppins tombol-nav btn bg-color-yellow rounded-pill  shadow text-dark"  role="button">Pencatatan</button>
+                  <Link href='/mitra/pencatatan'><button className="poppins tombol-nav btn bg-color-yellow rounded-pill  shadow text-dark"  role="button">Pencatatan</button></Link>
                 </div>
               </div>
           </nav>
