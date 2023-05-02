@@ -15,7 +15,8 @@ export default authMiddleware(async function handler(req,res){
         }
         const approve = await prisma.aproval.create({
             data: {
-                accid:id
+                accid:id,
+                diacc_oleh:userId
             }
         });
         return res.status(200).json({message: "berhasil disetujui"})

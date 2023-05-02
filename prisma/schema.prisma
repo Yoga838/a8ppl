@@ -44,16 +44,21 @@ model pegawai {
   updatedAt DateTime @updatedAt
 }
 model aproval {
-  id    Int   @id @default(autoincrement())
-  accid Int
-  acc   Mitra @relation(fields: [accid], references: [id])
+  id            Int   @id @default(autoincrement())
+  accid         Int
+  acc           Mitra @relation(fields: [accid], references: [id])
+  diacc_oleh    Int
+  admin         Admin @relation(fields: [diacc_oleh], references: [id])
 }
 model Rejected {
-  id        Int       @id @default(autoincrement())
-  name      String
-  email     String    
-  password  String
-  createdAt DateTime  @default(now())
+  id            Int       @id @default(autoincrement())
+  name          String
+  email         String    
+  password      String
+  createdAt     DateTime  @default(now())
+  rejected_oleh Int
+  reject        Admin @relation(fields: [rejected_oleh], references: [id]) 
+
 }
 
 
@@ -65,4 +70,6 @@ model Admin {
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  approval  aproval[]
+  rejected  Rejected[]
 }

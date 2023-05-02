@@ -12,7 +12,8 @@ export default authMiddleware(async function handler(req,res){
             data:{
                 name,
                 email,
-                password
+                password,
+                rejected_oleh:userId
             }
         })
         const mitra = await prisma.mitra.delete({
