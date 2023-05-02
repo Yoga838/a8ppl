@@ -13,15 +13,15 @@ export default authMiddleware(async function handler(req,res){
         const emailauthentic2 =  await prisma.visitor.findUnique({ where: {email}});
         const emailauthentic = await prisma.mitra.findUnique({ where: {email}});
         const emailauthentic3 = await prisma.admin.findUnique({ where: {email}});
-        const emailauthentic4 = await prisma.pegawai.findUnique({ where: {email}});
-        if( emailauthentic2 || emailauthentic3|| emailauthentic4){
+        const emailauthentic4 = await prisma.pegawai.findUnique({where:{email}})
+        if( emailauthentic4 || emailauthentic3 || emailauthentic){
             return res.status(400).json({message: 'email yang anda pakai telah terdaftar!'})
         }
-        if (emailauthentic.id != userId){
+        if (emailauthentic2.id != userId){
             return res.status(400).json({message: 'email yang anda pakai telah terdaftar!'})
         }
         const hashedPassword = await hash(password, 10);
-        const MitraUpdate = await prisma.mitra.update({
+        const userupdate = await prisma.visitor.update({
             where:{id:userId},
             data: {
                 name,

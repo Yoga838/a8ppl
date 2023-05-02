@@ -94,8 +94,8 @@ export default function profil() {
             <div className="button-item d-flex flex-column align-items-center gap-4">
               <Link href='/admin'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Pengajuan
                 Akun</button></Link>
-              <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Pengajuan
-                Premium</button>
+              <Link href='/admin/premium'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Pengajuan
+                Premium</button></Link>
               <button type="button" onClick={pop} className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Keluar</button>
             </div>
           </div>

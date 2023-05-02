@@ -45,7 +45,7 @@ export async function getServerSideProps(ctx){
 export default function pengajuan() {
 
     const [data,setdata] = useState([]);
-    const [data2,setdata2] = useState([]);
+    // const [data2,setdata2] = useState([]);
   useEffect(() => {
     const cookie = nookies.get('token');
     const cookies = cookie.token;
@@ -62,13 +62,13 @@ export default function pengajuan() {
         console.log(error);
       });
 
-    axios.get('/api/approval' ,{headers} )
-      .then(response => {
-        setdata2(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    // axios.get('/api/approval' ,{headers} )
+    //   .then(response => {
+    //     setdata2(response.data);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
 
   }, []);
   function logout(){
@@ -117,20 +117,20 @@ const notpop = () => {
           <Link href='/admin/profil'><div className="circle mt-5" /></Link>
           <h4>{data.name}</h4>
           <div className="button-item d-flex flex-column align-items-center gap-4">
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow text-warning  btn-lg">Pengajuan
-              Akun</button>
-            <Link href='/admin/premium'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Pengajuan
+            <Link href='/admin'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Pengajuan
+              Akun</button></Link>
+            <Link href='/admin/premium'><button type="button" className="btn btn-admin btn-light poppins text-warning rounded-pill shadow  btn-lg">Pengajuan
               Premium</button></Link>
             <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Keluar</button>
           </div>
           </div>
         </div>
         <div className="col-md-8 pe-5 sidebar-right color-brown pt-5 pb-5">
-          <h1 className="poppins fw-bold  text-center">Pengajuan Akun Mitra</h1>
+          <h1 className="poppins fw-bold  text-center">Pengajuan Member Premium</h1>
           <div className="d-flex flex-column gap-4">
             {/* content for loop entar     */}
 
-            {data2.map((dat,index) =>(
+            {/* {data2.map((dat,index) =>(
               
             <div key={dat.id} className=" column-name shadow d-flex justify-content-between align-items-center  bg-color-yellow rounded-pill poppins fw-bold" onClick={(e) => {
               e.stopPropagation();
@@ -140,7 +140,7 @@ const notpop = () => {
              <img src="/images/icon-pengajuan-akun.png" alt="" />
             </div>
             
-            ))}
+            ))} */}
 
           
             {/* end content for loop entar*/}

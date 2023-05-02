@@ -14,6 +14,7 @@ export default async function handler(req, res){
         const visitor = await prisma.Visitor.findUnique({ where: { email } });
         const mitra = await prisma.Mitra.findUnique({ where: { email } });
         const admin = await prisma.Admin.findUnique({ where: { email } });
+        const pegawai = await prisma.pegawai.findUnique({ where: {email}})
         const reject = await prisma.rejected.findFirst({ where: { email } });
         
 
@@ -59,7 +60,7 @@ export default async function handler(req, res){
             }
             // const user = "admin";
             // const token = sign({ userId: admin.id }, JWT_SECRET, { expiresIn: '7d' });
-            return res.status(200).json({ message:"Akun anda ditolak oleh admin! silahkan coba lagi" });
+            return res.status(200).json({ message:"Pengajuan anda di tolak, coba lagi!" });
         }
 }
 }

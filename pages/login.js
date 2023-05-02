@@ -84,6 +84,9 @@ export default function login() {
   const notpop = () => {
     setTampil2(false)
   } 
+  const route = () => {
+    Router.push("mitra_regist")
+  }
 
   return (
     <div>
@@ -114,12 +117,21 @@ export default function login() {
             </div>
           </div>
         </div>
-        {tampil2 &&(pesan != ''&&(
+        {tampil2 &&(pesan != 'Pengajuan anda di tolak, coba lagi!'?(
             <div className='status'>
               <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
                 <img src="/images/alert.png" alt="" />
                 <h1 className="poppins fw-bold text-dark text-center">{pesan}</h1>
                 <button className="btn shadow set btn-warning rounded-pill text-white" onClick={notpop}>OK</button>
+              </div>
+            </div>
+        ):
+        (
+          <div className='status'>
+              <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+                <img src="/images/alert.png" alt="" />
+                <h1 className="poppins fw-bold text-dark text-center">{pesan}</h1>
+                <button className="btn shadow set btn-warning rounded-pill text-white" onClick={route}>OK</button>
               </div>
             </div>
         )

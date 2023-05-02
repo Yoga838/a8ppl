@@ -13,6 +13,7 @@ export default async function handler(req,res){
         const emailauthentic =  await prisma.visitor.findUnique({ where: {email}});
         const emailauthentic2 = await prisma.mitra.findUnique({ where: {email}});
         const emailauthentic3 = await prisma.admin.findUnique({ where: {email}});
+        const emailauthentic4 = await prisma.pegawai.findUnique({ where: {email}})
         if(emailauthentic || emailauthentic2 || emailauthentic3){
             return res.status(400).json({message: 'Data anda sudah terdaftar Coba lagi!'})
         }
@@ -36,7 +37,8 @@ export default async function handler(req,res){
         const emailauthentic =  await prisma.visitor.findUnique({ where: {email}});
         const emailauthentic2 = await prisma.mitra.findUnique({ where: {email}});
         const emailauthentic3 = await prisma.admin.findUnique({ where: {email}});
-        if(emailauthentic || emailauthentic2 || emailauthentic3){
+        const emailauthentic4 = await prisma.pegawai.findUnique({ where:{email}})
+        if(emailauthentic || emailauthentic2 || emailauthentic3 || emailauthentic4){
             return res.status(400).json({message: 'Data anda sudah terdaftar Coba lagi!'})
         }
         const hashedPassword = await hash(password, 10);

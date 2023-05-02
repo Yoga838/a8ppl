@@ -27,7 +27,7 @@ export default authMiddleware(async function handler(req,res){
             }
             
         })
-        return res.status(200).json({message: "Data Berhasil disimpan"})
+        return res.status(200).json({message: "Dokumen berhasil dibuat"})
     }
     if (req.method === "GET"){
         const userId = req.user.userId;
