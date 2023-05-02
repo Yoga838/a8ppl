@@ -137,7 +137,7 @@ export default function tambah() {
         </div>
       </div>
     </div>
-    {tampil &&( pesan == "Dokumen berhasil dibuat" ?(
+    {tampil &&( pesan == "Data berhasil dibuat" ?(
             <div className='status'>
             <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
               <img src="/images/centang.png" alt="" />
