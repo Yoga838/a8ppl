@@ -139,7 +139,7 @@ export default function visitor_page() {
               <div className="button-item d-flex pb-2 flex-column align-items-center gap-4">
               <Link href='/visitor'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Home</button></Link>
                 <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button>
-                <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Log Out</button>
+                <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Keluars</button>
               </div>
             </div>
             </div>
