@@ -103,11 +103,11 @@ export default function profil() {
   const [tampil,setTampil] = useState(false)
   
   function batal(){
-    Router.replace('/mitra/profil')
+    Router.replace('/admin/profil')
   }
   const success = () => {
     setTampil(false)
-    Router.replace('/mitra/profil');
+    Router.replace('/admin/profil');
   }
   const notsuccess = () => {
     setTampil(false)
