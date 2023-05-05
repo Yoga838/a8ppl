@@ -118,11 +118,35 @@ const [data2,setdata2] = useState([]);
         </div>
         <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
           <h1 className="poppins fw-bold text-center">Tambah Data Pencatatan</h1>
-          <div className="inputan-pencatatn pe-5 pt-4 ">
-            <div className="input d-flex flex-column mb-4">
-              <label className="ms-3  pb-1 poppins">Nama Lengkap</label>
-              <input className="rounded-pill p-1 ps-3" type="text" placeholder="Masukkan nama lengkap pegawai baru anda" id />
+          <div className="inputan-pencatatan pe-5 pt-4 ">
+            <div className="input d-flex flex-column">
+              <label className="ms-3  pb-1 poppins">Nama Pencatatan</label>
+              <input className="rounded-pill p-1 ps-3" type="text" placeholder="Masukkan nama pencatatan anda, contoh: Januari 2023"  />
             </div>
+            <div className="input d-flex flex-column">
+              <label className="ms-3  pb-1 poppins">Tanggal</label>
+              <input className="rounded-pill p-1 ps-3" type="date" placeholder="Masukkan nama lengkap pegawai baru anda" id />
+            </div>
+            <div className="input d-flex flex-column">
+              <label className="ms-3  pb-1 poppins">Keterangan</label>
+              <input className="rounded-pill p-1 ps-3" type="text" placeholder="Masukkan keterangan pencatatan anda, contoh: biaya listrik"  />
+            </div>
+            <div className="input d-flex flex-column">
+              <label className="ms-3  pb-1 poppins">Pemasukan</label>
+              <input className="rounded-pill p-1 ps-3" type="number" placeholder="Masukkan pemasukan anda, contoh: 500000000"  />
+            </div>
+            <div className="input d-flex flex-column">
+              <label className="ms-3  pb-1 poppins">Pengeluaran</label>
+              <input className="rounded-pill p-1 ps-3" type="number" placeholder="Masukkan Pengeluaran anda, contoh: 30000000"  />
+            </div>
+            <div className="input d-flex flex-column">
+              <label className="ms-3  pb-1 poppins">Saldo</label>
+              <input className="rounded-pill p-1 ps-3" type="number" placeholder="Masukkan saldo anda, contoh: 1500000000"  />
+            </div>
+          </div>
+          <div className="button-left d-flex justify-content-end gap-4 mb-4">
+            <button type="button"  className="btn btn-admin bg-color-red poppins text-white shadow rounded-pill  btn-lg">Batal</button>
+            <button type="button"  className="btn btn-admin bg-color-green poppins text-white shadow rounded-pill  btn-lg">Buat</button>
           </div>
           
           
