@@ -107,7 +107,7 @@ export default function profil() {
             </div>
           </div>
         </div>
-        <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
+        <div className="col-md-8 pe-5 content1 sidebar-right color-brown pt-5">
           <div className="circle mx-auto " />
           <h4 className="text-center">{data.name}</h4>
           <p>   {data.deskripsi}</p>

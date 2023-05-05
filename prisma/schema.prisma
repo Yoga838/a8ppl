@@ -31,6 +31,7 @@ model Mitra {
   updatedAt DateTime  @updatedAt
   aproval   aproval[]
   pegawai   pegawai[]
+  pencatatan pencatatan[]
 }
 model pegawai {
   id        Int      @id @default(autoincrement())
@@ -73,4 +74,15 @@ model Admin {
   updatedAt DateTime @updatedAt
   approval  aproval[]
   rejected  Rejected[]
+}
+
+model pencatatan {
+  id          Int   @id @default(autoincrement())
+  tanggal     DateTime
+  keterangan  String
+  pemasukan   Int
+  pengeluaran Int
+  saldo       Int
+  milik       Int
+  pemilik     Mitra @relation(fields: [milik], references: [id])
 }
