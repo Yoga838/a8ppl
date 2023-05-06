@@ -1,15 +1,16 @@
 class MenuPegawai{
-  constructor(query){
-    this.query=query
+  constructor(payload,cookies){
+    this.payload = payload;
+    this.cookies = cookies;
 }
-    async sendData(payload,cookies){
+    async sendData(){
         const response = await fetch("/api/addpegawai",{
             method: 'POST',
             headers: {
-              'Authorization': `Bearer ${cookies}`,
+              'Authorization': `Bearer ${this.cookies}`,
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(this.payload)
           })
         const data = await response.json();
 

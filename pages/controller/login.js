@@ -1,12 +1,12 @@
 class Login {
-    constructor(query){
-        this.query=query
+    constructor(payload){
+        this.payload=payload
     }
-    async cekEmailPassword(payload){
+    async cekEmailPassword(){
         const response = await fetch("/api/log",{
             method: "POST",
             headers:{"Content-Type" : "application/json"},
-            body: JSON.stringify(payload)
+            body: JSON.stringify(this.payload)
         })
         const data = await response.json();
        

@@ -57,11 +57,11 @@ export default function login() {
   const dologin = async (e) => {
     e.preventDefault(); // prevent form from submitting normally
     //take method from controller
-    const login = new Login();
-    const data = await login.cekEmailPassword({
+    const login = new Login({
       email,
       password
-    })
+    });
+    const data = await login.cekEmailPassword()
     //set cookies to save data and set the route and set pop up 
     if(data.token){
       nookies.set(null,'token',data.token);

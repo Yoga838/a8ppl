@@ -93,8 +93,8 @@ export default function tambah() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const isValidEmail = emailRegex.test(email);
     if(isValidPhoneNumber && isValidEmail){
-      const Daftar = new MenuPegawai()
-      const data = await Daftar.sendData({name,no,email,password},cookies)
+      const Daftar = new MenuPegawai({name,no,email,password},cookies)
+      const data = await Daftar.sendData()
       setPesan(data.message)
       setTampil(true)
     }
