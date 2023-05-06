@@ -25,8 +25,8 @@ try {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const isValidEmail = emailRegex.test(email); 
   if(isValidEmail && isValidPhoneNumber ){
-    const Daftar = new SignUpUser();
-    const data = await Daftar.CekEmail({ email, name, password,alamat,no })
+    const Daftar = new SignUpUser({ email, name, password,alamat,no });
+    const data = await Daftar.CekEmail()
     setPesan(data.message)
     pop()
   }

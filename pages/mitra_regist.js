@@ -30,8 +30,8 @@ try {
   const urlRegex = new RegExp(/^((http|https):\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/);
   const isValidLink = urlRegex.test(usaha,pribadi)
   if(isValidEmail && isValidPhoneNumber && isValidLink){
-    const Daftar = new SignUpMitra();
-    const data = await Daftar.CekEmail({ email, name, password,no ,alamat,usaha,pribadi})
+    const Daftar = new SignUpMitra({ email, name, password,no ,alamat,usaha,pribadi});
+    const data = await Daftar.CekEmail()
     setPesan(data.message)
     pop()
 }
