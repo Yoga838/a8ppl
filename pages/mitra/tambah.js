@@ -102,12 +102,22 @@ export default function tambah() {
     },
     body: JSON.stringify(send)
 };
+
+    const phoneNumberRegex = /^(\+62|62|0)[2-9][0-9]{9,10}$/;
+    const isValidPhoneNumber = phoneNumberRegex.test(no);
+    if(isValidPhoneNumber){
       const res = await fetch('/api/addpegawai' ,config )
       const data = await res.json()
       setPesan(data.message)
       setTampil(true)
+    }
+    else{
+      alert("format nomor anda tidak sesuai")
+    }
 
-      // router.replace('/mitra/tambahpegawai') 
+     
+
+  
   }
   const [tampil,setTampil] = useState(false)
   const success = () => {
