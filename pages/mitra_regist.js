@@ -35,7 +35,7 @@ try {
     setPesan(data.message)
     pop()
 }
-else if(isValidEmail){
+else if(!isValidEmail){
   alert("format email anda tidak sesuai")
 }
 else if(!isValidLink){
