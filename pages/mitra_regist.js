@@ -4,6 +4,7 @@ import Link from 'next/link'
 import React from 'react'
 import { useState } from 'react';
 import Router from 'next/router';
+import SignUpMitra from './controller/SignUpMitra'
 
 
 export default function mitra_regist() {
@@ -22,18 +23,27 @@ const [pesan, setPesan] = useState('');
 const doregister = async (e) => {
   e.preventDefault(); // prevent form from submitting normally
 try {
-  const res = await fetch('/api/registration', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ email, name, password,no ,alamat,usaha,pribadi})
-  });
-  
-  const data = await res.json();
-  console.log(data);
-  setPesan(data.message)
-  pop()
+  const phoneNumberRegex = /^(\+62|62|0)[2-9][0-9]{9,10}$/;
+  const isValidPhoneNumber = phoneNumberRegex.test(no);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const isValidEmail = emailRegex.test(email); 
+  const urlRegex = new RegExp(/^((http|https):\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/);
+  const isValidLink = urlRegex.test(usaha,pribadi)
+  if(isValidEmail && isValidPhoneNumber && isValidLink){
+    const Daftar = new SignUpMitra();
+    const data = await Daftar.CekEmail({ email, name, password,no ,alamat,usaha,pribadi})
+    setPesan(data.message)
+    pop()
+}
+else if(isValidEmail){
+  alert("format email anda tidak sesuai")
+}
+else if(!isValidLink){
+  alert("format link tidak sesuai")
+}
+else{
+  alert("format nomor telepon anda tidak sesuai")
+}
   
   
 } catch (error) {

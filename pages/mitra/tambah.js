@@ -6,6 +6,7 @@ import { useState,useEffect } from 'react';
 import nookies from 'nookies'
 import axios from 'axios';
 import Router from 'next/router';
+import MenuPegawai from '../controller/MenuPegawai'
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -87,30 +88,13 @@ export default function tambah() {
     const cookie = nookies.get('token');
     const cookies = cookie.token;
 
-    const send = {
-      name,
-      no,
-      email,
-      password
-    }
-  
-    const config = {
-      method : "POST",
-        headers :{
-      'Authorization': `Bearer ${cookies}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(send)
-};
-
     const phoneNumberRegex = /^(\+62|62|0)[2-9][0-9]{9,10}$/;
     const isValidPhoneNumber = phoneNumberRegex.test(no);
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const isValidEmail = emailRegex.test(email);
-
     if(isValidPhoneNumber && isValidEmail){
-      const res = await fetch('/api/addpegawai' ,config )
-      const data = await res.json()
+      const Daftar = new MenuPegawai()
+      const data = await Daftar.sendData({name,no,email,password},cookies)
       setPesan(data.message)
       setTampil(true)
     }

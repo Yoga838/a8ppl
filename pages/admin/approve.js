@@ -225,7 +225,7 @@ const notsuccess = () => {
               <p>{data2.email}</p>
               <p>Password</p>
               <p>{data2.password}</p>
-              <p>Link Foto Peruasahaan</p>
+              <p>Link Foto Perusahaan</p>
               <p>{data2.usaha}</p>
               <p>Link Foto Pribadi</p>
               <p>{data2.pribadi}</p>

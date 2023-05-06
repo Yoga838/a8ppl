@@ -1,9 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react'
 import Link from 'next/link'
 import nookies from 'nookies'
 import Router from 'next/router'
 import { useState } from 'react'
+import Login from './controller/login'
 
 
 export async function getServerSideProps(ctx){
@@ -54,16 +56,13 @@ export default function login() {
 
   const dologin = async (e) => {
     e.preventDefault(); // prevent form from submitting normally
-    const res = await fetch('/api/log', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email,  password })
-    });
-    
-    const data = await res.json();
-
+    //take method from controller
+    const login = new Login();
+    const data = await login.cekEmailPassword({
+      email,
+      password
+    })
+    //set cookies to save data and set the route and set pop up 
     if(data.token){
       nookies.set(null,'token',data.token);
       nookies.set(null,'role',data.user)
@@ -79,12 +78,10 @@ export default function login() {
       else if(data.user == "pegawai"){
         Router.push('/pegawai')
       }
-      // Router.replace('/dashboard');
     }
     else{
       setPesan(data.message)
       pop()
-      // alert(data.message)
     }
 
   };  
@@ -113,6 +110,7 @@ export default function login() {
             <div className="col-md-12 ">
               <div className="rounded1 width-form mx-auto bg-light mt-login mb-login pt-5 ">    
                 <h1 className="poppins fw-bold text-color-yellow text-center">Tem.U</h1>
+                {/* handle on submit if submit or button masuk was click the function dologin will running */}
                 <form className="margin-input center  set-width" onSubmit={dologin} >
                   <div className="input-email ">
                     <label htmlFor="inputEmail" className="poppins form-label">Email</label>
@@ -128,6 +126,7 @@ export default function login() {
             </div>
           </div>
         </div>
+        {/* this is pop up condition (just run if input wrong or the account not approved) */}
         {tampil2 &&(pesan != 'Pengajuan anda di tolak, coba lagi!'?(
             <div className='status'>
               <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">

@@ -6,6 +6,7 @@ import { useEffect,useState } from 'react'
 import axios from 'axios'
 import Router from 'next/router'
 import Link from 'next/link'
+import profil from '../controller/profil'
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -50,18 +51,15 @@ export default function visitor_page() {
   useEffect(() => {
     const cookie = nookies.get('token');
     const cookies = cookie.token;
-  
-    const headers ={
-      'Authorization': `Bearer ${cookies}`,
-      'Content-Type': 'application/json',
-    };
-    axios.get('/api/getuser' ,{headers} )
-      .then(response => {
-        setdata(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    const role = nookies.get('role');
+    const job = role.role
+    async function getdata(){
+      const Get_Profile = new profil()
+      const dat = await Get_Profile.getDataAkun(job,cookies)
+      setdata(dat)
+    }
+    getdata()
+
   }, []);
 
   function logout(){

@@ -7,6 +7,7 @@ import { useEffect,useState } from 'react'
 import axios from 'axios'
 import Router from 'next/router'
 import Link from 'next/link'
+import profil from '../controller/profil'
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -46,24 +47,20 @@ export async function getServerSideProps(ctx){
 }
 
 
-export default function profil() {
+export default function Profil() {
   
   const [data,setdata] = useState([]);
   useEffect(() => {
     const cookie = nookies.get('token');
     const cookies = cookie.token;
-  
-    const headers ={
-      'Authorization': `Bearer ${cookies}`,
-      'Content-Type': 'application/json',
-    };
-    axios.get('/api/getadmin' ,{headers} )
-      .then(response => {
-        setdata(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    const role = nookies.get('role');
+    const job = role.role
+    async function getdata(){
+      const Get_Profile = new profil()
+      const dat = await Get_Profile.getDataAkun(job,cookies)
+      setdata(dat)
+      }
+      getdata()
   }, []);
 
   function logout(){
@@ -81,21 +78,20 @@ export default function profil() {
 
   const [pesan,setPesan] = useState('')
   const updateadmin = async (e) => {
+    e.preventDefault(); // prevent form from submitting normally
     
     const cookie = nookies.get('token');
     const cookies = cookie.token;
-    e.preventDefault(); // prevent form from submitting normally
-    const res = await fetch('/api/editadmin', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${cookies}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ deskripsi })
-    });
-    
-    const data = await res.json();
-    setPesan(data.message)
+    const role = nookies.get('role');
+    const job = role.role
+    if (deskripsi!= ''){
+    const edit = new profil();
+    const dat = await edit.UpdateDataAkun(cookies,{deskripsi},job)
+    setPesan(dat.message)
+    }
+    else{
+      alert('harap inputkan deskripsi terbaru')
+    }
     setTampil(true)
     
   }
@@ -112,7 +108,6 @@ export default function profil() {
   const notsuccess = () => {
     setTampil(false)
   }
-  console.log(deskripsi)
   return (
     <div>
     <meta charSet="UTF-8" />

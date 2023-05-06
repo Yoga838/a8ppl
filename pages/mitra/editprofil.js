@@ -6,6 +6,7 @@ import nookies from 'nookies'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Router from 'next/router'
+import profil from '../controller/profil'
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -47,23 +48,21 @@ export async function getServerSideProps(ctx){
 export default function editprofil() {
     const cookie = nookies.get('token');
     const cookies = cookie.token;
+    const role = nookies.get('role');  
+    const job = role.role
 
     const [data,setdata] = useState([]);
     useEffect(() => {
       const cookie = nookies.get('token');
       const cookies = cookie.token;
-    
-      const headers ={
-        'Authorization': `Bearer ${cookies}`,
-        'Content-Type': 'application/json',
-      };
-      axios.get('/api/getmitralog' ,{headers} )
-        .then(response => {
-          setdata(response.data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      const role = nookies.get('role');
+      const job = role.role
+      async function getdata(){
+        const Get_Profile = new profil()
+        const dat = await Get_Profile.getDataAkun(job,cookies)
+        setdata(dat)
+        }
+        getdata()
     }, []);
 
     const [name,setName] = useState('')
@@ -75,21 +74,24 @@ export default function editprofil() {
     const [pesan,setPesan] = useState('')
     const updatemitra = async (e) => {
         e.preventDefault(); // prevent form from submitting normally
-        const res = await fetch('/api/editmitra', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${cookies}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ email:final_email, name:final_name, password,no:final_no ,alamat:final_alamat})
-        });
-        
-        const data = await res.json();
-        setPesan(data.message)
-        setTampil(true)
-        
-  
-      }
+        const phoneNumberRegex = /^(\+62|62|0)[2-9][0-9]{9,10}$/;
+        const isValidPhoneNumber = phoneNumberRegex.test(final_no);
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const isValidEmail = emailRegex.test(final_email);
+        if(isValidEmail && isValidPhoneNumber){ 
+          const edit = new profil();
+          const dat = await edit.UpdateDataAkun(cookies,{ email:final_email, name:final_name, password,no:final_no ,alamat:final_alamat },job)
+          setPesan(dat.message)
+          setTampil(true)
+        }
+        else if (!isValidEmail){
+          alert("format email anda tidak sesuai")
+        }
+        else{
+          alert("format nomor telepon anda tidak sesuai")
+        }
+    
+    }
 
       function handleInputFocus(event) {
         event.target.setSelectionRange(0, event.target.value.length);

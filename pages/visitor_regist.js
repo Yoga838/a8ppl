@@ -4,6 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import { useState,useEffect } from 'react';
 import Router from 'next/router';
+import SignUpUser from './controller/SignUpUser';
 
 
 export default function visitor_regist() {
@@ -19,22 +20,26 @@ const [pesan, setPesan] = useState('')
 const doregister = async (e) => {
   e.preventDefault(); // prevent form from submitting normally
 try {
-  const res = await fetch('/api/registration', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ email, name, password,alamat,no })
-  });
-  
-  const data = await res.json();
-  // console.log(data);
-  setPesan(data.message)
-  pop()
-  // if (data.message == "berhasil dibuat"){
-  //   Router.push('/login');
-  // }
-  
+  const phoneNumberRegex = /^(\+62|62|0)[2-9][0-9]{9,10}$/;
+  const isValidPhoneNumber = phoneNumberRegex.test(no);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const isValidEmail = emailRegex.test(email); 
+  if(isValidEmail && isValidPhoneNumber ){
+    const Daftar = new SignUpUser();
+    const data = await Daftar.CekEmail({ email, name, password,alamat,no })
+    setPesan(data.message)
+    pop()
+  }
+  else if(!isValidEmail){
+    alert("format email anda tidak sesuai")
+  }
+  else if(!isValidLink){
+    alert("format link tidak sesuai")
+  }
+  else{
+    alert("format nomor telepon tidak sesuai")
+  }
+
 } catch (error) {
   console.log("error mas")
 
