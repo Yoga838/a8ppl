@@ -56,8 +56,8 @@ export default function Profil() {
     const role = nookies.get('role');
     const job = role.role
     async function getdata(){
-      const Get_Profile = new profil(job,cookies)
-      const dat = await Get_Profile.getDataAkun()
+      const Get_Profile = new profil()
+      const dat = await Get_Profile.getDataAkun(job,cookies)
       setdata(dat)
       }
       getdata()
@@ -85,8 +85,8 @@ export default function Profil() {
     const role = nookies.get('role');
     const job = role.role
     if (deskripsi!= ''){
-    const edit = new profil(cookies,{deskripsi},job);
-    const dat = await edit.UpdateDataAkun()
+    const edit = new profil();
+    const dat = await edit.UpdateDataAkun(cookies,{deskripsi},job)
     setPesan(dat.message)
     }
     else{

@@ -79,8 +79,8 @@ export default function editprofil() {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const isValidEmail = emailRegex.test(final_email);
         if(isValidEmail && isValidPhoneNumber){ 
-          const edit = new profil(cookies,{ email:final_email, name:final_name, password,no:final_no ,alamat:final_alamat },job);
-          const dat = await edit.UpdateDataAkun()
+          const edit = new profil();
+          const dat = await edit.UpdateDataAkun(cookies,{ email:final_email, name:final_name, password,no:final_no ,alamat:final_alamat },job)
           setPesan(dat.message)
           setTampil(true)
         }

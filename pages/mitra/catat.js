@@ -7,6 +7,7 @@ import nookies from 'nookies'
 import Router from 'next/router';
 import axios from 'axios'
 import profil from '../../controller/profil';
+import { sendError } from 'next/dist/server/api-utils';
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -71,12 +72,45 @@ const [data2,setdata2] = useState([]);
     const role = nookies.get('role');
     const job = role.role
     async function getdata(){
-      const Get_Profile = new profil(job,cookies)
-      const dat = await Get_Profile.getDataAkun()
+      const Get_Profile = new profil()
+      const dat = await Get_Profile.getDataAkun(job,cookies)
       setdata(dat)
     }
     getdata()
   }, []);
+
+  const [nama,setNama] = useState('')
+  const [tanggal,setTanggal] = useState('')
+  const [keterangan,setKeterangan] = useState('')
+  const [pemasukan,setPemasukan] = useState('')
+  const [pengeluaran,setPengeluaran] = useState('')
+  const [saldo,setSaldo] = useState('')
+  const cookie = nookies.get('token');
+  const cookies = cookie.token;
+  const role = nookies.get('role');
+  const job = role.role
+
+  async function data_kirim() {
+    const Pemasukan = parseInt(pemasukan);
+    const Pengeluaran = parseInt(pengeluaran);
+    const Saldo = parseInt(saldo);
+
+    const send = {
+      nama,tanggal,keterangan,pemasukan:Pemasukan,pengeluaran:Pengeluaran,saldo:Saldo
+    }
+    console.log(send)
+    
+    const response = await fetch("/api/catat",{
+      method: "POST",
+      headers:{
+        'Authorization': `Bearer ${cookies}`,
+        "Content-Type" : "application/json"},
+      body: JSON.stringify()
+    })
+    const data = await response.json(send);
+    
+    alert(data.message)
+  }
 
   return (
     <div>
@@ -111,32 +145,32 @@ const [data2,setdata2] = useState([]);
           <div className="inputan-pencatatan pe-5 pt-4 ">
             <div className="input d-flex flex-column">
               <label className="ms-3  pb-1 poppins">Nama Pencatatan</label>
-              <input className="rounded-pill p-1 ps-3" type="text" placeholder="Masukkan nama pencatatan anda, contoh: Januari 2023"  />
+              <input className="rounded-pill p-1 ps-3" value={nama} onChange={(e) => setNama(e.target.value)} type="text" placeholder="Masukkan nama pencatatan anda, contoh: Januari 2023"  />
             </div>
             <div className="input d-flex flex-column">
               <label className="ms-3  pb-1 poppins">Tanggal</label>
-              <input className="rounded-pill p-1 ps-3" type="date" placeholder="Masukkan nama lengkap pegawai baru anda" id />
+              <input className="rounded-pill p-1 ps-3" value={tanggal} onChange={(e) => setTanggal(e.target.value)} type="date" placeholder="Masukkan nama lengkap pegawai baru anda" id />
             </div>
             <div className="input d-flex flex-column">
               <label className="ms-3  pb-1 poppins">Keterangan</label>
-              <input className="rounded-pill p-1 ps-3" type="text" placeholder="Masukkan keterangan pencatatan anda, contoh: biaya listrik"  />
+              <input className="rounded-pill p-1 ps-3" value={keterangan} onChange={(e) => setKeterangan(e.target.value)} type="text" placeholder="Masukkan keterangan pencatatan anda, contoh: biaya listrik"  />
             </div>
             <div className="input d-flex flex-column">
               <label className="ms-3  pb-1 poppins">Pemasukan</label>
-              <input className="rounded-pill p-1 ps-3" type="number" placeholder="Masukkan pemasukan anda, contoh: 500000000"  />
+              <input className="rounded-pill p-1 ps-3" value={pemasukan} onChange={(e) => setPemasukan(e.target.value)} type="number" placeholder="Masukkan pemasukan anda, contoh: 500000000"  />
             </div>
             <div className="input d-flex flex-column">
               <label className="ms-3  pb-1 poppins">Pengeluaran</label>
-              <input className="rounded-pill p-1 ps-3" type="number" placeholder="Masukkan Pengeluaran anda, contoh: 30000000"  />
+              <input className="rounded-pill p-1 ps-3" value={pengeluaran} onChange={(e) => setPengeluaran(e.target.value)} type="number" placeholder="Masukkan Pengeluaran anda, contoh: 30000000"  />
             </div>
             <div className="input d-flex flex-column">
               <label className="ms-3  pb-1 poppins">Saldo</label>
-              <input className="rounded-pill p-1 ps-3" type="number" placeholder="Masukkan saldo anda, contoh: 1500000000"  />
+              <input className="rounded-pill p-1 ps-3" value={saldo} onChange={(e) => setSaldo(e.target.value)} type="number" placeholder="Masukkan saldo anda, contoh: 1500000000"  />
             </div>
           </div>
           <div className="button-left d-flex justify-content-end gap-4 mb-4">
             <button type="button"  className="btn btn-admin bg-color-red poppins text-white shadow rounded-pill  btn-lg">Batal</button>
-            <button type="button"  className="btn btn-admin bg-color-green poppins text-white shadow rounded-pill  btn-lg">Buat</button>
+            <button type="button" onClick={data_kirim} className="btn btn-admin bg-color-green poppins text-white shadow rounded-pill  btn-lg">Buat</button>
           </div>
           
           

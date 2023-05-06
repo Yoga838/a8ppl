@@ -55,8 +55,8 @@ export default function mitra_page() {
     const role = nookies.get('role');
     const job = role.role
     async function getdata(){
-      const Get_Profile = new profil(job,cookies)
-      const dat = await Get_Profile.getDataAkun()
+      const Get_Profile = new profil()
+      const dat = await Get_Profile.getDataAkun(job,cookies)
       setdata(dat)
     }
     getdata()
