@@ -6,7 +6,7 @@ import { useState,useEffect } from 'react';
 import nookies from 'nookies'
 import axios from 'axios';
 import Router from 'next/router';
-import MenuPegawai from '../../controller/MenuPegawai'
+import MenuPegawai from '../controller/MenuPegawai'
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -93,8 +93,8 @@ export default function tambah() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const isValidEmail = emailRegex.test(email);
     if(isValidPhoneNumber && isValidEmail){
-      const Daftar = new MenuPegawai({name,no,email,password},cookies)
-      const data = await Daftar.sendData()
+      const Daftar = new MenuPegawai()
+      const data = await Daftar.sendData({name,no,email,password},cookies)
       setPesan(data.message)
       setTampil(true)
     }
