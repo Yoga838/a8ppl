@@ -6,6 +6,7 @@ import { useState,useEffect } from 'react';
 import nookies from 'nookies'
 import Router from 'next/router';
 import axios from 'axios'
+import profil from '../controller/profil';
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -67,25 +68,22 @@ const [data2,setdata2] = useState([]);
   useEffect(() => {
     const cookie = nookies.get('token');
     const cookies = cookie.token;
+    const role = nookies.get('role');
+    const job = role.role
   
-    const headers ={
-      'Authorization': `Bearer ${cookies}`,
-      'Content-Type': 'application/json',
-    };
-    axios.get('/api/getmitralog' ,{headers} )
-      .then(response => {
-        setdata(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    axios.get('/api/addpegawai' ,{headers} )
-      .then(response => {
-        setdata2(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    async function getdata(){
+      const Get_Profile = new profil()
+      const dat = await Get_Profile.getDataAkun(job,cookies)
+      setdata(dat)
+    }
+    getdata()
+    // axios.get('/api/addpegawai' ,{headers} )
+    //   .then(response => {
+    //     setdata2(response.data);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
   }, []);
 
   return (

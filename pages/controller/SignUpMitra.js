@@ -1,7 +1,5 @@
 class SignUpMitra{
-    constructor(){
-
-    }
+ 
     async CekEmail(payload){
         const response = await fetch("/api/registration",{
             method: 'PUT',

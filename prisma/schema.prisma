@@ -76,13 +76,20 @@ model Admin {
   rejected  Rejected[]
 }
 
-model pencatatan {
+model detail_pencatatan {
   id          Int   @id @default(autoincrement())
   tanggal     DateTime
   keterangan  String
   pemasukan   Int
   pengeluaran Int
   saldo       Int
-  milik       Int
-  pemilik     Mitra @relation(fields: [milik], references: [id])
+  detail_dari Int
+  catat       pencatatan @relation(fields: [detail_dari],references: [id])
+}
+model pencatatan{
+  id                  Int @id @default(autoincrement())
+  nama_pencatatan     String
+  milik               Int
+  pemilik             Mitra @relation(fields: [milik], references: [id])
+  detail_pencatatan   detail_pencatatan[]
 }
