@@ -1,6 +1,6 @@
 class profil{
-  constructor(){
-    super()
+  constructor(query){
+    this.query=query
 }
     async getDataAkun(role,cookies){
         if(role=='admin'){

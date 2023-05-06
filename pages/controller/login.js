@@ -1,6 +1,6 @@
 class Login {
-    constructor(){
-        super()
+    constructor(query){
+        this.query=query
     }
     async cekEmailPassword(payload){
         const response = await fetch("/api/log",{

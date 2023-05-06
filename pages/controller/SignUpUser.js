@@ -1,6 +1,6 @@
 class SignUpUser{
-  constructor(){
-    super()
+  constructor(query){
+    this.query=query
 }
     async CekEmail(payload){
         const response = await fetch('/api/registration', {
