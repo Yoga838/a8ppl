@@ -1,5 +1,7 @@
 class profil{
-
+  constructor(){
+    super()
+}
     async getDataAkun(role,cookies){
         if(role=='admin'){
             const response = await fetch("/api/getadmin",{

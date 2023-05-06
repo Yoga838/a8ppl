@@ -1,5 +1,7 @@
 class SignUpUser{
-
+  constructor(){
+    super()
+}
     async CekEmail(payload){
         const response = await fetch('/api/registration', {
             method: 'POST',

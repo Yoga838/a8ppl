@@ -1,4 +1,7 @@
 class Login {
+    constructor(){
+        super()
+    }
     async cekEmailPassword(payload){
         const response = await fetch("/api/log",{
             method: "POST",

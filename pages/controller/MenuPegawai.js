@@ -1,5 +1,7 @@
 class MenuPegawai{
-
+  constructor(){
+    super()
+}
     async sendData(payload,cookies){
         const response = await fetch("/api/addpegawai",{
             method: 'POST',
