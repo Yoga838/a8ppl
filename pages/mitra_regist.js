@@ -28,8 +28,9 @@ try {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const isValidEmail = emailRegex.test(email); 
   const urlRegex = new RegExp(/^((http|https):\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/);
-  const isValidLink = urlRegex.test(usaha,pribadi)
-  if(isValidEmail && isValidPhoneNumber && isValidLink){
+  const isValidLink = urlRegex.test(usaha)
+  const isValidLink2 = urlRegex.test(pribadi)
+  if(isValidEmail && isValidPhoneNumber && isValidLink && isValidLink2){
     const Daftar = new SignUpMitra({ email, name, password,no ,alamat,usaha,pribadi});
     const data = await Daftar.CekEmail()
     setPesan(data.message)
@@ -38,7 +39,7 @@ try {
 else if(!isValidEmail){
   alert("format email anda tidak sesuai")
 }
-else if(!isValidLink){
+else if(!isValidLink && isValidLink2){
   alert("format link tidak sesuai")
 }
 else{
