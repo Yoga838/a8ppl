@@ -5,7 +5,7 @@ import Link from 'next/link'
 import nookies from 'nookies'
 import Router from 'next/router'
 import { useState } from 'react'
-import Login from './controller/login'
+import Login from '../controller/login'
 
 
 export async function getServerSideProps(ctx){

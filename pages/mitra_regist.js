@@ -4,7 +4,7 @@ import Link from 'next/link'
 import React from 'react'
 import { useState } from 'react';
 import Router from 'next/router';
-import SignUpMitra from './controller/SignUpMitra'
+import SignUpMitra from '../controller/SignUpMitra'
 
 
 export default function mitra_regist() {

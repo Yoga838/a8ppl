@@ -6,7 +6,7 @@ import nookies from 'nookies'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Router from 'next/router'
-import profil from '../controller/profil'
+import profil from '../../controller/profil'
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)

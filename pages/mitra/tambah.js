@@ -6,7 +6,7 @@ import { useState,useEffect } from 'react';
 import nookies from 'nookies'
 import axios from 'axios';
 import Router from 'next/router';
-import MenuPegawai from '../controller/MenuPegawai'
+import MenuPegawai from '../../controller/MenuPegawai'
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)

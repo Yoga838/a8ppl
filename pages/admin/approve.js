@@ -6,7 +6,7 @@ import axios from 'axios'
 import Router from 'next/router'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import profil from '../controller/profil'
+import profil from '../../controller/profil'
 
 
 

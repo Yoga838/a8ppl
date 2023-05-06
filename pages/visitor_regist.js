@@ -4,7 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import { useState,useEffect } from 'react';
 import Router from 'next/router';
-import SignUpUser from './controller/SignUpUser';
+import SignUpUser from '../controller/SignUpUser';
 
 
 export default function visitor_regist() {
