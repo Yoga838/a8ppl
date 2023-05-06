@@ -105,14 +105,20 @@ export default function tambah() {
 
     const phoneNumberRegex = /^(\+62|62|0)[2-9][0-9]{9,10}$/;
     const isValidPhoneNumber = phoneNumberRegex.test(no);
-    if(isValidPhoneNumber){
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const isValidEmail = emailRegex.test(email);
+
+    if(isValidPhoneNumber && isValidEmail){
       const res = await fetch('/api/addpegawai' ,config )
       const data = await res.json()
       setPesan(data.message)
       setTampil(true)
     }
-    else{
+    else if (isValidPhoneNumber){
       alert("format nomor anda tidak sesuai")
+    }
+    else{
+      alert("format email anda tidak sesuai")
     }
 
      
