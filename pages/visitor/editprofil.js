@@ -100,8 +100,8 @@ export default function visitor_page() {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const isValidEmail = emailRegex.test(final_email);
         if(isValidEmail && isValidPhoneNumber){ 
-        const edit = new profil();
-        const dat = await edit.UpdateDataAkun(cookies,{ email:final_email, name:final_name, password,no:final_no ,alamat:final_alamat},job)
+        const edit = new profil(cookies,{ email:final_email, name:final_name, password,no:final_no ,alamat:final_alamat},job);
+        const dat = await edit.UpdateDataAkun()
         setPesan(dat.message)
         setTampil(true)
         }

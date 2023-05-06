@@ -57,8 +57,8 @@ export default function Profil() {
     const cookies = cookie.token;
    
     async function getdata(){
-    const Get_Profile = new profil()
-    const dat = await Get_Profile.getDataAkun(job,cookies)
+    const Get_Profile = new profil(job,cookies)
+    const dat = await Get_Profile.getDataAkun()
     setdata(dat)
     }
     getdata()

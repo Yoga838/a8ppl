@@ -99,8 +99,8 @@ export default function pegawai_page() {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const isValidEmail = emailRegex.test(final_email);
         if(isValidEmail && isValidPhoneNumber){ 
-          const edit = new profil();
-          const dat = await edit.UpdateDataAkun(cookies,{ email:final_email, name:final_name, password,no:final_no  },job)
+          const edit = new profil(cookies,{ email:final_email, name:final_name, password,no:final_no  },job);
+          const dat = await edit.UpdateDataAkun()
           setPesan(dat.message)
           setTampil(true)
         }
