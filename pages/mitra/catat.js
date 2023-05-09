@@ -90,28 +90,49 @@ const [data2,setdata2] = useState([]);
   const role = nookies.get('role');
   const job = role.role
 
-  async function data_kirim() {
+  const [pesan,setPesan] = useState('');
+  async function data_kirim() { 
     const Pemasukan = parseInt(pemasukan);
     const Pengeluaran = parseInt(pengeluaran);
     const Saldo = parseInt(saldo);
+    if (tanggal != ''){
+      const tanggal2 = new Date(tanggal).toISOString()
+      const send = {
+        nama,tanggal:tanggal2,keterangan,pemasukan:Pemasukan,pengeluaran:Pengeluaran,saldo:Saldo
+      }
+      const response = await fetch("/api/catat",{
+        method: "POST",
+        headers:{
+          'Authorization': `Bearer ${cookies}`,
+          "Content-Type" : "application/json"},
+        body: JSON.stringify(send)
+      })
+      const data = await response.json(send);
+      setTampil(true)
+      setPesan(data.message)
 
-    const send = {
+  
+    }
+    else{
+      const send = {
       nama,tanggal,keterangan,pemasukan:Pemasukan,pengeluaran:Pengeluaran,saldo:Saldo
     }
-    console.log(send)
+    setTampil(true)
+    setPesan("Data tidak boleh kosong!")
+    }
+
     
-    const response = await fetch("/api/catat",{
-      method: "POST",
-      headers:{
-        'Authorization': `Bearer ${cookies}`,
-        "Content-Type" : "application/json"},
-      body: JSON.stringify()
-    })
-    const data = await response.json(send);
-    
-    alert(data.message)
   }
 
+  const [tampil,setTampil] = useState(false)
+
+  const success = () => {
+    setTampil(false)
+    Router.replace('/mitra/pencatatan');
+  }
+  const notsuccess = () => {
+    setTampil(false)
+  }
   return (
     <div>
     <title>Tem.u</title>
@@ -127,7 +148,7 @@ const [data2,setdata2] = useState([]);
     </nav>
     <div className="content">
       <div className="row">
-        <div className="sidebar-left content1 bg-color-yellow col-md-4 pb-5 d-flex flex-column align-items-center gap-2">
+        <div className="sidebar-left  bg-color-yellow col-md-4 pb-5 d-flex flex-column align-items-center gap-2">
         <div className='content2 d-flex flex-column align-items-center gap-2'>
           <Link href='/mitra/profil'><div className="circle mt-4" /></Link>
           <h4>{data.name}</h4>
@@ -168,15 +189,35 @@ const [data2,setdata2] = useState([]);
               <input className="rounded-pill p-1 ps-3" value={saldo} onChange={(e) => setSaldo(e.target.value)} type="number" placeholder="Masukkan saldo anda, contoh: 1500000000"  />
             </div>
           </div>
-          <div className="button-left d-flex justify-content-end gap-4 mb-4">
+          <div className="button-left d-flex justify-content-end gap-4 mt-5 mb-4">
             <button type="button"  className="btn btn-admin bg-color-red poppins text-white shadow rounded-pill  btn-lg">Batal</button>
-            <button type="button" onClick={data_kirim} className="btn btn-admin bg-color-green poppins text-white shadow rounded-pill  btn-lg">Buat</button>
+            <button  type="button" onClick={data_kirim} className="btn btn-admin bg-color-green poppins text-white shadow rounded-pill  btn-lg">Buat</button>
           </div>
-          
-          
         </div>
+        
       </div>
     </div>
+    {/* pop up berhasil */}
+    {tampil &&( pesan == "Data berhasil dibuat" ?(
+            <div className='status'>
+            <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+              <img src="/images/centang.png" alt="" />
+              <h1 className="poppins fw-bold text-dark">{pesan}</h1>
+              <button className="btn btn-lg btn-warning rounded-pill shadow text-white" onClick={success}>OK</button>
+            </div>
+        </div>
+          )
+          :(
+            <div className='status'>
+              <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+                <img src="/images/alert.png" alt="" />
+                <h1 className="poppins fw-bold text-dark">{pesan}</h1>
+                <button className="btn btn-lg btn-warning rounded-pill shadow text-white" onClick={notsuccess}>OK</button>
+              </div>
+            </div>
+          )      
+          )}
+    {/* log out pop up */}
     {tampil2 &&(  
             <div className='status'>
               <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">

@@ -88,7 +88,7 @@ model detail_pencatatan {
 }
 model pencatatan{
   id                  Int @id @default(autoincrement())
-  nama_pencatatan     String
+  nama_pencatatan     String @unique
   milik               Int
   pemilik             Mitra @relation(fields: [milik], references: [id])
   detail_pencatatan   detail_pencatatan[]

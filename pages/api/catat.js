@@ -33,14 +33,14 @@ export default authMiddleware(async function handler(req,res){
         })
         return res.status(200).json({message: "Data berhasil dibuat"})
     }
-    // if (req.method === "PUT"){
-    //     const {nama,tanggal,keterangan,pemasukan,pengeluaran,saldo,} = req.body;
-    //     const search = await prisma.pencatatan.findFirst({
-    //         where:{
-    //             nama_pencatatan:nama
-    //         }
-    //     })
-    //     return res.send(search)
-    // }
+        // if (req.method === "PUT"){
+        //     const {nama,tanggal,keterangan,pemasukan,pengeluaran,saldo,} = req.body;
+        //     const search = await prisma.pencatatan.findFirst({
+        //         where:{
+        //             nama_pencatatan:nama
+        //         }
+        //     })
+        //     return res.send(search)
+        // }
 
 })

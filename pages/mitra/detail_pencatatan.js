@@ -1,12 +1,16 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @next/next/no-img-element */
-import React from 'react'
+import React, { useRef } from 'react';
 import Link from 'next/link'
 import { useState,useEffect } from 'react';
 import nookies from 'nookies'
 import Router from 'next/router';
 import axios from 'axios'
 import profil from '../../controller/profil';
+import { useRouter } from 'next/router';
+import { format } from 'date-fns';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -48,7 +52,19 @@ export async function getServerSideProps(ctx){
 
 
 
+
 export default function Pencatatan() {
+
+    const router = useRouter()
+    const {
+        query:{id,name},
+    } = router
+    const props = {
+        name,
+        id
+    }
+    const date_catat = props.name;
+
   function logout(){
     nookies.destroy(null,'token');
     nookies.destroy(null,'role');
@@ -66,6 +82,14 @@ const [data,setdata] = useState([]);
 const [data2,setdata2] = useState([]);
 
   useEffect(() => {
+    const {
+        query:{id,name},
+    } = router
+    const props = {
+        name,
+        id
+    }
+    const id_data = parseInt(props.id)
     const cookie = nookies.get('token');
     const cookies = cookie.token;
     const role = nookies.get('role');
@@ -77,30 +101,34 @@ const [data2,setdata2] = useState([]);
       setdata(dat)
     }
     getdata()
-    axios.get('/api/getcatat' ,{headers: {
-      'Authorization': `Bearer ${cookies}`,
-      'Content-Type': 'application/json'
-    }}, )
-      .then(response => {
-        setdata2(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
 
-  const handleButtonClick = (item) => {
-    senddata(item.id,item.nama_pencatatan)
-  };
-  function senddata(setId,setName){
-    Router.push({
-      pathname : "/mitra/detail_pencatatan",
-      query: {
-        id:setId,
-        name:setName
-      }
-    })
-  }
+    axios.post('/api/getdetailcatat',{id:id_data},{headers: {
+        'Authorization': `Bearer ${cookies}`,
+        'Content-Type': 'application/json'
+      }}, )
+        .then(response => {
+          setdata2(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }, [router]);
+
+    const divRef = useRef(null)
+
+    console.log(data2)
+    function saveexcel(){
+      // const workbook = new ExcelJS.Workbook();
+      // const worksheet = workbook.addWorksheet('My Sheet');
+      // data2.forEach(row => {
+      //   worksheet.addRow(row);
+      // });
+      // workbook.xlsx.writeFile('my-file.xlsx').then(() => {
+      //   console.log('Excel file created');
+      // });
+      
+      
+    }
 
   return (
     <div>
@@ -130,27 +158,54 @@ const [data2,setdata2] = useState([]);
           </div>
         </div>
         </div>
-        <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
-          <h1 className="poppins fw-bold text-center">Daftar Pencatatan</h1>
-          <div className="d-flex justify-content-between ms-5 mt-5 me-4">
-            <Link href='/mitra/tambah'><button className="btn btn-lg bg-color-green shadow rounded-pill text-light poppins fw-bold ">Grafik Pencatatan &nbsp;<img src="/images/grafik.png" alt="" /></button></Link>
-            <Link href='/mitra/catat'><button className="btn btn-lg bg-color-green shadow rounded-pill text-light poppins fw-bold ">Pencatatan &nbsp;<img src="/images/plus.png" alt="" /></button></Link>
-          </div>
-          <div className="d-flex flex-column mt-4 gap-4 align-items-center">
-            {/* content for loop entar     */}
-            {data2.map((dat,index) =>(
-            <div key={dat.id} className=" column-name-pgw d-flex justify-content-between shadow align-items-center  bg-color-yellow rounded-pill poppins fw-bold" onClick={(e) => {
-              e.stopPropagation();
-              handleButtonClick(dat)
-            }}>
-              <p>{dat.nama_pencatatan}</p>
-              <img src="/images/edit.png" alt="" />
-            </div>
-            ))}
+        <div className="col-md-8 pe-5 sidebar-right color-brown pt-5" >
+            {/* data tabel */}
+        <div className='data' ref={divRef}>
+        <h1 className="poppins fw-bold text-center">Pencatatan {date_catat}</h1>
+        <div className="tabel table-responsive">
+          <table id='table-to-xls' className="table table-bordered border-dark">
+            <thead className="table-kuning">
+              <tr>
+                <td>No</td>
+                <td>Tanggal</td>
+                <td>Keterangan</td>
+                <td>Pemasukan</td>
+                <td>Pengeluaran</td>
+                <td>Saldo</td>
+              </tr>
+            </thead>
+            <tbody className="text-center">
+            {data2.map((item,index) => (
+                <tr key={item.id}>
+                  <td>{index+1}</td>
+                  <td>{format(new Date(item.tanggal), 'dd-MM-yyyy')}</td>
+                  <td>{item.keterangan}</td>
+                  <td>{item.pemasukan}</td>
+                  <td>{item.pengeluaran}</td>
+                  <td>{item.saldo}</td>
 
-
-            {/* end content for loop entar*/}
-          </div>
+                </tr>
+            )
+            )}
+            </tbody>
+          </table>
+        </div>
+        </div>
+        {/* end data tabel */}
+        <div className="d-flex justify-content-end gap-4 mt-2">
+          <button type="button" className="btn bg-color-yellow rounded-pill poppins fw-bold  shadow">
+          <ReactHTMLTableToExcel
+                    id="test-table-xls-button"
+                    className ='btn'
+                    table="table-to-xls"
+                    filename="Rekapan"
+                    sheet="tablexls"
+                    buttonText="Ekspor Pencatatan "
+                    /> &nbsp; 
+            <img src="/images/save.png" alt="" />
+            </button>
+          <button type="button" className="btn bg-color-yellow rounded-pill poppins fw-bold edit-btn wrap shadow">Edit Pencatatan &nbsp; <img src="/images/button_icon_edit.png" alt="" /></button>
+        </div>
         </div>
       </div>
     </div>

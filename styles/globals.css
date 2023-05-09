@@ -275,3 +275,12 @@ nav{
 .deskripsi{
   border-radius: 25px;
 }
+.table-kuning{
+  background-color: #FFD93D;
+  text-align: center;
+  font-weight: 400;
+  font-family: "poppins",Arial, Helvetica, sans-serif;
+}
+.edit-btn img{
+  width: 20% !important;
+}
