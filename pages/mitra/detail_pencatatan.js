@@ -224,3 +224,6 @@ const [data2,setdata2] = useState([]);
   </div>
   )
 }
+
+
+//gatau
