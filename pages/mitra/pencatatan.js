@@ -117,7 +117,7 @@ const [data2,setdata2] = useState([]);
     </nav>
     <div className="content">
       <div className="row">
-        <div className="sidebar-left content1 bg-color-yellow col-md-4 pb-5 d-flex flex-column align-items-center gap-2">
+        <div className="sidebar-left bg-color-yellow col-md-4 pb-5 d-flex flex-column align-items-center gap-2">
         <div className='content2 d-flex flex-column align-items-center gap-2'>
           <Link href='/mitra/profil'><div className="circle mt-4" /></Link>
           <h4>{data.name}</h4>
@@ -136,7 +136,7 @@ const [data2,setdata2] = useState([]);
             <Link href='/mitra/tambah'><button className="btn btn-lg bg-color-green shadow rounded-pill text-light poppins fw-bold ">Grafik Pencatatan &nbsp;<img src="/images/grafik.png" alt="" /></button></Link>
             <Link href='/mitra/catat'><button className="btn btn-lg bg-color-green shadow rounded-pill text-light poppins fw-bold ">Pencatatan &nbsp;<img src="/images/plus.png" alt="" /></button></Link>
           </div>
-          <div className="d-flex flex-column mt-4 gap-4 align-items-center">
+          <div className="d-flex flex-column mt-4 gap-4 align-items-center content1">
             {/* content for loop entar     */}
             {data2.map((dat,index) =>(
             <div key={dat.id} className=" column-name-pgw d-flex justify-content-between shadow align-items-center  bg-color-yellow rounded-pill poppins fw-bold" onClick={(e) => {

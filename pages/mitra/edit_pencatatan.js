@@ -1,16 +1,17 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @next/next/no-img-element */
 import React, { useRef } from 'react';
 import Link from 'next/link'
 import { useState,useEffect } from 'react';
 import nookies from 'nookies'
-import axios from 'axios'
-import profil from '../../controller/profil';
-import { useRouter } from 'next/router';
 import Router from 'next/router';
+import axios from 'axios'
+import profil from '@/controller/profil';
+import { useRouter } from 'next/router';
 import { format } from 'date-fns';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-
+import { flushSync } from 'react-dom';
 
 
 export async function getServerSideProps(ctx){
@@ -65,7 +66,6 @@ export default function Pencatatan() {
         id
     }
     const date_catat = props.name;
-    const id_catat = props.id;
 
   function logout(){
     nookies.destroy(null,'token');
@@ -96,7 +96,7 @@ const [data2,setdata2] = useState([]);
     const cookies = cookie.token;
     const role = nookies.get('role');
     const job = role.role
-    
+  
     async function getdata(){
       const Get_Profile = new profil()
       const dat = await Get_Profile.getDataAkun(job,cookies)
@@ -115,22 +115,82 @@ const [data2,setdata2] = useState([]);
           console.log(error);
         });
     }, [router]);
-
-    const divRef = useRef(null)
-
-    console.log(data2)
     
-    const senddata = () =>{
-      Router.push({
-        pathname : "/mitra/edit_pencatatan",
+    const [tanggal,setTanggal] = useState('');
+    const [keterangan,setKeterangan] = useState('');
+    const [pemasukan,setPemasukan] = useState('');
+    const [pengeluaran,setPengeluaran] = useState('');
+    const [saldo,setSaldo] = useState(0);
+    const [date,setDate] = useState('') 
+
+    function PemasukanInput(event) {
+      setPemasukan(event.target.value);
+      const value = parseInt(event.target.value);
+      const hitung = value - pengeluaran
+      setSaldo(hitung)
+    }
+    function PengeluaranInput(event) {
+      setPengeluaran(event.target.value);
+      const value = parseInt(event.target.value);
+      const hitung = pemasukan - value;
+      setSaldo(hitung)
+    }
+    function TanggalInput(event){
+    setDate(event.target.value)
+    const value = new Date(event.target.value).toISOString()
+    setTanggal(value)
+    }
+
+    const cookie = nookies.get('token');
+    const cookies = cookie.token;
+    async function tambah_data ()  {
+      setSaldo(parseInt(saldo))
+
+      const send = {
+        tanggal,keterangan,pemasukan,pengeluaran,saldo,detail_dari:props.id
+      }
+      const response = await fetch("/api/catat",{
+        method: "PUT",
+        headers:{
+          'Authorization': `Bearer ${cookies}`,
+          "Content-Type" : "application/json"},
+        body: JSON.stringify(send)
+      })
+      const data = await response.json();
+      console.log(data)
+      setTampil(true)
+      setPesan(data.message)
+    }
+    
+    const [pesan,setPesan] = useState('');
+
+    const [tampil,setTampil] = useState(false)
+
+    const success = () => {
+      setTampil(false)
+      Router.replace({
+        pathname : "/mitra/detail_pencatatan",
         query: {
-          id:id_catat,
-          name:date_catat
+          id:props.id,
+          name:props.name
         }
       })
     }
-    
-    
+    const notsuccess = () => {
+      setTampil(false)
+    }
+
+    async function delete_data(id){
+      const response = await fetch(`/api/catat?id=${id}`,{
+        method: "DELETE",
+        headers:{
+          'Authorization': `Bearer ${cookies}`,
+          "Content-Type" : "application/json"},
+      })
+      const data = await response.json();
+      setTampil(true)
+      setPesan(data.message)
+    }
   return (
     <div>
     <title>Tem.u</title>
@@ -146,7 +206,7 @@ const [data2,setdata2] = useState([]);
     </nav>
     <div className="content">
       <div className="row">
-        <div className="sidebar-left content1 bg-color-yellow col-md-4 pb-5 d-flex flex-column align-items-center gap-2">
+        <div className="sidebar-left bg-color-yellow col-md-4 pb-5 d-flex flex-column align-items-center gap-2">
         <div className='content2 d-flex flex-column align-items-center gap-2'>
           <Link href='/mitra/profil'><div className="circle mt-4" /></Link>
           <h4>{data.name}</h4>
@@ -159,9 +219,9 @@ const [data2,setdata2] = useState([]);
           </div>
         </div>
         </div>
-        <div className="col-md-8 pe-5 sidebar-right color-brown pt-5" >
+        <div className="col-md-8 pe-5  sidebar-right color-brown pt-5" >
             {/* data tabel */}
-        <div className='data' ref={divRef}>
+        <div className='data' >
         <h1 className="poppins fw-bold text-center">Pencatatan {date_catat}</h1>
         <div className="tabel table-responsive">
           <table id='table-to-xls' className="table table-bordered border-dark">
@@ -173,6 +233,7 @@ const [data2,setdata2] = useState([]);
                 <td>Pemasukan</td>
                 <td>Pengeluaran</td>
                 <td>Saldo</td>
+                <td>Action</td>
               </tr>
             </thead>
             <tbody className="text-center">
@@ -184,6 +245,7 @@ const [data2,setdata2] = useState([]);
                   <td>{item.pemasukan}</td>
                   <td>{item.pengeluaran}</td>
                   <td>{item.saldo}</td>
+                  <td><button type='button' onClick={(e) => {e.stopPropagation(),delete_data(item.id)}} className='btn btn-sm'><img src='/images/delete.svg'/></button></td>
                 </tr>
             )
             )}
@@ -192,23 +254,58 @@ const [data2,setdata2] = useState([]);
         </div>
         </div>
         {/* end data tabel */}
-        <div className="d-flex justify-content-end gap-4 mt-2">
-          <button type="button" className="btn bg-color-yellow rounded-pill poppins fw-bold  shadow">
-          <ReactHTMLTableToExcel
-                    id="test-table-xls-button"
-                    className ='btn'
-                    table="table-to-xls"
-                    filename="Rekapan"
-                    sheet="tablexls"
-                    buttonText="Ekspor Pencatatan "
-                    /> &nbsp; 
-            <img src="/images/save.png" alt="" />
-            </button>
-          <button type="button" onClick={(e) => {e.stopPropagation();senddata() }} className="btn bg-color-yellow rounded-pill poppins fw-bold edit-btn wrap shadow">Edit Pencatatan &nbsp; <img src="/images/button_icon_edit.png" alt="" /></button>
+        {/* input edit */}
+        <div className="input d-flex flex-column mt-3">
+            <label className="ms-3  pb-1 poppins">Tambah Kolom Tanggal</label>
+            <input className="rounded-pill p-1 ps-3" type="date" value={date} onChange={TanggalInput } placeholder="Masukkan nama pencatatan anda, contoh: Januari 2023"  />
         </div>
+        <div className="input d-flex flex-column">
+            <label className="ms-3  pb-1 poppins">Tambah Kolom Keterangan</label>
+            <input className="rounded-pill p-1 ps-3" type="text" value={keterangan} onChange={(e) => setKeterangan(e.target.value) } placeholder="Masukkan keterangan pencatatan anda, contoh: biaya listrik"  />
+        </div>
+        <div className="input d-flex flex-column">
+            <label className="ms-3  pb-1 poppins">Tambah Kolom Pemasukan</label>
+            <input className="rounded-pill p-1 ps-3" type="number" value={pemasukan} onChange={PemasukanInput} placeholder="Masukkan pemasukan anda, contoh: 500000000"  />
+        </div>
+        <div className="input d-flex flex-column">
+            <label className="ms-3  pb-1 poppins">Tambah Kolom Pengeluaran</label>
+            <input className="rounded-pill p-1 ps-3" type="number" value={pengeluaran} onChange={PengeluaranInput} placeholder="Masukkan Pengeluaran anda, contoh: 30000000"  />
+        </div>
+        <div className="input d-flex flex-column">
+            <label className="ms-3  pb-1 poppins">Tambah Kolom Saldo</label>
+            <input className="rounded-pill p-1 ps-3" type="number" value={saldo} onChange={(e) => setSaldo(e.target.value) } disabled placeholder="Masukkan saldo anda, contoh: 1500000000"  />
+        </div>
+        {/* end input edit */}
+        {/* tombol  */}
+        <div className="button-left d-flex justify-content-end gap-4 mt-5 mb-4">
+            <button type="button"  className="btn btn-admin bg-color-red poppins text-white shadow rounded-pill  btn-lg">Batal</button>
+            <button  type="button" onClick={(e)=>{e.stopPropagation(),tambah_data()}} className="btn btn-admin bg-color-green poppins text-white shadow rounded-pill  btn-lg">Simpan</button>
+          </div>
+        {/* end tombol */}
         </div>
       </div>
     </div>
+    {/* pop up status */}
+    {/* pop up berhasil */}
+    {tampil &&( pesan == "Data berhasil diubah" ?(
+            <div className='status'>
+            <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+              <img src="/images/centang.png" alt="" />
+              <h1 className="poppins fw-bold text-dark">{pesan}</h1>
+              <button className="btn btn-lg btn-warning rounded-pill shadow text-white" onClick={success}>OK</button>
+            </div>
+        </div>
+          )
+          :(
+            <div className='status'>
+              <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+                <img src="/images/alert.png" alt="" />
+                <h1 className="poppins fw-bold text-dark text-center">{pesan}</h1>
+                <button className="btn btn-lg btn-warning rounded-pill shadow text-white" onClick={notsuccess}>OK</button>
+              </div>
+            </div>
+          )      
+          )}
     {/* pop up logout */}
     {tampil2 &&(  
             <div className='status'>

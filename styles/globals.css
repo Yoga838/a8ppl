@@ -284,3 +284,7 @@ nav{
 .edit-btn img{
   width: 20% !important;
 }
+table td{
+  text-align: center;
+  vertical-align: middle;
+}

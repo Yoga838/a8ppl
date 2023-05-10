@@ -82,8 +82,8 @@ const [data2,setdata2] = useState([]);
   const [nama,setNama] = useState('')
   const [tanggal,setTanggal] = useState('')
   const [keterangan,setKeterangan] = useState('')
-  const [pemasukan,setPemasukan] = useState('')
-  const [pengeluaran,setPengeluaran] = useState('')
+  const [pemasukan,setPemasukan] = useState(0)
+  const [pengeluaran,setPengeluaran] = useState(0)
   const [saldo,setSaldo] = useState('')
   const cookie = nookies.get('token');
   const cookies = cookie.token;
@@ -110,15 +110,10 @@ const [data2,setdata2] = useState([]);
       const data = await response.json(send);
       setTampil(true)
       setPesan(data.message)
-
-  
     }
     else{
-      const send = {
-      nama,tanggal,keterangan,pemasukan:Pemasukan,pengeluaran:Pengeluaran,saldo:Saldo
-    }
-    setTampil(true)
-    setPesan("Data tidak boleh kosong!")
+      setTampil(true)
+      setPesan("Data tidak boleh kosong!")
     }
 
     
@@ -133,6 +128,19 @@ const [data2,setdata2] = useState([]);
   const notsuccess = () => {
     setTampil(false)
   }
+  function PemasukanInput(event) {
+    setPemasukan(event.target.value);
+    const value = parseInt(event.target.value);
+    const hitung = value - pengeluaran
+    setSaldo(hitung)
+  }
+  function PengeluaranInput(event) {
+    setPengeluaran(event.target.value);
+    const value = parseInt(event.target.value);
+    const hitung = pemasukan - value;
+    setSaldo(hitung)
+  }
+
   return (
     <div>
     <title>Tem.u</title>
@@ -161,7 +169,7 @@ const [data2,setdata2] = useState([]);
           </div>
         </div>
         </div>
-        <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
+        <div className="col-md-8 content1 pe-5 sidebar-right color-brown pt-5">
           <h1 className="poppins fw-bold text-center">Tambah Data Pencatatan</h1>
           <div className="inputan-pencatatan pe-5 pt-4 ">
             <div className="input d-flex flex-column">
@@ -178,15 +186,15 @@ const [data2,setdata2] = useState([]);
             </div>
             <div className="input d-flex flex-column">
               <label className="ms-3  pb-1 poppins">Pemasukan</label>
-              <input className="rounded-pill p-1 ps-3" value={pemasukan} onChange={(e) => setPemasukan(e.target.value)} type="number" placeholder="Masukkan pemasukan anda, contoh: 500000000"  />
+              <input className="rounded-pill p-1 ps-3" value={pemasukan} onChange={PemasukanInput} type="number" placeholder="Masukkan pemasukan anda, contoh: 500000000"  />
             </div>
             <div className="input d-flex flex-column">
               <label className="ms-3  pb-1 poppins">Pengeluaran</label>
-              <input className="rounded-pill p-1 ps-3" value={pengeluaran} onChange={(e) => setPengeluaran(e.target.value)} type="number" placeholder="Masukkan Pengeluaran anda, contoh: 30000000"  />
+              <input className="rounded-pill p-1 ps-3" value={pengeluaran} onChange={PengeluaranInput} type="number" placeholder="Masukkan Pengeluaran anda, contoh: 30000000"  />
             </div>
             <div className="input d-flex flex-column">
               <label className="ms-3  pb-1 poppins">Saldo</label>
-              <input className="rounded-pill p-1 ps-3" value={saldo} onChange={(e) => setSaldo(e.target.value)} type="number" placeholder="Masukkan saldo anda, contoh: 1500000000"  />
+              <input className="rounded-pill p-1 ps-3" disabled value={saldo} onChange={(e) => setSaldo(e.target.value)} type="number" placeholder="Masukkan saldo anda, contoh: 1500000000"  />
             </div>
           </div>
           <div className="button-left d-flex justify-content-end gap-4 mt-5 mb-4">
@@ -211,7 +219,7 @@ const [data2,setdata2] = useState([]);
             <div className='status'>
               <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
                 <img src="/images/alert.png" alt="" />
-                <h1 className="poppins fw-bold text-dark">{pesan}</h1>
+                <h1 className="poppins fw-bold text-dark text-center">{pesan}</h1>
                 <button className="btn btn-lg btn-warning rounded-pill shadow text-white" onClick={notsuccess}>OK</button>
               </div>
             </div>
