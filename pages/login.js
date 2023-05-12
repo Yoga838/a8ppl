@@ -57,11 +57,22 @@ export default function login() {
   const dologin = async (e) => {
     e.preventDefault(); // prevent form from submitting normally
     //take method from controller
-    const login = new Login();
-    const data = await login.cekEmailPassword({
-      email,
-      password
+    // const login = new Login();
+    // const data = await login.cekEmailPassword({
+    //   email,
+    //   password
+    // })
+    const send = {
+      "email":email,
+      "password":password 
+    }
+    const response = await fetch("/api/log",{
+      method: "POST",
+      headers:{"Content-Type" : "application/json"},
+      body: JSON.stringify(send)
     })
+    const data = await response.json();
+
     //set cookies to save data and set the route and set pop up 
     if(data.token){
       nookies.set(null,'token',data.token);
