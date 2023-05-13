@@ -94,7 +94,6 @@ class profil{
                   },
                   body: JSON.stringify(payload)
                 })
-              console.log(payload)
               const data = await response.json();
               return data;
           }

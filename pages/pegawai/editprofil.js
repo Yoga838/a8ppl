@@ -99,9 +99,10 @@ export default function pegawai_page() {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const isValidEmail = emailRegex.test(final_email);
         if(isValidEmail && isValidPhoneNumber){ 
-          const edit = new profil(cookies,{ email:final_email, name:final_name, password,no:final_no  },job);
-          const dat = await edit.UpdateDataAkun()
+          const edit = new profil();
+          const dat = await edit.UpdateDataAkun(cookies,{ email:final_email, name:final_name, password,no:final_no  },job)
           setPesan(dat.message)
+          console.log(dat)
           setTampil(true)
         }
         else if (!isValidEmail){
@@ -139,7 +140,7 @@ export default function pegawai_page() {
              <Link href='/visitor/profil'> <div className="circle mt-5" /></Link>
               <h4>{data.name}</h4>
               <div className="button-item d-flex pb-2 flex-column align-items-center gap-4">
-              <Link href='/visitor'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Home</button></Link>
+              <Link href='/visitor'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button></Link>
                 <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button>
                 <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Keluar</button>
               </div>
