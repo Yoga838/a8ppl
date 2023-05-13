@@ -198,7 +198,7 @@ const [data2,setdata2] = useState([]);
             </div>
           </div>
           <div className="button-left d-flex justify-content-end gap-4 mt-5 mb-4">
-            <button type="button"  className="btn btn-admin bg-color-red poppins text-white shadow rounded-pill  btn-lg">Batal</button>
+            <Link href="pencatatan"><button type="button"  className="btn btn-admin bg-color-red poppins text-white shadow rounded-pill  btn-lg">Batal</button></Link>
             <button  type="button" onClick={data_kirim} className="btn btn-admin bg-color-green poppins text-white shadow rounded-pill  btn-lg">Buat</button>
           </div>
         </div>

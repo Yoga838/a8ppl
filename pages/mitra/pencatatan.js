@@ -133,7 +133,7 @@ const [data2,setdata2] = useState([]);
         <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
           <h1 className="poppins fw-bold text-center">Daftar Pencatatan</h1>
           <div className="d-flex justify-content-between ms-5 mt-5 me-4">
-            <Link href='/mitra/tambah'><button className="btn btn-lg bg-color-green shadow rounded-pill text-light poppins fw-bold ">Grafik Pencatatan &nbsp;<img src="/images/grafik.png" alt="" /></button></Link>
+            <Link href='grafik'><button className="btn btn-lg bg-color-green shadow rounded-pill text-light poppins fw-bold ">Grafik Pencatatan &nbsp;<img src="/images/grafik.png" alt="" /></button></Link>
             <Link href='/mitra/catat'><button className="btn btn-lg bg-color-green shadow rounded-pill text-light poppins fw-bold ">Pencatatan &nbsp;<img src="/images/plus.png" alt="" /></button></Link>
           </div>
           <div className="d-flex flex-column mt-4 gap-4 align-items-center content1">

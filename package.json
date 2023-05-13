@@ -24,7 +24,8 @@
     "nookies": "^2.5.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-html-table-to-excel": "^2.0.0"
+    "react-html-table-to-excel": "^2.0.0",
+    "recharts": "^2.6.2"
   },
   "devDependencies": {
     "prisma": "^4.14.0"
