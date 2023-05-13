@@ -7,6 +7,7 @@ import nookies from 'nookies'
 import axios from 'axios';
 import Router from 'next/router';
 import MenuPegawai from '@/controller/MenuPegawai';
+import profil from '@/controller/profil';
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -94,7 +95,7 @@ export default function tambah() {
       setPesan(data.message)
       setTampil(true)
     }
-    else if (isValidPhoneNumber){
+    else if (!isValidPhoneNumber){
       alert("format nomor anda tidak sesuai")
     }
     else{

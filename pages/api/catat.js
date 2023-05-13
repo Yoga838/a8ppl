@@ -40,7 +40,7 @@ export default authMiddleware(async function handler(req,res){
     if (req.method == "PUT"){
         const {tanggal,keterangan,pemasukan,pengeluaran,saldo,detail_dari} = req.body;
         if (!tanggal||!keterangan||!pemasukan||!pengeluaran||!detail_dari){
-            return res.status(401).json({tanggal,keterangan,pemasukan,pengeluaran,saldo,detail_dari})
+            return res.status(401).json({message:"Data tidak boleh kosong!"})
         }
         const input = await prisma.detail_pencatatan.create({
             data:{
