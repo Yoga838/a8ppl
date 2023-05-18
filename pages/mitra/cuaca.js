@@ -73,27 +73,27 @@ export default function cuaca() {
       })
       const dat2 = await response.json();
       setdata2(dat2)
-      dayForecast()
+      if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition((position)=>{
+            let lon= position.coords.longitude;
+            let lat= position.coords.latitude;
+            const url= `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&` + `lon=${lon}&appid=${apikey}`;
+            
+
+            fetch(url).then((res)=>{
+                return res.json();
+            }).then((data)=>{
+                var dat= new Date(data.dt)
+                
+                weatherReport(data);
+            })
+        })
+    }   
     }
-    
+    getpremium()
 
 
-            if(navigator.geolocation){
-                navigator.geolocation.getCurrentPosition((position)=>{
-                    let lon= position.coords.longitude;
-                    let lat= position.coords.latitude;
-                    const url= `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&` + `lon=${lon}&appid=${apikey}`;
-                    
-        
-                    fetch(url).then((res)=>{
-                        return res.json();
-                    }).then((data)=>{
-                        var dat= new Date(data.dt)
-                        getpremium()
-                        weatherReport(data);
-                    })
-                })
-            }   
+           
     },[])
 
     const apikey="0b65ccf66ad2b73d7d1bf772a558702d";
