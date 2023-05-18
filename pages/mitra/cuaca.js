@@ -73,8 +73,9 @@ export default function cuaca() {
       })
       const dat2 = await response.json();
       setdata2(dat2)
+      dayForecast()
     }
-    getpremium()
+    
 
 
             if(navigator.geolocation){
@@ -88,6 +89,7 @@ export default function cuaca() {
                         return res.json();
                     }).then((data)=>{
                         var dat= new Date(data.dt)
+                        getpremium()
                         weatherReport(data);
                     })
                 })
