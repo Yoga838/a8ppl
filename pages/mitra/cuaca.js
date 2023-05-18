@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @next/next/no-img-element */
@@ -50,6 +51,7 @@ export async function getServerSideProps(ctx){
 
 export default function cuaca() {
   const [data,setdata] = useState([]);
+  const [data2,setdata2] = useState([])
     React.useEffect(() => {
     const cookie = nookies.get('token');
     const cookies = cookie.token;
@@ -59,9 +61,20 @@ export default function cuaca() {
       const Get_Profile = new profil()
       const dat = await Get_Profile.getDataAkun(job,cookies)
       setdata(dat)
-      }
-      getdata()
-
+    }
+    getdata()
+    async function getpremium(){
+      const response = await fetch("/api/ispremium",{
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${cookies}`,
+          'Content-Type': 'application/json'
+        }
+      })
+      const dat2 = await response.json();
+      setdata2(dat2)
+    }
+    getpremium()
 
 
             if(navigator.geolocation){
@@ -74,11 +87,7 @@ export default function cuaca() {
                     fetch(url).then((res)=>{
                         return res.json();
                     }).then((data)=>{
-                        console.log(data);
-                        console.log(new Date().getTime())
                         var dat= new Date(data.dt)
-                        console.log(dat.toLocaleString(undefined,'Asia/Kolkata'))
-                        console.log(new Date().getMinutes())
                         weatherReport(data);
                     })
                 })
@@ -95,7 +104,6 @@ export default function cuaca() {
         fetch(urlsearch).then((res)=>{
             return res.json();
         }).then((data)=>{
-            console.log(data);
             weatherReport(data);
         })
         document.getElementById('input').value='';
@@ -108,19 +116,13 @@ export default function cuaca() {
         fetch(urlcast).then((res)=>{
             return res.json();
         }).then((forecast)=>{
-            console.log(forecast.city);
             hourForecast(forecast);
             dayForecast(forecast)
-    
-            console.log(data);
             document.getElementById('city').innerText= data.name + ', '+data.sys.country;
-            console.log(data.name,data.sys.country);
         
-            console.log(Math.floor(data.main.temp-273));
             document.getElementById('temperature').innerText= Math.floor(data.main.temp-273)+ ' °C';
         
             document.getElementById('clouds').innerText= data.weather[0].description;
-            console.log(data.weather[0].description)
             
             let icon1= data.weather[0].icon;
             let iconurl= "https://api.openweathermap.org/img/w/"+ icon1 +".png";
@@ -134,7 +136,6 @@ export default function cuaca() {
         for (let i = 0; i < 5; i++) {
     
             var date= new Date(forecast.list[i].dt*1000)
-            console.log((date.toLocaleTimeString(undefined,'Asia/Kolkata')).replace(':00',''))
     
             let hourR=document.createElement('div');
             hourR.setAttribute('class','next');
@@ -163,7 +164,6 @@ export default function cuaca() {
     function dayForecast(forecast){
         document.querySelector('.weekF').innerHTML=''
         for (let i = 8; i < forecast.list.length; i+=8) {
-            console.log(forecast.list[i]);
             let div= document.createElement('div');
             div.setAttribute('class','dayF');
             
@@ -198,6 +198,7 @@ export default function cuaca() {
     setTampil2(false)
   } 
 
+  console.log(data2.status)
   return (
     <>
     <div>
@@ -262,7 +263,8 @@ export default function cuaca() {
                 </div>
               </div>
               {/*end forecast dan suhu sekarang*/}
-              <div className="row">
+              {data2.status ? (
+                <div className="row">
                 <div className="contain border border-warning m-5">
                   <div className="prediksi text-white rounded-pill px-4">
                     <h5 className="text-warning poppins fw-bold">Prediksi cuaca 4 hari kedepan</h5>
@@ -281,6 +283,34 @@ export default function cuaca() {
                   </div>
                 </div>
               </div>
+               ):
+               (
+                <div className="row">
+                <div className="contain border border-warning m-5 bg-color-yellow">
+                  <div className="prediksi text-white rounded-pill px-4">
+                    <h5 className="text-warning poppins fw-bold">Prediksi cuaca 4 hari kedepan</h5>
+                  </div>
+                  <div className='premium d-flex flex-column align-items-center'>
+                    <Link href='informasi-pembayaran'><button className='btn btn-lg'><img src='/images/lock.png'/></button></Link>
+                    <Link href='informasi-pembayaran'><button className='btn btn-lg'><h2 className='poppins fw-bold'>DAFTAR MEMBER PREMIUM</h2></button></Link>
+                  </div>
+                  <div className="weekF visually-hidden">
+                    <div className="dayF">
+                      <p className="date">Sun Jul 03 2022</p>
+                      <p>31 °C / 31 °C</p>
+                      <p className="desc">Overcast Clouds</p>
+                    </div>
+                    <div className="dayF">
+                      <p className="date">Sun Jul 03 2022</p>
+                      <p>31 °C / 31 °C</p>
+                      <p className="desc">Overcast Clouds</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+               )} 
+              
+              {/*  */}
             </div>
           </div>
         </div>

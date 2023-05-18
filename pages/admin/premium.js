@@ -53,7 +53,7 @@ export async function getServerSideProps(ctx){
 export default function pengajuan() {
 
     const [data,setdata] = useState([]);
-    // const [data2,setdata2] = useState([]);
+    const [data2,setdata2] = useState([]);
   useEffect(() => {
     const cookie = nookies.get('token');
     const cookies = cookie.token;
@@ -67,13 +67,18 @@ export default function pengajuan() {
       }
       getdata()
 
-    // axios.get('/api/approval' ,{headers} )
-    //   .then(response => {
-    //     setdata2(response.data);
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
+    async function premipropo (){
+      const response = await fetch("/api/premiumacc",{
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${cookies}`,
+          'Content-Type': 'application/json'
+        }
+      })
+      const data = await response.json();
+      setdata2(data)
+    }
+    premipropo()
 
   }, []);
   function logout(){
@@ -95,7 +100,7 @@ const notpop = () => {
   };
   function senddata(setId,setName){
     Router.push({
-      pathname : "/admin/approve",
+      pathname : "/admin/premiumacc",
       query: {
         id:setId,
         name:setName
@@ -135,17 +140,17 @@ const notpop = () => {
           <div className="d-flex flex-column gap-4">
             {/* content for loop entar     */}
 
-            {/* {data2.map((dat,index) =>(
+            {data2.map((dat,index) =>(
               
-            <div key={dat.id} className=" column-name shadow d-flex justify-content-between align-items-center  bg-color-yellow rounded-pill poppins fw-bold" onClick={(e) => {
-              e.stopPropagation();
-              handleButtonClick(dat)
-            }}>
-              <p>{dat.name}</p>
-             <img src="/images/icon-pengajuan-akun.png" alt="" />
-            </div>
-            
-            ))} */}
+              <div key={dat.id} className=" column-name shadow d-flex justify-content-between align-items-center  bg-color-yellow rounded-pill poppins fw-bold" onClick={(e) => {
+                e.stopPropagation();
+                handleButtonClick(dat)
+              }}>
+                <p>{dat.name}</p>
+               <img src="/images/icon-pengajuan-akun.png" alt="" />
+              </div>
+              
+              ))}
 
           
             {/* end content for loop entar*/}

@@ -100,7 +100,7 @@ async function getdata(){
   setdata(dat)
   }
   getdata()
-    axios.post('/api/getmitra' ,send,config )
+    axios.post('/api/premiumacc' ,send,config )
       .then(response => {
         setdata2(response.data);
       })
@@ -113,9 +113,13 @@ async function getdata(){
     e.preventDefault(); // prevent form from submitting normally
     const cookie = nookies.get('token');
     const cookies = cookie.token;
+    const expire = new Date();
+    expire.setMonth(expire.getMonth() + 12);
 
     const send = {
-        id:accid
+        id:accid,
+        status:1,
+        expire
     }
   
     const config = {
@@ -126,7 +130,7 @@ async function getdata(){
 };
 
     
-      const res = await axios.post('/api/approval' ,send,config )
+      const res = await axios.patch('/api/premiumacc' ,send,config )
       const data = await res.data
       router.replace('/admin')
     
@@ -137,12 +141,9 @@ async function getdata(){
     const cookie = nookies.get('token');
     const cookies = cookie.token;
     const send = {
-        name:data2.name,
-        email:data2.email,
-        password:data2.password,
-        id:accid
+        id:accid,
+        status:2
       }
-      console.log(send)
   
     const config = {
         headers :{
@@ -152,9 +153,9 @@ async function getdata(){
 };
 
     
-      const res = await axios.post('/api/reject' ,send,config )
+      const res = await axios.patch('/api/premiumacc' ,send,config )
       const data = await res.data
-      router.replace('/admin')
+      router.replace('/admin/premium')
     
   }
 
@@ -212,25 +213,13 @@ const notsuccess = () => {
           </div>
           </div>
         </div>
-        <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
+        <div className="col-md-8 content1 pe-5 sidebar-right color-brown pt-5">
           <h1 className="poppins fw-bold  text-center">Persetujuan Pembuatan Akun Mitra</h1>
           <div className="d-flex justify-content-center flex-column gap-4">
             {/* content      */}
             <div className=" column-acc bg-color-yellow  poppins fw-bold">
-              <p>Nama Lengkap:</p>
-              <p>{data2.name}</p>
-              <p>No Telp:</p>
-              <p>{data2.no}</p>  
-              <p>Alamat Lengkap:</p>
-              <p>{data2.alamat}</p>
-              <p>Email</p>
-              <p>{data2.email}</p>
-              <p>Password</p>
-              <p>{data2.password}</p>
-              <p>Link Foto Perusahaan</p>
-              <a className='break-word' href={data2.usaha}>{data2.usaha}</a>
-              <p>Link Foto Pribadi</p>
-              <a className='break-word' href={data2.pribadi}>{data2.pribadi}</a>
+              <p>Link Bukti Bayar:</p>
+              <a className='break-word' href={data2.pribadi}>{data2.bukti_bayar}</a>
             </div>
             {/* end content*/}
             <div className="tombol mb-5 mt-3  justify-content center">

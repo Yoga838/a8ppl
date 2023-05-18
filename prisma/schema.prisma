@@ -19,24 +19,33 @@ model Visitor {
 }
 
 model Mitra {
-  id        Int       @id @default(autoincrement())
-  name      String
-  email     String    @unique
-  password  String
-  no        String
-  alamat    String
-  usaha     String
-  pribadi   String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  aproval   aproval[]
-  pegawai   pegawai[]
-  pencatatan pencatatan[]
+  id              Int       @id @default(autoincrement())
+  name            String
+  email           String    @unique
+  password        String
+  no              String
+  alamat          String
+  usaha           String
+  pribadi         String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  aproval         aproval[]
+  pegawai         pegawai[]
+  pencatatan      pencatatan[]
+  bukti_bayar     bukti_bayar[]
+}
+model bukti_bayar{
+  id            Int @id @default(autoincrement())
+  bukti_bayar   String 
+  status        Int @default(0)
+  expire        DateTime?
+  id_mitra      Int @unique
+  mitra         Mitra @relation(fields: [id_mitra],references: [id])
 }
 model pegawai {
   id        Int      @id @default(autoincrement())
   workAt    Int
-  work      Mitra @relation(fields: [workAt], references: [id])
+  work      Mitra    @relation(fields: [workAt], references: [id])
   name      String
   email     String   @unique
   password  String
