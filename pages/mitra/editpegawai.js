@@ -5,7 +5,7 @@ import React from 'react'
 import nookies from 'nookies'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import Router from 'next/router'
+import {Router,useRouter} from 'next/router'
 import profil from '../../controller/profil'
 
 export async function getServerSideProps(ctx){
@@ -50,7 +50,17 @@ export default function editprofil() {
     const cookies = cookie.token;
     const role = nookies.get('role');  
     const job = role.role
+    const router = useRouter();
+    const {
+      query:{id,nama},
+    } = router
+    const props = {
+        nama,
+        id
+    }
+    const idacc = parseInt(props.id)
 
+    const [data2,setdata2] = useState([]);
     const [data,setdata] = useState([]);
     useEffect(() => {
       const cookie = nookies.get('token');
@@ -63,7 +73,28 @@ export default function editprofil() {
         setdata(dat)
         }
         getdata()
-    }, []);
+      const {
+          query:{id,nama},
+      } = router
+      const props = {
+          nama,
+          id
+      }
+      const idacc = parseInt(props.id)
+      async function GetPegawai (){
+        const pegawai = await axios.post("/api/getpegawai",
+          {"id":idacc},
+          {headers: {
+            'Authorization': `Bearer ${cookies}`,
+            'Content-Type': 'application/json',
+          }}
+        )
+        const data = await pegawai.data
+        setdata2(data)
+      }
+      GetPegawai()
+        
+    }, [router]);
 
     const [name,setName] = useState('')
     const [no,setNo] = useState('')
@@ -79,10 +110,21 @@ export default function editprofil() {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const isValidEmail = emailRegex.test(final_email);
         if(isValidEmail && isValidPhoneNumber){ 
-          const edit = new profil();
-          const dat = await edit.UpdateDataAkun(cookies,{ email:final_email, name:final_name, password,no:final_no ,alamat:final_alamat },job)
-          setPesan(dat.message)
-          setTampil(true)
+          async function update(){
+            const response = await axios.put("/api/editpegawai",
+            {name:final_name,email:final_email,password,no:final_no,id:idacc},
+            {headers: {
+              'Authorization': `Bearer ${cookies}`,
+              'Content-Type': 'application/json'
+            }}
+            )
+            const dat = await response.data
+            console.log(dat)
+            setPesan(dat.message)
+            setTampil(true)
+            console.log(idacc)
+          }
+        update()
         }
         else if (!isValidEmail){
           alert("format email anda tidak sesuai")
@@ -96,14 +138,13 @@ export default function editprofil() {
       function handleInputFocus(event) {
         event.target.setSelectionRange(0, event.target.value.length);
       }
-    const final_name = name !== ''? name : data?.name || ''
-    const final_no = no !== ''? no : data?.no || ''
-    const final_alamat = alamat !== ''? alamat : data?.alamat || ''
-    const final_email = email !== ''? email : data?.email || ''
+    const final_name = name !== ''? name : data2?.name || ''
+    const final_no = no !== ''? no : data2?.no || ''
+    const final_email = email !== ''? email : data2?.email || ''
 
 
     function batal(){
-        Router.replace('/mitra/profil')
+        router.back()
     }
     function logout(){
           nookies.destroy(null,'token');
@@ -114,7 +155,7 @@ export default function editprofil() {
     const [tampil2,setTampil2] = useState(false)
     const success = () => {
       setTampil(false)
-      Router.replace('/mitra/profil');
+      router.replace('/mitra/tambahpegawai');
     }
     const pop = () => {
       setTampil2(true)
@@ -149,7 +190,7 @@ export default function editprofil() {
           <h4>{data.name}</h4>
           <div className="button-item d-flex flex-column align-items-center gap-4">
             <Link href='/mitra'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Home</button></Link>
-            <Link href='tambahpegawai'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Pegawai</button></Link>
+            <Link href='tambahpegawai'><button type="button" className="btn btn-admin btn-light poppins text-warning rounded-pill shadow  btn-lg">Pegawai</button></Link>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Tracking</button>
             <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Keluar</button>
@@ -168,10 +209,6 @@ export default function editprofil() {
               <input className="rounded-pill border-0 p-1 ps-2" type="text" value={final_no} onChange={(e) => setNo(e.target.value)} onFocus={handleInputFocus}/>
             </div>
             <div className="inp d-flex flex-column gap-1">
-              <label className="poppins" htmlFor>Alamat Lengkap</label>
-              <input className="rounded-pill border-0 p-1 ps-2" type="text" value={final_alamat} onChange={(e) => setAlamat(e.target.value)} onFocus={handleInputFocus}/>
-            </div>
-            <div className="inp d-flex flex-column gap-1">
               <label className="poppins" htmlFor>Email</label>
               <input className="rounded-pill border-0 p-1 ps-2" type="text" value={final_email} onChange={(e) => setEmail(e.target.value)} onFocus={handleInputFocus}/>
             </div>
@@ -188,7 +225,7 @@ export default function editprofil() {
             <div className='status'>
             <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
               <img src="/images/centang.png" alt="" />
-              <h1 className="poppins fw-bold text-dark">{pesan}</h1>
+              <h1 className="poppins fw-bold text-dark text-center">{pesan}</h1>
               <button className="btn btn-lg btn-warning rounded-pill shadow text-white" onClick={success}>OK</button>
             </div>
         </div>
@@ -197,7 +234,7 @@ export default function editprofil() {
             <div className='status'>
               <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
                 <img src="/images/alert.png" alt="" />
-                <h1 className="poppins fw-bold text-dark">{pesan}</h1>
+                <h1 className="poppins fw-bold text-dark text-center">{pesan}</h1>
                 <button className="btn btn-lg btn-warning rounded-pill shadow text-white" onClick={notsuccess}>OK</button>
               </div>
             </div>

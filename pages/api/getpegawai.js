@@ -23,7 +23,8 @@ export default authMiddleware(async function handler(req, res){
         }
         const pegawai = await prisma.pegawai.findUnique({
             where:{
-                id            }
+                id            
+            }
         })
         return res.status(200).json(pegawai)
     }

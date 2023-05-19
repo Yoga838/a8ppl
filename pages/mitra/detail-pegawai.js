@@ -112,7 +112,7 @@ export default function mitra_page() {
         pathname : "/mitra/editpegawai",
         query: {
           id:props.id,
-          name:props.name
+          nama:props.name
         }
       })
   };
