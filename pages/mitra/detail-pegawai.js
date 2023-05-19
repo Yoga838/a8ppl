@@ -1,11 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable @next/next/no-css-tags */
+import Link from 'next/link'
 import React from 'react'
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import nookies from 'nookies';
-import axios from 'axios';import Router from 'next/router'
-import profil from '@/controller/profil';
+import nookies from 'nookies'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import {Router,useRouter} from 'next/router'
+import profil from '../../controller/profil'
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -44,67 +46,83 @@ export async function getServerSideProps(ctx){
   }
 }
 
+export default function mitra_page() {
 
-export default function informasi_pembayaran() {
+    const router = useRouter()
+    const {
+        query:{id,name},
+    } = router
+    const props = {
+        name,
+        id
+    }
+    const date_catat = props.name;
 
-    const [data,setdata] = useState([]);
-    useEffect(() => {
-      const cookie = nookies.get('token');
-      const cookies = cookie.token;
-      const role = nookies.get('role');
-      const job = role.role
-      async function getdata(){
-        const Get_Profile = new profil()
-        const dat = await Get_Profile.getDataAkun(job,cookies)
-        setdata(dat)
-        }
-        getdata()
-
-      async function GetPremiInfo(){
-        const response = await fetch("/api/premiumcondition",{
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${cookies}`,
-            'Content-Type': 'application/json'
-          }
+  const [data,setdata] = useState([]);
+  const [data2,setdata2] =  useState([]);
+  useEffect(() => {
+    const cookie = nookies.get('token');
+    const cookies = cookie.token;
+    const role = nookies.get('role');
+    const job = role.role
+    async function getdata(){
+      const Get_Profile = new profil()
+      const dat = await Get_Profile.getDataAkun(job,cookies)
+      setdata(dat)
+    }
+    getdata()
+    const {
+        query:{id,name},
+    } = router
+    const props = {
+        name,
+        id
+    }
+    const convertid = parseInt(props.id)
+    const idacc = {id:convertid}
+    async function getpegawai (){
+        const pegawai = await fetch("/api/getpegawai",{
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${cookies}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(idacc)
         })
-        const data = await response.json()
-        if(data.status == true && data.tolak == true ){
-          setpesan("Pengajuan Anda Ditolak Coba Lagi!")
-          setTampil(true)
-        }
-        else if(data.status == true && data.tolak == false){
-          setpesan("Pengajuan belum diproses admin")
-          setTampil(true)
-        }
-        else{
-          //
-        }
-      }
-      GetPremiInfo()
-    }, []);
-  
+        const data = await pegawai.json()
+        setdata2(data)
+    }
+    getpegawai()
+  }, [router]);
 
-    function logout(){
-        nookies.destroy(null,'token');
-        nookies.destroy(null,'role');
-        Router.replace('/');
-    }
-    const [tampil2,setTampil2] = useState(false)
-    const pop = () => {
-      setTampil2(true)
-    } 
-    const notpop = () => {
-      setTampil2(false)
-    }
-    const [pesan,setpesan] = useState('')
-    const [tampil,setTampil] = useState(false)
-    const close = () =>{
-      setTampil(false)
-    }
+  function logout(){
+      nookies.destroy(null,'token');
+      nookies.destroy(null,'role');
+      Router.replace('/');
+  }
+  const [tampil2,setTampil2] = useState(false)
+  const pop = () => {
+    setTampil2(true)
+  } 
+  const notpop = () => {
+    setTampil2(false)
+  } 
+  const handleButtonClick = () => {
+    router.push({
+        pathname : "/mitra/editpegawai",
+        query: {
+          id:props.id,
+          name:props.name
+        }
+      })
+  };
   return (
     <div>
+    <meta charSet="UTF-8" />
+    <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tem.u</title>
+    <link rel="stylesheet" href="/style.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossOrigin="anonymous" />
     <nav className="d-flex justify-content-between navbar fixed-top navbar-light bg-light">
     <div class="container-fluid">
@@ -119,10 +137,10 @@ export default function informasi_pembayaran() {
       <div className="row">
         <div className="sidebar-left content1 bg-color-yellow col-md-4  d-flex flex-column align-items-center gap-2">
         <div className='content2 d-flex flex-column align-items-center gap-2'>
-          <Link href='/mitra/profil'><div className="circle mt-4" /></Link>
+          <div className="circle mt-4"/>
           <h4>{data.name}</h4>
           <div className="button-item d-flex flex-column align-items-center gap-4">
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Home</button>
+            <Link href='/mitra'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Home</button></Link>
             <Link href='/mitra/tambahpegawai'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Pegawai</button></Link>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button>
@@ -131,32 +149,16 @@ export default function informasi_pembayaran() {
         </div> 
         </div>
         <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
-          {/* isinya data nanti tapi */}
-          <h1 className='poppins fw-bold text-center'>Informasi Pembayaran</h1>
-
-        <div className='container bg-color-yellow p-5 border-pembayaran shadow'>
-            <p className='poppins'>No Rekening Admin:</p>
-            <h3 className='poppins fw-bold'>5487-4562-3698-2587</h3>
-            <p className='poppins'>harga:</p>
-            <h3 className='poppins fw-bold'>Rp 350.000,00</h3>
+          <div className="circle mx-auto "><img src='/images/worker.png'></img></div>
+          <p className="poppins">Nama Lengkap:</p>
+          <p className="poppins fw-bold">{data2.name}</p>
+          <p className="poppins">No Telp:</p>
+          <p className="poppins fw-bold">{data2.no}</p>
+          <p className="poppins">Email:</p>
+          <p className="poppins fw-bold">{data2.email}</p>
+          <p className="poppins">password:</p>
+          <p className="poppins fw-bold">********************</p>
         </div>
-        <div className="button-left d-flex justify-content-end mt-5 gap-4 mb-4">
-            <button onClick={(e)=>{e.stopPropagation(),Router.back()}} type="button"  className="btn btn-admin bg-color-red poppins text-white shadow rounded-pill  btn-lg">Kembali</button>
-            <Link href='halaman-pembayaran'><button type="button"  className="btn btn-admin bg-color-green poppins text-white shadow rounded-pill  btn-lg">Daftar Premium</button></Link>
-        </div>
-
-        </div>
-        {/* pop up status */}
-        {tampil &&(  
-            <div className='status'>
-            <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
-              <img src="/images/alert.png" alt="" />
-              <h1 className="poppins fw-bold text-dark text-center">{pesan}</h1>
-              <button className="btn btn-lg btn-warning rounded-pill shadow text-white" onClick={close}>OK</button>
-            </div>
-          </div>
-          )}
-          {/* pop up logout */}
         {tampil2 &&(  
             <div className='status'>
               <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
@@ -169,6 +171,7 @@ export default function informasi_pembayaran() {
               </div>
             </div>
           )}
+        <button onClick={(e)=>{e.stopPropagation(),handleButtonClick()}} className="poppins shadow fw-bold button-edit bg-color-yellow btn btn-lg rounded-pill">Edit Data&nbsp;<img src="/images/button_icon_edit.png" alt="" /></button>
       </div>
     </div>
   </div>

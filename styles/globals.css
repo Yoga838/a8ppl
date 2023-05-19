@@ -118,6 +118,9 @@ background-color: #FF0000 !important
   background-color: black !important;
   border-radius: 50%;
 }
+.circle img{
+  width: 100% !important;
+}
 .btn-admin{
   width: 300px;
 }

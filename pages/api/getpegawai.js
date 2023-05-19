@@ -15,7 +15,16 @@ export default authMiddleware(async function handler(req, res){
         }
 
         return res.send( pegawai );
-    } else {
-        return res.status(405).json({ message: 'method not allowed' })
+    } 
+    if(req.method === 'POST') {
+        const {id} = req.body;
+        if (!id){
+            return res.status(400).json({message:"method body not found"})
+        }
+        const pegawai = await prisma.pegawai.findUnique({
+            where:{
+                id            }
+        })
+        return res.status(200).json(pegawai)
     }
 })

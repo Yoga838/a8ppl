@@ -90,6 +90,19 @@ const [data2,setdata2] = useState([]);
       });
   }, []);
 
+  const handleButtonClick = (item) => {
+    senddata(item.id,item.name)
+  };
+  function senddata(setId,setName){
+    Router.push({
+      pathname : "/mitra/detail-pegawai",
+      query: {
+        id:setId,
+        name:setName
+      }
+    })
+  }
+
   return (
     <div>
     <title>Tem.u</title>
