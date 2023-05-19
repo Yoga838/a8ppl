@@ -6,7 +6,7 @@ export default authMiddleware(async function handler(req,res){
         const userId = req.user.userId;
         const bukti = req.body;
         if (!bukti){
-            return res.status(400).json({message:"Data tidak boleh kosong!"})
+            return res.status(200).json({message:"Data tidak boleh kosong!"})
         }
         const search = await prisma.bukti_bayar.findFirst({
             where:{
