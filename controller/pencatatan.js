@@ -60,6 +60,17 @@ class pencatatan {
         const data = await response.json()
         return data
     }
+    async hapus (cookies,id){
+        const response = await fetch(`/api/catat?id=${id}`,{
+            method: "DELETE",
+            headers:{
+                'Authorization': `Bearer ${cookies}`,
+                'Content-Type': 'application/json'
+            }
+        })
+        const data = await response.json()
+        return data
+    }
 }
 
 

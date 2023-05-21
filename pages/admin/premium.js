@@ -8,6 +8,7 @@ import axios from 'axios'
 import Router from 'next/router'
 import Link from 'next/link'
 import profil from '@/controller/profil'
+import MenuPengajuanPremium from '@/controller/MenuPengajuanPremium'
 
 
 export async function getServerSideProps(ctx){
@@ -68,14 +69,8 @@ export default function pengajuan() {
       getdata()
 
     async function premipropo (){
-      const response = await fetch("/api/premiumacc",{
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${cookies}`,
-          'Content-Type': 'application/json'
-        }
-      })
-      const data = await response.json();
+      const pengajuan = new MenuPengajuanPremium()
+      const data = await pengajuan.MenuPengajuanPremium(cookies)
       setdata2(data)
     }
     premipropo()

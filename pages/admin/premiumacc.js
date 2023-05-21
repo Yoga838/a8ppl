@@ -7,6 +7,7 @@ import Router from 'next/router'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import profil from '../../controller/profil'
+import MenuPengajuanPremium from '@/controller/MenuPengajuanPremium'
 
 
 
@@ -66,7 +67,8 @@ export default function approve({}) {
     
     const [data,setdata] = useState([]);
     const [data2,setdata2] = useState([]);
-    console.log(data2)
+    const cookie = nookies.get('token');
+    const cookies = cookie.token;
 
   useEffect(() => {
     const {
@@ -86,33 +88,25 @@ export default function approve({}) {
         id:accid
     }
   
-    const config = {
-        headers :{
-      'Authorization': `Bearer ${cookies}`,
-      'Content-Type': 'application/json',
+    const role = nookies.get('role');
+    const job = role.role
+    async function getdata(){
+      const Get_Profile = new profil()
+      const dat = await Get_Profile.getDataAkun(job,cookies)
+      setdata(dat)
+      }
+    async function acc_pilih (){
+      const acc = new MenuPengajuanPremium()
+      const data = await acc.PengajuanDipilih(cookies,send)
+      setdata2(data)
     }
-};
-const role = nookies.get('role');
-const job = role.role
-async function getdata(){
-  const Get_Profile = new profil()
-  const dat = await Get_Profile.getDataAkun(job,cookies)
-  setdata(dat)
-  }
-  getdata()
-    axios.post('/api/premiumacc' ,send,config )
-      .then(response => {
-        setdata2(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
+    acc_pilih()
+    getdata()
   }, [router]);
+
+
   const approve = async (e) => {
     e.preventDefault(); // prevent form from submitting normally
-    const cookie = nookies.get('token');
-    const cookies = cookie.token;
     const expire = new Date();
     expire.setMonth(expire.getMonth() + 12);
 
@@ -120,43 +114,25 @@ async function getdata(){
         id:accid,
         status:1,
         expire
-    }
-  
-    const config = {
-        headers :{
-      'Authorization': `Bearer ${cookies}`,
-      'Content-Type': 'application/json',
-    }
-};
+    }  
+    const acc = new MenuPengajuanPremium()
+    const data = await acc.setuju(cookies,send)
 
-    
-      const res = await axios.patch('/api/premiumacc' ,send,config )
-      const data = await res.data
-      router.replace('/admin')
+    router.replace('/admin')
     
   }
 
   const reject = async (e) => {
     e.preventDefault(); // prevent form from submitting normally
-    const cookie = nookies.get('token');
-    const cookies = cookie.token;
+  
     const send = {
         id:accid,
         status:2
       }
-  
-    const config = {
-        headers :{
-      'Authorization': `Bearer ${cookies}`,
-      'Content-Type': 'application/json',
-    }
-};
-
-    
-      const res = await axios.patch('/api/premiumacc' ,send,config )
-      const data = await res.data
-      router.replace('/admin/premium')
-    
+    const decline = new MenuPengajuanPremium()
+    const data = await decline.setuju(cookies,send)
+      
+    router.replace('/admin/premium')
   }
 
   function logout(){

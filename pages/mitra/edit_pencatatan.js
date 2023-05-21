@@ -174,13 +174,8 @@ export default function Pencatatan() {
     }
 
     async function delete_data(id){
-      const response = await fetch(`/api/catat?id=${id}`,{
-        method: "DELETE",
-        headers:{
-          'Authorization': `Bearer ${cookies}`,
-          "Content-Type" : "application/json"},
-      })
-      const data = await response.json();
+      const del = new pencatatan()
+      const data = await del.hapus(cookies,id)
       setTampil(true)
       setPesan(data.message)
     }

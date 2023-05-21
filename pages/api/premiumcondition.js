@@ -10,7 +10,7 @@ export default authMiddleware(async function handler(req,res){
               id_mitra: userId,
             }
           });
-        if(!buktiBayar || buktiBayar.expire < now){
+        if(!buktiBayar){
             return res.status(200).json({"status":false})
         }
         if(buktiBayar.status === 0){
@@ -18,6 +18,9 @@ export default authMiddleware(async function handler(req,res){
         }
         else if(buktiBayar.status === 2){
             return res.status(200).json({"status":true,"tolak":true})
+        }
+        else if(buktiBayar.status === 1 || buktiBayar.expire < now){
+            return res.status(200).json({"status":false})
         }
         else{
             return res.status(200).json({"status":true})
