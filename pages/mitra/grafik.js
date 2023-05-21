@@ -7,6 +7,7 @@ import nookies from 'nookies';
 import axios from 'axios';import Router from 'next/router'
 import profil from '@/controller/profil';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import pencatatan from '@/controller/pencatatan';
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -62,14 +63,8 @@ export default function grafik() {
         }
         getdata()
       async function get_grafik(){
-        const response = await fetch("/api/getgrafik",{
-            method: "GET",
-            headers:{
-              'Authorization': `Bearer ${cookies}`,
-              "Content-Type" : "application/json"
-            }
-        })
-        const data = await response.json();
+        const get = new pencatatan()
+        const data = await get.GrafikPencatatan(cookies)
         setData2(data)
       }
       get_grafik()
@@ -89,8 +84,6 @@ export default function grafik() {
     const notpop = () => {
       setTampil2(false)
     }
-
-    console.log(data2)
   return (
     <div>
     <title>Tem.u</title>

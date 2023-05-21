@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import { format } from 'date-fns';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { flushSync } from 'react-dom';
+import pencatatan from '@/controller/pencatatan';
 
 
 export async function getServerSideProps(ctx){
@@ -71,17 +72,17 @@ export default function Pencatatan() {
     nookies.destroy(null,'token');
     nookies.destroy(null,'role');
     Router.replace('/');
-}
-const [tampil2,setTampil2] = useState(false)
-const pop = () => {
-  setTampil2(true)
-} 
-const notpop = () => {
-  setTampil2(false)
-} 
+  }
+  const [tampil2,setTampil2] = useState(false)
+  const pop = () => {
+    setTampil2(true)
+  } 
+  const notpop = () => {
+    setTampil2(false)
+  } 
 
-const [data,setdata] = useState([]);
-const [data2,setdata2] = useState([]);
+  const [data,setdata] = useState([]);
+  const [data2,setdata2] = useState([]);
 
   useEffect(() => {
     const {
@@ -96,24 +97,23 @@ const [data2,setdata2] = useState([]);
     const cookies = cookie.token;
     const role = nookies.get('role');
     const job = role.role
+    const send = {
+      id:id_data
+    }
   
     async function getdata(){
       const Get_Profile = new profil()
       const dat = await Get_Profile.getDataAkun(job,cookies)
       setdata(dat)
     }
+    async function getpilih(){
+      const pilih = new pencatatan()
+      const data = await pilih.PencatatanDipilih(cookies,send)
+      setdata2(data)
+    }
+    getpilih()
     getdata()
 
-    axios.post('/api/getdetailcatat',{id:id_data},{headers: {
-        'Authorization': `Bearer ${cookies}`,
-        'Content-Type': 'application/json'
-      }}, )
-        .then(response => {
-          setdata2(response.data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
     }, [router]);
     
     const [tanggal,setTanggal] = useState('');
@@ -149,15 +149,8 @@ const [data2,setdata2] = useState([]);
       const send = {
         tanggal,keterangan,pemasukan,pengeluaran,saldo,detail_dari:props.id
       }
-      const response = await fetch("/api/catat",{
-        method: "PUT",
-        headers:{
-          'Authorization': `Bearer ${cookies}`,
-          "Content-Type" : "application/json"},
-        body: JSON.stringify(send)
-      })
-      const data = await response.json();
-      console.log(data)
+      const save = new pencatatan()
+      const data = await save.simpan(cookies,send)
       setTampil(true)
       setPesan(data.message)
     }

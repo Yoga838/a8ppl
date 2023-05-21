@@ -8,6 +8,7 @@ import Router from 'next/router';
 import axios from 'axios'
 import profil from '../../controller/profil';
 import { sendError } from 'next/dist/server/api-utils';
+import pencatatan from '@/controller/pencatatan';
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -87,8 +88,6 @@ const [data2,setdata2] = useState([]);
   const [saldo,setSaldo] = useState('')
   const cookie = nookies.get('token');
   const cookies = cookie.token;
-  const role = nookies.get('role');
-  const job = role.role
 
   const [pesan,setPesan] = useState('');
   async function data_kirim() { 
@@ -100,14 +99,8 @@ const [data2,setdata2] = useState([]);
       const send = {
         nama,tanggal:tanggal2,keterangan,pemasukan:Pemasukan,pengeluaran:Pengeluaran,saldo:Saldo
       }
-      const response = await fetch("/api/catat",{
-        method: "POST",
-        headers:{
-          'Authorization': `Bearer ${cookies}`,
-          "Content-Type" : "application/json"},
-        body: JSON.stringify(send)
-      })
-      const data = await response.json(send);
+      const create = new pencatatan()
+      const data = await create.buat(cookies,send)
       setTampil(true)
       setPesan(data.message)
     }

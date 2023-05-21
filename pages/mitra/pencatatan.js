@@ -7,6 +7,7 @@ import nookies from 'nookies'
 import Router from 'next/router';
 import axios from 'axios'
 import profil from '../../controller/profil';
+import pencatatan from '@/controller/pencatatan';
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -53,17 +54,17 @@ export default function Pencatatan() {
     nookies.destroy(null,'token');
     nookies.destroy(null,'role');
     Router.replace('/');
-}
-const [tampil2,setTampil2] = useState(false)
-const pop = () => {
-  setTampil2(true)
-} 
-const notpop = () => {
-  setTampil2(false)
-} 
+  }
+  const [tampil2,setTampil2] = useState(false)
+  const pop = () => {
+    setTampil2(true)
+  } 
+  const notpop = () => {
+    setTampil2(false)
+  } 
 
-const [data,setdata] = useState([]);
-const [data2,setdata2] = useState([]);
+  const [data,setdata] = useState([]);
+  const [data2,setdata2] = useState([]);
 
   useEffect(() => {
     const cookie = nookies.get('token');
@@ -76,18 +77,14 @@ const [data2,setdata2] = useState([]);
       const dat = await Get_Profile.getDataAkun(job,cookies)
       setdata(dat)
     }
+    async function getcatat(){
+      const get_catat = new pencatatan()
+      const data = await get_catat.pencatatan(cookies)
+      setdata2(data)
+    }
+    getcatat()
     getdata()
-    axios.get('/api/getcatat' ,{headers: {
-      'Authorization': `Bearer ${cookies}`,
-      'Content-Type': 'application/json'
-    }}, )
-      .then(response => {
-        setdata2(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
+    }, []);
 
   const handleButtonClick = (item) => {
     senddata(item.id,item.nama_pencatatan)
@@ -116,7 +113,7 @@ const [data2,setdata2] = useState([]);
       </div>
     </nav>
     <div className="content">
-      <div className="row">
+      <div className="row ">
         <div className="sidebar-left bg-color-yellow col-md-4 pb-5 d-flex flex-column align-items-center gap-2">
         <div className='content2 d-flex flex-column align-items-center gap-2'>
           <Link href='/mitra/profil'><div className="circle mt-4" /></Link>
@@ -136,8 +133,9 @@ const [data2,setdata2] = useState([]);
             <Link href='grafik'><button className="btn btn-lg bg-color-green shadow rounded-pill text-light poppins fw-bold ">Grafik Pencatatan &nbsp;<img src="/images/grafik.png" alt="" /></button></Link>
             <Link href='/mitra/catat'><button className="btn btn-lg bg-color-green shadow rounded-pill text-light poppins fw-bold ">Pencatatan &nbsp;<img src="/images/plus.png" alt="" /></button></Link>
           </div>
-          <div className="d-flex flex-column mt-4 gap-4 align-items-center content1">
-            {/* content for loop entar     */}
+          <div className="d-flex flex-column mt-4 gap-4 align-items-center content1-2">
+            {/* content for loop entar */}
+             
             {data2.map((dat,index) =>(
             <div key={dat.id} className=" column-name-pgw d-flex justify-content-between shadow align-items-center  bg-color-yellow rounded-pill poppins fw-bold" onClick={(e) => {
               e.stopPropagation();

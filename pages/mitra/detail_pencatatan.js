@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import Router from 'next/router';
 import { format } from 'date-fns';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import pencatatan from '@/controller/pencatatan';
 
 
 
@@ -96,24 +97,22 @@ const [data2,setdata2] = useState([]);
     const cookies = cookie.token;
     const role = nookies.get('role');
     const job = role.role
+    const send = {id:id_data}
     
     async function getdata(){
       const Get_Profile = new profil()
       const dat = await Get_Profile.getDataAkun(job,cookies)
       setdata(dat)
     }
+    async function getpilih(){
+      const pilih = new pencatatan()
+      const data = await pilih.PencatatanDipilih(cookies,send)
+      setdata2(data)
+    }
+    getpilih()
     getdata()
 
-    axios.post('/api/getdetailcatat',{id:id_data},{headers: {
-        'Authorization': `Bearer ${cookies}`,
-        'Content-Type': 'application/json'
-      }}, )
-        .then(response => {
-          setdata2(response.data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+    
     }, [router]);
 
     const divRef = useRef(null)

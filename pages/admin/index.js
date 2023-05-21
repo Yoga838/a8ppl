@@ -8,6 +8,7 @@ import axios from 'axios'
 import Router from 'next/router'
 import Link from 'next/link'
 import profil from '@/controller/profil'
+import MenuPengajuanAkun from '@/controller/MenuPengajuanAkun'
 
 
 export async function getServerSideProps(ctx){
@@ -58,26 +59,21 @@ export default function pengajuan() {
     const cookie = nookies.get('token');
     const cookies = cookie.token;
   
-    const headers ={
-      'Authorization': `Bearer ${cookies}`,
-      'Content-Type': 'application/json',
-    };
+    
     const role = nookies.get('role');
     const job = role.role
     async function getdata(){
       const Get_Profile = new profil()
       const dat = await Get_Profile.getDataAkun(job,cookies)
       setdata(dat)
-      }
-      getdata()
-
-    axios.get('/api/approval' ,{headers} )
-      .then(response => {
-        setdata2(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    }
+    async function getacc(){
+      const Get_Pegawai = new MenuPengajuanAkun()
+      const data = await Get_Pegawai.MenuPengajuanAkun(cookies)
+      setdata2(data)
+    }
+    getdata()
+    getacc()
 
   }, []);
   function logout(){
@@ -106,7 +102,6 @@ const notpop = () => {
       }
     })
   }
-
 
   return (
     <div>

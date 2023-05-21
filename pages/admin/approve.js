@@ -7,6 +7,7 @@ import Router from 'next/router'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import profil from '../../controller/profil'
+import MenuPengajuanAkun from '@/controller/MenuPengajuanAkun'
 
 
 
@@ -61,6 +62,8 @@ export default function approve({}) {
     }
     const acc = props.id
     const accid = parseInt(acc)
+    const cookie = nookies.get('token');
+    const cookies = cookie.token;
     
     
     
@@ -76,86 +79,49 @@ export default function approve({}) {
         name,
         id
     }
-
     const cookie = nookies.get('token');
     const cookies = cookie.token;
     const acc = props.id
     const accid = parseInt(acc)
+    const role = nookies.get('role');
+    const job = role.role
 
-    const send = {
-        id:accid
+    async function getdata(){
+      const Get_Profile = new profil()
+      const dat = await Get_Profile.getDataAkun(job,cookies)
+      setdata(dat)
+      }
+    async function getpilih(){
+      const Dipilih = new MenuPengajuanAkun()
+      const data = await Dipilih.PengajuanDipilih(cookies,accid)
+      setdata2(data)
     }
-  
-    const config = {
-        headers :{
-      'Authorization': `Bearer ${cookies}`,
-      'Content-Type': 'application/json',
-    }
-};
-const role = nookies.get('role');
-const job = role.role
-async function getdata(){
-  const Get_Profile = new profil()
-  const dat = await Get_Profile.getDataAkun(job,cookies)
-  setdata(dat)
-  }
-  getdata()
-    axios.post('/api/getmitra' ,send,config )
-      .then(response => {
-        setdata2(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
+    getpilih()
+    getdata()
   }, [router]);
   const approve = async (e) => {
     e.preventDefault(); // prevent form from submitting normally
-    const cookie = nookies.get('token');
-    const cookies = cookie.token;
-
     const send = {
         id:accid
     }
-  
-    const config = {
-        headers :{
-      'Authorization': `Bearer ${cookies}`,
-      'Content-Type': 'application/json',
-    }
-};
-
-    
-      const res = await axios.post('/api/approval' ,send,config )
-      const data = await res.data
-      router.replace('/admin')
+    const setuju = new MenuPengajuanAkun()
+    const data = await setuju.Setuju(cookies,send)
+    router.replace('/admin')
     
   }
 
   const reject = async (e) => {
     e.preventDefault(); // prevent form from submitting normally
-    const cookie = nookies.get('token');
-    const cookies = cookie.token;
     const send = {
         name:data2.name,
         email:data2.email,
         password:data2.password,
         id:accid
       }
-      console.log(send)
-  
-    const config = {
-        headers :{
-      'Authorization': `Bearer ${cookies}`,
-      'Content-Type': 'application/json',
-    }
-};
-
-    
-      const res = await axios.post('/api/reject' ,send,config )
-      const data = await res.data
-      router.replace('/admin')
-    
+    const tolak = new MenuPengajuanAkun()
+    const data = await tolak.Tolak(cookies,send)
+    console.log(data)
+    router.replace('/admin')  
   }
 
   function logout(){
@@ -184,7 +150,6 @@ const success = () => {
 const notsuccess = () => {
   setTampil(false)
 }
-
   return (
     <div>
     <meta charSet="UTF-8" />
