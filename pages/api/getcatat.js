@@ -6,8 +6,11 @@ export default authMiddleware(async function handler(req,res){
         const userId = req.user.userId;
         const getdata = await prisma.pencatatan.findMany({
             select: {
-                id: true,
+                milik: true,
                 nama_pencatatan: true,
+              },
+              where:{
+                milik:userId
               }
         })
         return res.status(200).json(getdata)
