@@ -189,7 +189,7 @@ export default function addtracking() {
           </div>
         {/* button */}
           <div className="button-left d-flex justify-content-end gap-4 mt-4">
-            <button type="button" className="btn btn-admin bg-color-red poppins text-white shadow rounded-pill  btn-lg">Batal</button>
+            <button onClick={(e) => {e.stopPropagation(),Router.back()}} type="button" className="btn btn-admin bg-color-red poppins text-white shadow rounded-pill  btn-lg">Batal</button>
             <button onClick={(e)=>{e.stopPropagation,tambah()}} type="button" className="btn btn-admin bg-color-green poppins text-white shadow rounded-pill  btn-lg">Buat</button>
           </div>
 
