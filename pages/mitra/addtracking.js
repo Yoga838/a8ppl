@@ -127,7 +127,7 @@ export default function addtracking() {
     const[pesan,setpesan]= useState()
     const [pop_up,setpopup] = useState(false)
     const notsuccess = () => {
-      setpesan(false)
+      setpopup(false)
     }
     const success = () => {
       Router.replace("/mitra/tracking")
