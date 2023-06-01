@@ -175,7 +175,7 @@ export default function edit_konfirmasi() {
         </div>
         <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
           {/* isinya data nanti tapi */}
-          <h1 className="poppins fw-bold text-center">Edit Konfirmasi produk</h1>
+          <h1 className="poppins fw-bold text-center">Edit Konfirmasi Pendistribusian</h1>
           <div className="input d-flex flex-column mb-2">
               <label className="ms-3  pb-1 poppins">Nama Pembeli</label>
               <input value={nama_pembeli} onChange={(e)=>{setdat1(e.target.value)}}  className="rounded-pill p-1 ps-3" type="text" placeholder="Masukkan nama pembeli anda"  />
@@ -190,7 +190,7 @@ export default function edit_konfirmasi() {
           </div>
           {/* button */}
           <div className="button-left d-flex justify-content-end gap-4 mt-4">
-            <button type="button" className="btn btn-admin bg-color-red poppins text-white shadow rounded-pill  btn-lg">Batal</button>
+            <button onClick={(e)=>{e.stopPropagation,router.back()}} type="button" className="btn btn-admin bg-color-red poppins text-white shadow rounded-pill  btn-lg">Batal</button>
             <button onClick={(e)=>{e.stopPropagation,simpan()}} type="button" className="btn btn-admin bg-color-green poppins text-white shadow rounded-pill  btn-lg">Simpan</button>
           </div>
         </div>
