@@ -39,7 +39,7 @@ try {
 else if(!isValidEmail){
   alert("format email anda tidak sesuai")
 }
-else if(!isValidLink && !isValidLink2){
+else if(!isValidLink || !isValidLink2){
   alert("format link tidak sesuai")
 }
 else{
