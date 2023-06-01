@@ -87,7 +87,7 @@ export default function Pencatatan() {
     }, []);
 
   const handleButtonClick = (item) => {
-    senddata(item.id,item.nama_pencatatan)
+    senddata(item.milik,item.nama_pencatatan)
   };
   function senddata(setId,setName){
     Router.push({
@@ -137,7 +137,7 @@ export default function Pencatatan() {
             {/* content for loop entar */}
              
             {data2.map((dat,index) =>(
-            <div key={dat.id} className=" column-name-pgw d-flex justify-content-between shadow align-items-center  bg-color-yellow rounded-pill poppins fw-bold" onClick={(e) => {
+            <div key={dat.milik} className=" column-name-pgw d-flex justify-content-between shadow align-items-center  bg-color-yellow rounded-pill poppins fw-bold" onClick={(e) => {
               e.stopPropagation();
               handleButtonClick(dat)
             }}>

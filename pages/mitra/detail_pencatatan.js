@@ -111,8 +111,6 @@ const [data2,setdata2] = useState([]);
     }
     getpilih()
     getdata()
-
-    
     }, [router]);
 
     const divRef = useRef(null)
