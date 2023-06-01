@@ -26,7 +26,8 @@ export default authMiddleware(async function handler(req,res){
     }
     if(req.method === "PUT"){
         const userId = req.user.userId;
-        const pegawai = await prisma.pegawai.findUnique({where:Number(userId)})
+        const id = {"id":Number(userId)}
+        const pegawai = await prisma.pegawai.findUnique({where:id})
         const response = await prisma.tracking.findMany({
             where: {
                 kondisi_barang: {
