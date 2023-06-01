@@ -122,7 +122,7 @@ export default function pegawai_page() {
       setTampil(false)
     }
     function batal(){
-      Router.replace('/pegawai')
+      Router.back()
   }
 
 

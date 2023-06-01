@@ -25,7 +25,7 @@ export default async function handler(req, res){
         if (visitor){
             const passwordMatch = await compare(password, visitor.password);
             if (!passwordMatch) {
-                return res.status(401).json({ message: 'Password yang anda masukkan salah!' });
+                return res.status(401).json({ message: 'Email atau password yang anda masukkan salah!' });
             }
             const user = "visitor";
             const token = sign({ userId: visitor.id }, JWT_SECRET, { expiresIn: '7d' });
@@ -34,7 +34,7 @@ export default async function handler(req, res){
         if (admin){
             const passwordMatch = await compare(password, admin.password);
             if (!passwordMatch) {
-                return res.status(401).json({ message: 'Password yang anda masukkan salah!' });
+                return res.status(401).json({ message: 'Email atau password yang anda masukkan salah!' });
             }
             const user = "admin";
             const token = sign({ userId: admin.id }, JWT_SECRET, { expiresIn: '7d' });
@@ -43,7 +43,7 @@ export default async function handler(req, res){
         if (pegawai){
             const passwordMatch = await compare(password, pegawai.password);
             if (!passwordMatch) {
-                return res.status(401).json({ message: 'Password yang anda masukkan salah!' });
+                return res.status(401).json({ message: 'Email atau password yang anda masukkan salah!' });
             }
             const user = "pegawai";
             const token = sign({ userId: pegawai.id }, JWT_SECRET, { expiresIn: '7d' });
@@ -52,7 +52,7 @@ export default async function handler(req, res){
         if (mitra){
             const passwordMatch = await compare(password, mitra.password);
             if (!passwordMatch) {
-                return res.status(401).json({ message: 'Password yang anda masukkan salah!' });
+                return res.status(401).json({ message: 'Email atau password yang anda masukkan salah!' });
             }
             const approv = await prisma.aproval.findFirst({where:{accid:mitra.id}})
             if(!approv){
@@ -65,7 +65,7 @@ export default async function handler(req, res){
         if (reject){
             const passwordMatch = await compare(password, reject.password);
             if (!passwordMatch) {
-                return res.status(401).json({ message: 'Password yang anda masukkan salah!' });
+                return res.status(401).json({ message: 'Email atau password yang anda masukkan salah!' });
             }
             // const user = "admin";
             // const token = sign({ userId: admin.id }, JWT_SECRET, { expiresIn: '7d' });

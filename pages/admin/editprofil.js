@@ -84,14 +84,9 @@ export default function Profil() {
     const cookies = cookie.token;
     const role = nookies.get('role');
     const job = role.role
-    if (deskripsi!= ''){
     const edit = new profil();
     const dat = await edit.UpdateDataAkun(cookies,{deskripsi},job)
     setPesan(dat.message)
-    }
-    else{
-      alert('harap inputkan deskripsi terbaru')
-    }
     setTampil(true)
     
   }

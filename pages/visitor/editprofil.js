@@ -122,7 +122,7 @@ export default function visitor_page() {
       setTampil(false)
     }
     function batal(){
-      Router.replace('/mitra')
+      Router.back()
   }
 
 
