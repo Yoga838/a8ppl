@@ -6,7 +6,7 @@ export default authMiddleware(async function handler(req,res){
         const userId = req.user.userId;
         const{nama_pembeli,alamat_pembeli,kondisi_barang,id_pembeli} = req.body
         if (!alamat_pembeli||!kondisi_barang){
-            return res.status(400).json({message:"Data tidak boleh kosong!aa"})
+            return res.status(400).json({message:"Data tidak boleh kosong!"})
         }
         if(!nama_pembeli&&!id_pembeli){
             return res.status(400).json({message:"Data tidak boleh kosong!"})
