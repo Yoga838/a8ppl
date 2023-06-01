@@ -16,6 +16,19 @@ model Visitor {
   no        String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  tracking  tracking[]
+}
+model tracking {
+  id Int @id @default(autoincrement())
+  nama_pembeli String ?
+  alamat_pembeli String 
+  kondisi_barang String
+  id_pembeli Int ?
+  id_mitra Int
+  id_pegawai Int ?
+  visitor Visitor ? @relation(fields: [id_pembeli],references: [id])
+  pegawai pegawai ? @relation(fields: [id_pegawai],references: [id])
+  mitra Mitra @relation(fields: [id_mitra],references: [id])
 }
 
 model Mitra {
@@ -33,6 +46,7 @@ model Mitra {
   pegawai         pegawai[]
   pencatatan      pencatatan[]
   bukti_bayar     bukti_bayar[]
+  tracking        tracking[]
 }
 model bukti_bayar{
   id            Int @id @default(autoincrement())
@@ -41,6 +55,14 @@ model bukti_bayar{
   expire        DateTime?
   id_mitra      Int @unique
   mitra         Mitra @relation(fields: [id_mitra],references: [id])
+}
+model konfirmasi {
+  id Int @id @default(autoincrement())
+  nama_pembeli String
+  alamat_pembeli String
+  keterangan String
+  id_pegawai Int
+  pegawai pegawai @relation(fields: [id_pegawai],references: [id])
 }
 model pegawai {
   id        Int      @id @default(autoincrement())
@@ -52,6 +74,8 @@ model pegawai {
   no        String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  tracking tracking[]
+  konfirmasi konfirmasi[]
 }
 model aproval {
   id            Int   @id @default(autoincrement())

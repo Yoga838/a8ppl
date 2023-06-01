@@ -6,8 +6,7 @@ import Link from 'next/link';
 import nookies from 'nookies';
 import axios from 'axios';import Router from 'next/router'
 import profil from '@/controller/profil';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import pencatatan from '@/controller/pencatatan';
+import { useRouter } from 'next/router';
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -33,10 +32,10 @@ export async function getServerSideProps(ctx){
         }
       }
     }
-    else if(cookies.role == 'pegawai'){
+    else if(cookies.role == 'mitra'){
       return{
         redirect:{
-          destination : '/pegawai'
+          destination : '/mitra'
         }
       }
     }
@@ -47,29 +46,48 @@ export async function getServerSideProps(ctx){
 }
 
 
-export default function grafik() {
+export default function Tracking() {
 
+    const router = useRouter()
     const [data,setdata] = useState([]);
-    const[data2,setData2] = useState([]);
+    const [data2,setdata2] = useState([]);
     useEffect(() => {
       const cookie = nookies.get('token');
       const cookies = cookie.token;
       const role = nookies.get('role');
       const job = role.role
+
+        const {
+            query:{id,nama_pembeli},
+        } = router
+        const props = {
+            nama_pembeli,
+            id
+        }
+        const convertid = parseInt(props.id)
+        const idacc = {id:convertid}
+
       async function getdata(){
         const Get_Profile = new profil()
         const dat = await Get_Profile.getDataAkun(job,cookies)
         setdata(dat)
-        }
-        getdata()
-      async function get_grafik(){
-        const get = new pencatatan()
-        const data = await get.GrafikPencatatan(cookies)
-        setData2(data)
       }
-      get_grafik()
-     
-    }, []);
+      async function gettracking(){
+        const dat = await fetch("/api/getallkonfirmasi",{
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${cookies}`,
+            'Content-Type': 'application/json'
+          },
+          body:JSON.stringify(idacc)
+        })
+        const data = await dat.json()
+        setdata2(data)
+        console.log(data)
+      }
+      gettracking()
+      getdata()
+    }, [router]);
   
 
     function logout(){
@@ -84,6 +102,20 @@ export default function grafik() {
     const notpop = () => {
       setTampil2(false)
     }
+    
+    const handleButtonClick = () => {
+      senddata(data2.id,data2.nama_pembeli)
+    };
+    function senddata(setId,setName){
+      Router.push({
+        pathname : "/pegawai/edit-konfirmasi",
+        query: {
+          id:setId,
+          name:setName
+        }
+      })
+    }
+
   return (
     <div>
     <title>Tem.u</title>
@@ -91,42 +123,38 @@ export default function grafik() {
     <nav className="d-flex justify-content-between navbar fixed-top navbar-light bg-light">
     <div class="container-fluid">
         <h2 className="ms-3 mt-3 fw-bold poppins text-color-yellow">Tem.u</h2>
-        <div className="tombol d-flex gap-4 align-items-center">
-          <Link href='/mitra/cuaca'><button className="poppins tombol-nav btn bg-color-yellow rounded-pill  shadow text-dark"  role="button">Cuaca</button></Link>
-          <Link href='/mitra/pencatatan'><button className="poppins tombol-nav btn bg-color-yellow rounded-pill text-white shadow text-dark"  role="button">Pencatatan</button></Link>
-        </div>
-      </div>
+    </div>
     </nav>
     <div className="content">
       <div className="row">
         <div className="sidebar-left content1 bg-color-yellow col-md-4  d-flex flex-column align-items-center gap-2">
         <div className='content2 d-flex flex-column align-items-center gap-2'>
-          <Link href='/mitra/profil'><div className="circle mt-4" /></Link>
-          <h4>{data.name}</h4>
-          <div className="button-item d-flex flex-column align-items-center gap-4">
-            <Link href={'/mitra'}><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Home</button></Link>
-            <Link href='tambahpegawai'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Pegawai</button></Link>
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button>
-            <Link href='tracking'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button></Link>
-            <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Keluar</button>
-          </div>
+                <Link href='/pegawai/profil'><div className="circle mt-5" /></Link>
+                <h4>{data.name}</h4>
+                <div className="button-item d-flex pb-2 flex-column align-items-center gap-4">
+                <Link href='/pegawai'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button></Link>
+                <Link href='/pegawai/tracking'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button></Link>
+                <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Keluar</button>
+        </div>
         </div> 
         </div>
         <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
           {/* isinya data nanti tapi */}
-          <div className='d-flex mt-5 pt-2 justify-content-center'>
-              <BarChart width={800} height={400} data={data2}>
-                <CartesianGrid strokeDasharray="1 1"/>
-                <XAxis dataKey="nama_pencatatan"  />
-                <YAxis width={80}/>
-                <Tooltip/>
-                <Legend />
-                <Bar dataKey='total_pemasukan' fill='green'/>
-                <Bar dataKey='total_pengeluaran' fill='red'/>
-                <Bar dataKey='total_saldo' fill='blue'/>
-              </BarChart>
+          <h1 className="poppins fw-bold text-center">Konfirmasi Pendistribusian</h1>
+          <div className='data bg-color-yellow pt-4 pb-4'>
+            <div className='bg-color-green success-logo mx-auto'>
+                <p className='poppins fw-bold text-white'>Barang Sudah Diterima</p>
+            </div>
+            <div className='isi ps-5'>
+                <p>Nama Pembeli: <br/> <strong> {data2.nama_pembeli} </strong></p>
+                <p>Alamat Pembeli: <br/> <strong> {data2.alamat_pembeli} </strong></p>
+                <p>keterangan: <br/> <strong> {data2.keterangan} </strong></p>
+            </div>
           </div>
         </div>
+        {/* button fixed */}
+        <button onClick={(e) => {e.stopPropagation,handleButtonClick()}} className="confirbtn poppins fw-bold button-edit bg-color-yellow btn btn-lg  shadow rounded-pill">Edit Konfirmasi&nbsp;<img src="/images/button_icon_edit.png" alt="" /></button>
+        {/* pop up logout */}
         {tampil2 &&(  
             <div className='status'>
               <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">

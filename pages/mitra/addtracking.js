@@ -6,7 +6,6 @@ import Link from 'next/link';
 import nookies from 'nookies';
 import axios from 'axios';import Router from 'next/router'
 import profil from '@/controller/profil';
-import { el } from 'date-fns/locale';
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -46,12 +45,12 @@ export async function getServerSideProps(ctx){
 }
 
 
-export default function informasi_pembayaran() {
+export default function addtracking() {
 
     const cookie = nookies.get('token');
     const cookies = cookie.token;
-
     const [data,setdata] = useState([]);
+    const [data2, setdata2] = useState([]);
     useEffect(() => {
       const cookie = nookies.get('token');
       const cookies = cookie.token;
@@ -61,8 +60,25 @@ export default function informasi_pembayaran() {
         const Get_Profile = new profil()
         const dat = await Get_Profile.getDataAkun(job,cookies)
         setdata(dat)
+      }
+      async function getpremium(){
+        const response = await fetch("/api/ispremium",{
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${cookies}`,
+            'Content-Type': 'application/json'
+          }
+        })
+        const dat2 = await response.json();
+        if (dat2.status){
+          setdata2(dat2)
         }
-        getdata()
+        else{
+          Router.replace('/mitra/informasi-pembayaran')
+        }
+      }
+      getpremium()
+      getdata()
     }, []);
   
 
@@ -79,59 +95,43 @@ export default function informasi_pembayaran() {
       setTampil2(false)
     }
 
-    const [bukti,setBukti] = useState()
-    const isValidLink = (link) => {
-        const linkRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-        return linkRegex.test(link);
-    };
-    const [pesan,setPesan] = useState('')
-    async function bayar (){
-        // const isvalid = isValidLink(bukti)
-        if (bukti){
-            const isvalid = isValidLink(bukti)
-            if (!isvalid){
-              alert("link salah harap masukkan link yang benar!")
-            }
-            else{
-              const response = await fetch("/api/premium",{
-                method: 'POST',
-                headers: {
-                  'Authorization': `Bearer ${cookies}`,
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(bukti)
-              })
-            const data = await response.json();
-            setPesan(data.message)
-            pop1()
-            }
-        }
-        else{
-          const response = await fetch("/api/premium",{
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${cookies}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(null)
-          })
-        const data = await response.json();
-        setPesan(data.message)
-        pop1()
-        }
+
+
+    //data input 
+    const [id_pembeli,setid] = useState('')
+    const [nama_pembeli,setnama] = useState('')
+    const [alamat_pembeli,setalamat] = useState('')
+    const [kondisi_barang,setkondisi]  = useState('')
+    
+    //data to json
+    const dat = {
+      "nama_pembeli":nama_pembeli,
+      "alamat_pembeli":alamat_pembeli,
+      "kondisi_barang":kondisi_barang,
+      "id_pembeli":Number(id_pembeli)}
+    //function to api
+    async function tambah(){
+      const response = await fetch("/api/addtracking",{
+        method:"POST",
+        headers: {
+          'Authorization': `Bearer ${cookies}`,
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(dat)
+      })
+      const data = await response.json()
+      setpesan(data.message)
+      setpopup(true)
     }
-    function pindah (){
-        Router.replace('/mitra')
-      }
-    const [tampil,setTampil] = useState(false)
-    const pop1 = () => {
-        setTampil(true)
-    } 
-    const notpop1 = () => {
-        setTampil(false)
-    } 
-
-
+    // set pop up 
+    const[pesan,setpesan]= useState()
+    const [pop_up,setpopup] = useState(false)
+    const notsuccess = () => {
+      setpesan(false)
+    }
+    const success = () => {
+      Router.replace("/mitra/tracking")
+    }
   return (
     <div>
     <title>Tem.u</title>
@@ -152,44 +152,69 @@ export default function informasi_pembayaran() {
           <Link href='/mitra/profil'><div className="circle mt-4" /></Link>
           <h4>{data.name}</h4>
           <div className="button-item d-flex flex-column align-items-center gap-4">
-            <Link href='/mitra'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Home</button></Link>
+            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Home</button>
             <Link href='/mitra/tambahpegawai'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Pegawai</button></Link>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button>
-            <Link href='tracking'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button></Link>
+            <button type="button" className="btn btn-admin btn-light poppins rounded-pill text-warning shadow btn-lg">Tracking</button>
             <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Keluar</button>
           </div>
         </div> 
         </div>
         <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
           {/* isinya data nanti tapi */}
-            <h1 className='poppins fw-bold text-center'>Halaman Pembayaran</h1>
-            <div className="input-bayar d-flex flex-column mb-4 ms-5 ps-5">
-                <label className="ms-3  pb-1 poppins">Link Bukti Bayar</label>
-                <input value={bukti} onChange={(e) => setBukti(e.target.value)} className="rounded-pill p-2 ps-3" type="text" placeholder="Masukkan Link Bukti sudah membayar menjadi member premium" id />
+          <h1 className='poppins fw-bold text-center'>Tambah Tracking Produk</h1>
+
+          <div className='input-tracking ms-5 me-5'>
+          <div className="input d-flex flex-column mb-2">
+              <label className="ms-3  pb-1 poppins">ID Pembeli</label>
+              <input value={id_pembeli} onChange={(e)=>setid(e.target.value)} className="rounded-pill p-1 ps-3" type="number" placeholder="Masukkan ID pembeli anda(jika ada)"  />
+          </div>
+          <div className="input d-flex flex-column mb-2">
+              <label className="ms-3  pb-1 poppins">Nama Pembeli</label>
+              <input value={nama_pembeli} onChange={(e)=>setnama(e.target.value)} className="rounded-pill p-1 ps-3" type="text" placeholder="Masukkan nama pembeli anda"  />
+          </div>
+          <div className="input d-flex flex-column mb-2">
+              <label className="ms-3  pb-1 poppins">Alamat Pembeli</label>
+              <input value={alamat_pembeli} onChange={(e)=>setalamat(e.target.value)} className="rounded-pill p-1 ps-3" type="text" placeholder="Masukkan alamat pembeli produk anda"  />
+          </div>
+          <div className="input d-flex flex-column mb-2">
+              <label className="ms-3  pb-1 poppins">Kondisi Barang</label>
+              <select value={kondisi_barang} onChange={(e)=>setkondisi(e.target.value)}  className="rounded-pill p-1 ps-3">
+                <option value="">Select an option</option>
+                <option value="Sedang Di kemas">Sedang Di kemas</option>
+                <option value="Sedang Dalam Perjalanan">Sedang Dalam Perjalanan</option>
+                <option value="Barang Sudah Diterima">Barang Sudah Diterima</option>
+              </select>
+          </div>
+          </div>
+        {/* button */}
+          <div className="button-left d-flex justify-content-end gap-4 mt-4">
+            <button type="button" className="btn btn-admin bg-color-red poppins text-white shadow rounded-pill  btn-lg">Batal</button>
+            <button onClick={(e)=>{e.stopPropagation,tambah()}} type="button" className="btn btn-admin bg-color-green poppins text-white shadow rounded-pill  btn-lg">Buat</button>
+          </div>
+
+        </div>
+        {/* pop up success atau gagal */}
+        {pop_up &&( pesan == "Data berhasil dibuat" ?(
+            <div className='status'>
+            <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+              <img src="/images/centang.png" alt="" />
+              <h1 className="poppins fw-bold text-dark">{pesan}</h1>
+              <button className="btn btn-lg btn-warning rounded-pill shadow text-white" onClick={success}>OK</button>
             </div>
-            <div className="button-left d-flex justify-content-end mt-5 gap-4 mb-4 me-5 pe-3">
-                <button type="button" onClick={(e)=>{e.stopPropagation(),bayar()}} className="btn btn-admin bg-color-green poppins text-white shadow rounded-pill  btn-lg">Kirim</button>
-            </div>
-        {/* pop up send */}
-        {tampil &&(pesan != 'Data berhasil dikirim. Mohon tunggu 1x24 jam untuk pengajuan anda' ?(
+        </div>
+          )
+          :(
             <div className='status'>
               <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
                 <img src="/images/alert.png" alt="" />
                 <h1 className="poppins fw-bold text-dark text-center">{pesan}</h1>
-                <button className="btn  set btn-warning rounded-pill text-white" onClick={notpop1}>OK</button>
+                <button className="btn btn-lg btn-warning rounded-pill shadow text-white" onClick={notsuccess}>OK</button>
               </div>
             </div>
-          ):( 
-          <div className='status'>
-            <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
-              <img src="/images/centang.png" alt="" />
-              <h1 className="poppins fw-bold text-dark text-center">{pesan}</h1>
-              <button className="btn  set btn-warning rounded-pill text-white" onClick={pindah}>OK</button>
-            </div>
-          </div>)
+          )      
           )}
         {/* pop up logout */}
-        </div>
         {tampil2 &&(  
             <div className='status'>
               <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">

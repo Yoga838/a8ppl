@@ -126,14 +126,14 @@ const [data2,setdata2] = useState([]);
           <Link href='/mitra'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Home</button></Link>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow text-warning btn-lg">Pegawai</button>
             <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Konfirmasi Pendistribusian</button>
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Tracking</button>
+            <Link href='tracking'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Tracking</button></Link>
             <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Keluar</button>
           </div>
         </div>
         </div>
         <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
           <div className="d-flex justify-content-end me-4">
-            <Link href='/mitra/tambah'><button className="btn btn-lg bg-color-green shadow rounded-pill ">Pegawai &nbsp;<img src="/images/plus.png" alt="" /></button></Link>
+            <Link href='/mitra/tambah'><button className="poppins fw-bold text-white btn btn-lg bg-color-green shadow rounded-pill ">Pegawai &nbsp;<img src="/images/plus.png" alt="" /></button></Link>
           </div>
           <h1 className="poppins fw-bold text-center">Daftar Pegawai</h1>
           <div className="d-flex flex-column gap-4 align-items-center">

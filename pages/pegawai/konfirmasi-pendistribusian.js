@@ -47,7 +47,6 @@ export async function getServerSideProps(ctx){
 export default function user_page() {
 
   const [data,setdata] = useState([]);
-  const [data2,setdata2] = useState([]);
   useEffect(() => {
     const cookie = nookies.get('token');
     const cookies = cookie.token;
@@ -63,14 +62,9 @@ export default function user_page() {
       .catch(error => {
         console.log(error);
       });
-    axios.get('/api/getallkonfirmasi' ,{headers} )
-      .then(response => {
-        setdata2(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
   }, []);
+  const cookie = nookies.get('token');
+  const cookies = cookie.token;
 
   function logout(){
       nookies.destroy(null,'token');
@@ -84,20 +78,42 @@ export default function user_page() {
   const notpop = () => {
     setTampil2(false)
   }
-  //set to move to detail
-  const handleButtonClick = (item) => {
-    senddata(item.id,item.nama_pembeli)
-  };
-  function senddata(setId,setName){
-    Router.push({
-      pathname : "/pegawai/detail-konfirmasi",
-      query: {
-        id:setId,
-        name:setName
-      }
-    })
-  }
+
+  //data
+  const [nama_pembeli,setnama] = useState()
+  const [alamat_pembeli,setalamat] = useState()
+  const [keterangan,setketrangan] = useState()
   
+  //set data
+  const send = {
+    "nama_pembeli":nama_pembeli,
+    "alamat_pembeli":alamat_pembeli,
+    "keterangan":keterangan
+  }
+  // operasi tambah
+  async function tambah (){
+    const response = await fetch("/api/addkonfirmasi",{
+      method:"POST",
+      headers:{
+        'Authorization': `Bearer ${cookies}`,
+        'Content-Type': 'application/json',
+      },
+      body:JSON.stringify(send)
+    })
+    const data = await response.json()
+    setpesan(data.message)
+    settampil(true)
+  }
+
+  //set pop up
+  const [pesan,setpesan] = useState()
+  const [tampil,settampil] = useState(false)
+  function success(){
+    Router.replace("/pegawai")
+  }
+  function notsuccess(){
+    settampil(false)
+  }
   return (
     <div>
         <title>Tem.u</title>
@@ -119,27 +135,23 @@ export default function user_page() {
             </div>
             </div>
             <div className="col-md-8 pe-5 content1 sidebar-right color-brown pt-5">
-                <div className="d-flex justify-content-end me-4">
-                   <Link href='/pegawai/konfirmasi-pendistribusian'><button className="poppins fw-bold text-white btn btn-lg bg-color-green shadow rounded-pill ">Konfirmasi Distribusi &nbsp;<img src="/images/plus.png" alt="" /></button></Link>
+                <h1  className='poppins fw-bold text-center'>Konfirmasi Pendistribusian</h1>
+                <div className="input d-flex flex-column mb-2">
+                    <label className="ms-3  pb-1 poppins">Nama Pembeli</label>
+                    <input value={nama_pembeli} onChange={(e) => setnama(e.target.value)} className="rounded-pill p-1 ps-3" type="text" placeholder="Masukkan nama pembeli anda"  />
                 </div>
-                <h1 className="poppins fw-bold text-center mt-4">Konfirmasi Pendistribusian</h1>
-                <div className="d-flex flex-column gap-4 align-items-center">
-                    {/* content for loop entar     */}
-                    {data2.map((dat,index) =>(
-                    <div key={dat.id} className=" column-name-pgw d-flex justify-content-between shadow align-items-center  bg-color-yellow rounded-pill poppins fw-bold" onClick={(e) => {
-                    e.stopPropagation();
-                    handleButtonClick(dat)
-                    }}>
-                    <p>{dat.nama_pembeli}</p>
-                    <img src="/images/man.png" alt="" />
-                    </div>
-                    ))}
-
-                    {/* <div className=" column-name-pgw d-flex justify-content-between shadow align-items-center  bg-color-yellow rounded-pill poppins fw-bold">
-                    <p>Thanos</p>
-                    <img src="/images/item.png" alt="" />
-                    </div> */}
-                {/* end content for loop entar*/}
+                <div className="input d-flex flex-column mb-2">
+                    <label className="ms-3  pb-1 poppins">Alamat Pembeli</label>
+                    <input value={alamat_pembeli} onChange={(e) => setalamat(e.target.value)} className="rounded-pill p-1 ps-3" type="text" placeholder="Masukkan alamat lengkap pembeli anda"  />
+                </div>
+                <div className="input d-flex flex-column mb-2">
+                    <label className="ms-3  pb-1 poppins">Keterangan</label>
+                    <input value={keterangan} onChange={(e) => setketrangan(e.target.value)} className="rounded-pill p-1 ps-3" type="text" placeholder="Masukkan keterangan pembeli anda"  />
+                </div>
+                {/* button */}
+                <div className="button-left d-flex justify-content-end gap-4 mt-4">
+                    <button type="button" className="btn btn-admin bg-color-red poppins text-white shadow rounded-pill  btn-lg">Batal</button>
+                    <button onClick={(e)=>{e.stopPropagation,tambah()}} type="button" className="btn btn-admin bg-color-green poppins text-white shadow rounded-pill  btn-lg">Buat</button>
                 </div>
             </div>
           </div>
@@ -155,6 +167,26 @@ export default function user_page() {
                 </div>
               </div>
             </div>
+          )}
+          {/* pop up simpan */}
+          {tampil &&( pesan == "Data Berhasil Dibuat" ?(
+            <div className='status'>
+            <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+              <img src="/images/centang.png" alt="" />
+              <h1 className="poppins fw-bold text-dark">{pesan}</h1>
+              <button className="btn btn-lg btn-warning rounded-pill shadow text-white" onClick={success}>OK</button>
+            </div>
+        </div>
+          )
+          :(
+            <div className='status'>
+              <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+                <img src="/images/alert.png" alt="" />
+                <h1 className="poppins fw-bold text-dark text-center">{pesan}</h1>
+                <button className="btn btn-lg btn-warning rounded-pill shadow text-white" onClick={notsuccess}>OK</button>
+              </div>
+            </div>
+          )      
           )}
         </div>
   )

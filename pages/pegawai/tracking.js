@@ -6,8 +6,6 @@ import Link from 'next/link';
 import nookies from 'nookies';
 import axios from 'axios';import Router from 'next/router'
 import profil from '@/controller/profil';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import pencatatan from '@/controller/pencatatan';
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -33,10 +31,10 @@ export async function getServerSideProps(ctx){
         }
       }
     }
-    else if(cookies.role == 'pegawai'){
+    else if(cookies.role == 'mitra'){
       return{
         redirect:{
-          destination : '/pegawai'
+          destination : '/mitra'
         }
       }
     }
@@ -47,10 +45,11 @@ export async function getServerSideProps(ctx){
 }
 
 
-export default function grafik() {
+export default function Tracking() {
 
     const [data,setdata] = useState([]);
-    const[data2,setData2] = useState([]);
+    const [data2,setdata2] = useState([]);
+    const [data3,setdata3] = useState([]);
     useEffect(() => {
       const cookie = nookies.get('token');
       const cookies = cookie.token;
@@ -60,15 +59,20 @@ export default function grafik() {
         const Get_Profile = new profil()
         const dat = await Get_Profile.getDataAkun(job,cookies)
         setdata(dat)
-        }
-        getdata()
-      async function get_grafik(){
-        const get = new pencatatan()
-        const data = await get.GrafikPencatatan(cookies)
-        setData2(data)
       }
-      get_grafik()
-     
+      async function gettracking(){
+        const response = await fetch("/api/getalltracking",{
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${cookies}`,
+            'Content-Type': 'application/json'
+          }
+        })
+        const data = await response.json();
+        setdata3(data)
+      }
+      gettracking()
+      getdata()
     }, []);
   
 
@@ -84,6 +88,20 @@ export default function grafik() {
     const notpop = () => {
       setTampil2(false)
     }
+    
+    const handleButtonClick = (item) => {
+      senddata(item.id,item.nama_pembeli)
+    };
+    function senddata(setId,setName){
+      Router.push({
+        pathname : "/pegawai/detail-tracking",
+        query: {
+          id:setId,
+          name:setName
+        }
+      })
+    }
+
   return (
     <div>
     <title>Tem.u</title>
@@ -91,40 +109,37 @@ export default function grafik() {
     <nav className="d-flex justify-content-between navbar fixed-top navbar-light bg-light">
     <div class="container-fluid">
         <h2 className="ms-3 mt-3 fw-bold poppins text-color-yellow">Tem.u</h2>
-        <div className="tombol d-flex gap-4 align-items-center">
-          <Link href='/mitra/cuaca'><button className="poppins tombol-nav btn bg-color-yellow rounded-pill  shadow text-dark"  role="button">Cuaca</button></Link>
-          <Link href='/mitra/pencatatan'><button className="poppins tombol-nav btn bg-color-yellow rounded-pill text-white shadow text-dark"  role="button">Pencatatan</button></Link>
-        </div>
-      </div>
+    </div>
     </nav>
     <div className="content">
       <div className="row">
         <div className="sidebar-left content1 bg-color-yellow col-md-4  d-flex flex-column align-items-center gap-2">
         <div className='content2 d-flex flex-column align-items-center gap-2'>
-          <Link href='/mitra/profil'><div className="circle mt-4" /></Link>
-          <h4>{data.name}</h4>
-          <div className="button-item d-flex flex-column align-items-center gap-4">
-            <Link href={'/mitra'}><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Home</button></Link>
-            <Link href='tambahpegawai'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Pegawai</button></Link>
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button>
-            <Link href='tracking'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button></Link>
-            <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Keluar</button>
-          </div>
+                <Link href='/pegawai/profil'><div className="circle mt-5" /></Link>
+                <h4>{data.name}</h4>
+                <div className="button-item d-flex pb-2 flex-column align-items-center gap-4">
+                <Link href='/pegawai'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button></Link>
+                <Link href='/pegawai/tracking'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button></Link>
+                <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Keluar</button>
+        </div>
         </div> 
         </div>
         <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
           {/* isinya data nanti tapi */}
-          <div className='d-flex mt-5 pt-2 justify-content-center'>
-              <BarChart width={800} height={400} data={data2}>
-                <CartesianGrid strokeDasharray="1 1"/>
-                <XAxis dataKey="nama_pencatatan"  />
-                <YAxis width={80}/>
-                <Tooltip/>
-                <Legend />
-                <Bar dataKey='total_pemasukan' fill='green'/>
-                <Bar dataKey='total_pengeluaran' fill='red'/>
-                <Bar dataKey='total_saldo' fill='blue'/>
-              </BarChart>
+          <h1 className="poppins fw-bold text-center">Tracking Produk</h1>
+          <div className="d-flex flex-column gap-4 mt-5 align-items-center">
+            {/* content for loop entar     */}
+            {data3.map((dat,index) =>(
+            <div key={dat.id} className=" column-name-pgw d-flex justify-content-between shadow align-items-center  bg-color-yellow rounded-pill poppins fw-bold" onClick={(e) => {
+              e.stopPropagation();
+              handleButtonClick(dat)
+            }}>
+              <p>{dat.nama_pembeli}</p>
+              <img src="/images/man.png" alt="" />
+            </div>
+            ))}
+
+            {/* end content for loop entar*/}
           </div>
         </div>
         {tampil2 &&(  

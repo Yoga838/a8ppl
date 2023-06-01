@@ -308,3 +308,14 @@ table td{
   height: 150vh;
   margin-bottom: 50px;
 }
+.data{
+  border-radius: 25px;
+}
+.success-logo{
+  max-width: fit-content;
+  border-radius: 25px;
+  padding: 14px 7px 1.5px 7px;
+}
+.confirbtn{
+  width: 220px !important;
+}

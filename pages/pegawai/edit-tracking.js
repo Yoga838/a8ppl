@@ -4,7 +4,7 @@ import React from 'react'
 import nookies from 'nookies'
 import { useEffect,useState } from 'react'
 import axios from 'axios'
-import Router from 'next/router'
+import {Router,useRouter} from 'next/router'
 import Link from 'next/link'
 
 export async function getServerSideProps(ctx){
@@ -46,12 +46,24 @@ export async function getServerSideProps(ctx){
 
 export default function user_page() {
 
-  const [data,setdata] = useState([]);
-  const [data2,setdata2] = useState([]);
+    const [data,setdata] = useState([]);
+    const router = useRouter()
+    const {
+        query:{id,nama_pembeli},
+        } = router
+    const props = {
+            nama_pembeli,
+            id
+        }
+    const convertid = parseInt(props.id)
+    const idacc = {id:convertid}
+
+    const cookie = nookies.get('token');
+    const cookies = cookie.token;
   useEffect(() => {
     const cookie = nookies.get('token');
     const cookies = cookie.token;
-  
+    
     const headers ={
       'Authorization': `Bearer ${cookies}`,
       'Content-Type': 'application/json',
@@ -63,13 +75,8 @@ export default function user_page() {
       .catch(error => {
         console.log(error);
       });
-    axios.get('/api/getallkonfirmasi' ,{headers} )
-      .then(response => {
-        setdata2(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+      
+    
   }, []);
 
   function logout(){
@@ -84,20 +91,32 @@ export default function user_page() {
   const notpop = () => {
     setTampil2(false)
   }
-  //set to move to detail
-  const handleButtonClick = (item) => {
-    senddata(item.id,item.nama_pembeli)
-  };
-  function senddata(setId,setName){
-    Router.push({
-      pathname : "/pegawai/detail-konfirmasi",
-      query: {
-        id:setId,
-        name:setName
-      }
-    })
-  }
-  
+  const [pesan,setpesan] = useState()
+  const[kondisi_barang,setkondisi] = useState()
+  const[tampil,setTampil] = useState(false)
+  function success (){
+      router.replace('/pegawai/tracking')
+    }
+    function notsuccess(){
+        setTampil(false)
+    }
+    const datasend = {
+      "kondisi_barang" : kondisi_barang,
+      "id":convertid
+    }
+    async function edit (){
+      const response = await fetch("/api/edit-tracking",{
+          method:"POST",
+          headers:{
+              'Authorization': `Bearer ${cookies}`,
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(datasend)
+      })
+      const data = await response.json();
+      setpesan(data.message)
+      setTampil(true)
+    }
   return (
     <div>
         <title>Tem.u</title>
@@ -112,34 +131,26 @@ export default function user_page() {
               <Link href='/pegawai/profil'><div className="circle mt-5" /></Link>
               <h4>{data.name}</h4>
               <div className="button-item d-flex pb-2 flex-column align-items-center gap-4">
-                <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button>
+                <Link href='/pegawai'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button></Link>
                 <Link href='/pegawai/tracking'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button></Link>
                 <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Keluar</button>
               </div>
             </div>
             </div>
             <div className="col-md-8 pe-5 content1 sidebar-right color-brown pt-5">
-                <div className="d-flex justify-content-end me-4">
-                   <Link href='/pegawai/konfirmasi-pendistribusian'><button className="poppins fw-bold text-white btn btn-lg bg-color-green shadow rounded-pill ">Konfirmasi Distribusi &nbsp;<img src="/images/plus.png" alt="" /></button></Link>
-                </div>
-                <h1 className="poppins fw-bold text-center mt-4">Konfirmasi Pendistribusian</h1>
-                <div className="d-flex flex-column gap-4 align-items-center">
-                    {/* content for loop entar     */}
-                    {data2.map((dat,index) =>(
-                    <div key={dat.id} className=" column-name-pgw d-flex justify-content-between shadow align-items-center  bg-color-yellow rounded-pill poppins fw-bold" onClick={(e) => {
-                    e.stopPropagation();
-                    handleButtonClick(dat)
-                    }}>
-                    <p>{dat.nama_pembeli}</p>
-                    <img src="/images/man.png" alt="" />
-                    </div>
-                    ))}
-
-                    {/* <div className=" column-name-pgw d-flex justify-content-between shadow align-items-center  bg-color-yellow rounded-pill poppins fw-bold">
-                    <p>Thanos</p>
-                    <img src="/images/item.png" alt="" />
-                    </div> */}
-                {/* end content for loop entar*/}
+              <h1 className='poppins fw-bold text-center'>Edit Tracking Produk</h1>
+              <div className="input d-flex flex-column mb-2">
+              <label className="ms-3  pb-1 poppins">Kondisi Barang</label>
+              <select value={kondisi_barang} onChange={(e)=>setkondisi(e.target.value)}  className="rounded-pill p-1 ps-3">
+                <option value="">Select an option</option>
+                <option value="Sedang Di kemas">Sedang Di kemas</option>
+                <option value="Sedang Dalam Perjalanan">Sedang Dalam Perjalanan</option>
+                <option value="Barang Sudah Diterima">Barang Sudah Diterima</option>
+              </select>
+              </div>
+                <div className="tombol d-flex justify-content-end gap-4 mt-5 me-5">
+                    <button  className="btn btn-lg rounded-pill poppins bg-color-red shadow text-white tombol-profil">batal</button>
+                    <button onClick={(e)=>{e.stopPropagation,edit()}} className="btn btn-lg rounded-pill poppins bg-color-green shadow text-white tombol-profil">simpan</button>
                 </div>
             </div>
           </div>
@@ -155,6 +166,26 @@ export default function user_page() {
                 </div>
               </div>
             </div>
+          )}
+           {/* pop up simpan */}
+           {tampil &&( pesan == "Data Berhasil Diubah" ?(
+            <div className='status'>
+            <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+              <img src="/images/centang.png" alt="" />
+              <h1 className="poppins fw-bold text-dark">{pesan}</h1>
+              <button className="btn btn-lg btn-warning rounded-pill shadow text-white" onClick={success}>OK</button>
+            </div>
+        </div>
+          )
+          :(
+            <div className='status'>
+              <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
+                <img src="/images/alert.png" alt="" />
+                <h1 className="poppins fw-bold text-dark text-center">{pesan}</h1>
+                <button className="btn btn-lg btn-warning rounded-pill shadow text-white" onClick={notsuccess}>OK</button>
+              </div>
+            </div>
+          )      
           )}
         </div>
   )

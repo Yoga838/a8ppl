@@ -193,7 +193,7 @@ const notsuccess = () => {
           <h1 className="poppins fw-bold  text-center">Persetujuan Pembuatan Akun Mitra</h1>
           <div className="d-flex justify-content-center flex-column gap-4">
             {/* content      */}
-            <div className=" column-acc bg-color-yellow  poppins fw-bold">
+            <div className=" column-acc bg-color-yellow data poppins fw-bold">
               <p>Link Bukti Bayar:</p>
               <a className='break-word' href={data2.pribadi}>{data2.bukti_bayar}</a>
             </div>
