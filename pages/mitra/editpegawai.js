@@ -99,20 +99,15 @@ export default function editprofil() {
     const [name,setName] = useState('')
     const [no,setNo] = useState('')
     const [alamat,setAlamat] = useState('')
-    const [email,setEmail] = useState('')
-    const [password,setPassword] = useState('')
-
     const [pesan,setPesan] = useState('')
     const updatemitra = async (e) => {
         e.preventDefault(); // prevent form from submitting normally
         const phoneNumberRegex = /^(\+62|62|0)[2-9][0-9]{9,10}$/;
         const isValidPhoneNumber = phoneNumberRegex.test(final_no);
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const isValidEmail = emailRegex.test(final_email);
-        if(isValidEmail && isValidPhoneNumber){ 
+        if(isValidPhoneNumber){ 
           async function update(){
             const response = await axios.put("/api/editpegawai",
-            {name:final_name,email:final_email,password,no:final_no,id:idacc},
+            {name:final_name,no:final_no,id:idacc},
             {headers: {
               'Authorization': `Bearer ${cookies}`,
               'Content-Type': 'application/json'
@@ -126,10 +121,7 @@ export default function editprofil() {
           }
         update()
         }
-        else if (!isValidEmail){
-          alert("format email anda tidak sesuai")
-        }
-        else{
+        else if (!isValidPhoneNumber){
           alert("format nomor telepon anda tidak sesuai")
         }
     
@@ -140,7 +132,6 @@ export default function editprofil() {
       }
     const final_name = name !== ''? name : data2?.name || ''
     const final_no = no !== ''? no : data2?.no || ''
-    const final_email = email !== ''? email : data2?.email || ''
 
 
     function batal(){
@@ -198,7 +189,7 @@ export default function editprofil() {
         </div>
         </div>
         <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
-          <div className="circle mx-auto " />
+          <div className="circle mx-auto "><img src='/images/worker.png'/></div>
           <div className="content mt-4">
             <div className="inp d-flex flex-column gap-1">
               <label className="poppins" htmlFor>Nama Lengkap</label>
@@ -207,14 +198,6 @@ export default function editprofil() {
             <div className="inp d-flex flex-column gap-1">
               <label className="poppins" htmlFor>No.Telp</label>
               <input className="rounded-pill border-0 p-1 ps-2" type="text" value={final_no} onChange={(e) => setNo(e.target.value)} onFocus={handleInputFocus}/>
-            </div>
-            <div className="inp d-flex flex-column gap-1">
-              <label className="poppins" htmlFor>Email</label>
-              <input className="rounded-pill border-0 p-1 ps-2" type="text" value={final_email} onChange={(e) => setEmail(e.target.value)} onFocus={handleInputFocus}/>
-            </div>
-            <div className="inp d-flex flex-column gap-1">
-              <label className="poppins" htmlFor>Password</label>
-              <input className="rounded-pill border-0 p-1 ps-2" type="password" value={password} onChange={(e) => setPassword(e.target.value)} onFocus={handleInputFocus}/>
             </div>
           </div>
           <div className="tombol d-flex justify-content-end gap-4 mt-4 me-5">
