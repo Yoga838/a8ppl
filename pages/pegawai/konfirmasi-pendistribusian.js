@@ -109,7 +109,7 @@ export default function user_page() {
   const [pesan,setpesan] = useState()
   const [tampil,settampil] = useState(false)
   function success(){
-    Router.replace("/pegawai")
+    Router.replace("/pegawai/konfirmasi")
   }
   function notsuccess(){
     settampil(false)

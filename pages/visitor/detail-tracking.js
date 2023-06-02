@@ -86,7 +86,7 @@ export default function visitor_page() {
   function logout(){
       nookies.destroy(null,'token');
       nookies.destroy(null,'role');
-      Router.replace('/');
+      router.replace('/');
   }
   const [tampil2,setTampil2] = useState(false)
   const pop = () => {
@@ -112,13 +112,13 @@ export default function visitor_page() {
               <Link href='/visitor/profil'><div className="circle mt-5" /></Link>
               <h4>{data.name}</h4>
               <div className="button-item d-flex pb-2 flex-column align-items-center gap-4">
-                <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button>
+                <button type="button" className="btn btn-admin btn-light poppins rounded-pill text-warning shadow btn-lg">Tracking</button>
                 <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Keluar</button>
               </div>
             </div>
             </div>
             <div className="col-md-8 pe-5 content1 sidebar-right color-brown pt-5">
-              <h1 className='poppins fw-bold text-center pb-3'>Tracking Produk</h1>
+              <h1 className='poppins fw-bold text-center pb-3'>Tracking Pendistribusian</h1>
               <div className='bg-color-yellow p-4 data mt-5'>
                 <p className="poppins">Nama Pembeli:<strong> {data2.nama_pembeli} </strong></p>
                 <p className="poppins">Alamat: <strong> {data2.alamat_pembeli} </strong></p>
