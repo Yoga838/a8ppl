@@ -190,10 +190,10 @@ const [data2,setdata2] = useState([]);
         </div>
         {/* end data tabel */}
         <div className="d-flex justify-content-end gap-4 mt-2">
-          <button type="button" className="btn bg-color-yellow rounded-pill poppins fw-bold  shadow">
+          <button type="button" className="btn bg-color-yellow rounded-pill poppins   shadow">
           <ReactHTMLTableToExcel
                     id="test-table-xls-button"
-                    className ='btn'
+                    className ='btn fw-bold'
                     table="table-to-xls"
                     filename="Rekapan"
                     sheet="tablexls"
