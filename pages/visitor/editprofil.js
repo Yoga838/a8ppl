@@ -141,7 +141,7 @@ export default function visitor_page() {
               <h4>{data.name}</h4>
               <div className="button-item d-flex pb-2 flex-column align-items-center gap-4">
               <Link href='/visitor'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button></Link>
-                <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Keluars</button>
+                <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Keluar</button>
               </div>
             </div>
             </div>

@@ -47,6 +47,7 @@ export async function getServerSideProps(ctx){
 export default function visitor_page() {
 
   const [data,setdata] = useState([]);
+  const [data2,setdata2] = useState([]);
   useEffect(() => {
     const cookie = nookies.get('token');
     const cookies = cookie.token;
@@ -58,6 +59,13 @@ export default function visitor_page() {
     axios.get('/api/getuser' ,{headers} )
       .then(response => {
         setdata(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    axios.get('/api/visitorgetdat',{headers})
+      .then(response => {
+        setdata2(response.data);
       })
       .catch(error => {
         console.log(error);
@@ -75,6 +83,19 @@ export default function visitor_page() {
   } 
   const notpop = () => {
     setTampil2(false)
+  }
+
+  const handleButtonClick = (item) => {
+    senddata(item.id,item.nama_pembeli)
+  };
+  function senddata(setId,setName){
+    Router.push({
+      pathname : "/visitor/detail-tracking",
+      query: {
+        id:setId,
+        name:setName
+      }
+    })
   }
   
   return (
@@ -100,7 +121,7 @@ export default function visitor_page() {
             <h1 className="poppins fw-bold text-center mt-4">Konfirmasi Pendistribusian</h1>
             <div className="d-flex flex-column gap-4 align-items-center">
                 {/* content for loop entar     */}
-                {/* {data2.map((dat,index) =>(
+                {data2.map((dat,index) =>(
                 <div key={dat.id} className=" column-name-pgw d-flex justify-content-between shadow align-items-center  bg-color-yellow rounded-pill poppins fw-bold" onClick={(e) => {
                 e.stopPropagation();
                 handleButtonClick(dat)
@@ -108,12 +129,12 @@ export default function visitor_page() {
                     <p>{dat.nama_pembeli}</p>
                     <img src="/images/man.png" alt="" />
                 </div>
-                ))} */}
+                ))}
 
-                <div  className=" column-name-pgw d-flex justify-content-between shadow align-items-center  bg-color-yellow rounded-pill poppins fw-bold">
+                {/* <div  className=" column-name-pgw d-flex justify-content-between shadow align-items-center  bg-color-yellow rounded-pill poppins fw-bold">
                     <p>Thanos</p>
                     <img src="/images/man.png" alt="" />
-                </div>
+                </div> */}
             </div>
 
             </div>

@@ -4,9 +4,9 @@ import React from 'react'
 import nookies from 'nookies'
 import { useEffect,useState } from 'react'
 import axios from 'axios'
-import Router from 'next/router'
+import { useRouter,Router } from 'next/router'
 import Link from 'next/link'
-import profil from '../../controller/profil'
+import { ro } from 'date-fns/locale'
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -48,19 +48,40 @@ export async function getServerSideProps(ctx){
 export default function visitor_page() {
 
   const [data,setdata] = useState([]);
+  const [data2,setdata2] = useState([]);
+  const router = useRouter()
+
   useEffect(() => {
     const cookie = nookies.get('token');
     const cookies = cookie.token;
-    const role = nookies.get('role');
-    const job = role.role
-    async function getdata(){
-      const Get_Profile = new profil()
-      const dat = await Get_Profile.getDataAkun(job,cookies)
-      setdata(dat)
+    const {
+        query:{id,name},
+    } = router
+    const props = {
+        name,
+        id
     }
-    getdata()
-
-  }, []);
+    const idacc = {"id":Number(props.id)}
+  
+    const headers ={
+      'Authorization': `Bearer ${cookies}`,
+      'Content-Type': 'application/json',
+    };
+    axios.get('/api/getuser' ,{headers} )
+      .then(response => {
+        setdata(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    axios.post('/api/visitorgetdat',idacc ,{headers})
+    .then(response => {
+        setdata2(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, [router]);
 
   function logout(){
       nookies.destroy(null,'token');
@@ -74,6 +95,8 @@ export default function visitor_page() {
   const notpop = () => {
     setTampil2(false)
   }
+
+  
   
   return (
     <div>
@@ -84,34 +107,25 @@ export default function visitor_page() {
         </nav>
         <div className="content">
           <div className="row">
-            <div className="sidebar-left content1 bg-color-yellow col-md-4 pt-5 pb-5 d-flex flex-column align-items-center gap-2">
+            <div className="sidebar-left bg-color-yellow col-md-4 pt-5 pb-5 d-flex flex-column align-items-center gap-2">
             <div className='content2  d-flex flex-column align-items-center gap-2'>
-              <div className="circle mt-5" />
+              <Link href='/visitor/profil'><div className="circle mt-5" /></Link>
               <h4>{data.name}</h4>
               <div className="button-item d-flex pb-2 flex-column align-items-center gap-4">
-                <Link href='/visitor'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button></Link>
+                <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button>
                 <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Keluar</button>
               </div>
             </div>
             </div>
-            <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
-              <div className="circle mx-auto" />
-              <div className="data-wrap ms-5">
-                <p className="poppins">ID User:</p>
-                <p className="poppins fw-bold">{data.id}</p>
-                <p className="poppins">Nama Lengkap:</p>
-                <p className="poppins fw-bold">{data.name}</p>
-                <p className="poppins">No Telp:</p>
-                <p className="poppins fw-bold">{data.no}</p>
-                <p className="poppins">Alamat Lengkap:</p>
-                <p className="poppins fw-bold">{data.alamat}</p>
-                <p className="poppins">Email:</p>
-                <p className="poppins fw-bold">{data.email}</p>
-                <p className="poppins">password:</p>
-                <p className="poppins fw-bold">********************</p>
+            <div className="col-md-8 pe-5 content1 sidebar-right color-brown pt-5">
+              <h1 className='poppins fw-bold text-center pb-3'>Tracking Produk</h1>
+              <div className='bg-color-yellow p-4 data mt-5'>
+                <p className="poppins">Nama Pembeli:<strong> {data2.nama_pembeli} </strong></p>
+                <p className="poppins">Alamat: <strong> {data2.alamat_pembeli} </strong></p>
+                <p className="poppins">kondisi barang: <strong> {data2.kondisi_barang} </strong></p>
               </div>
+
             </div>
-            <Link href='/visitor/editprofil'><button className="poppins fw-bold button-edit bg-color-yellow btn btn-lg shadow rounded-pill">Edit Profil&nbsp;<img src="/images/button_icon_edit.png" alt="" /></button></Link>
           </div>
         </div>
         {tampil2 &&(  
