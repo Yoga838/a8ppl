@@ -266,7 +266,7 @@ export default function Pencatatan() {
         {/* end input edit */}
         {/* tombol  */}
         <div className="button-left d-flex justify-content-end gap-4 mt-5 mb-4">
-            <button type="button"  className="btn btn-admin bg-color-red poppins text-white shadow rounded-pill  btn-lg">Batal</button>
+            <button type="button" onClick={(e)=>{e.stopPropagation(),router.back()}} className="btn btn-admin bg-color-red poppins text-white shadow rounded-pill  btn-lg">Batal</button>
             <button  type="button" onClick={(e)=>{e.stopPropagation(),tambah_data()}} className="btn btn-admin bg-color-green poppins text-white shadow rounded-pill  btn-lg">Simpan</button>
           </div>
         {/* end tombol */}
