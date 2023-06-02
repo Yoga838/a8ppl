@@ -142,7 +142,7 @@ export default function detail_tracking() {
           <div className="button-item d-flex flex-column align-items-center gap-4">
             <Link href='/mitra/tambahpegawai'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Pegawai</button></Link>
             <Link href='konfirmasi-pendistribusian'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button></Link>
-            <Link href='/mitra/tracking'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button></Link>
+            <Link href='/mitra/tracking'><button type="button" className="btn btn-admin btn-light poppins text-warning rounded-pill shadow btn-lg">Tracking</button></Link>
             <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Keluar</button>
           </div>
         </div> 
