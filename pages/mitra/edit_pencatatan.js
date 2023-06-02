@@ -176,8 +176,7 @@ export default function Pencatatan() {
     async function delete_data(id){
       const del = new pencatatan()
       const data = await del.hapus(cookies,id)
-      setTampil(true)
-      setPesan(data.message)
+      router.back()
     }
   return (
     <div>
