@@ -5,7 +5,7 @@ export default authMiddleware(async function handler(req,res){
     if(req.method === "GET"){
         const userId = req.user.userId;
         const getdata = await prisma.tracking.findMany({
-            where:{id_pembeli:Number(userId)}
+            where:{id_pembeli:Number(userId),NOT:{kondisi_barang:"Barang Sudah Diterima"}}
         })
         return res.send(getdata)
     }
