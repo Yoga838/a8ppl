@@ -161,7 +161,7 @@ const [data2,setdata2] = useState([]);
           </div>
         </div>
         </div>
-        <div className="col-md-8 content1 pe-5 sidebar-right color-brown pt-5">
+        <div className="col-md-8 content1 pe-5 sidebar-right color-brown pt-5 ">
           <h1 className="poppins fw-bold text-center">Tambah Data Pencatatan</h1>
           <div className="inputan-pencatatan pe-5 pt-4 ">
             <div className="input d-flex flex-column">
@@ -189,8 +189,8 @@ const [data2,setdata2] = useState([]);
               <input className="rounded-pill p-1 ps-3" disabled value={saldo} onChange={(e) => setSaldo(e.target.value)} type="number" placeholder="Masukkan saldo anda, contoh: 1500000000"  />
             </div>
           </div>
-          <div className="button-left d-flex justify-content-end gap-4 mt-5 mb-4">
-            <Link href="pencatatan"><button type="button"  className="btn btn-admin bg-color-red poppins text-white shadow rounded-pill  btn-lg">Batal</button></Link>
+          <div className="button-left d-flex justify-content-end gap-4 mt-4">
+            <button type="button" onClick={(e)=>{e.stopPropagation,Router.back()}}  className="btn btn-admin bg-color-red poppins text-white shadow rounded-pill  btn-lg">Batal</button>
             <button  type="button" onClick={data_kirim} className="btn btn-admin bg-color-green poppins text-white shadow rounded-pill  btn-lg">Buat</button>
           </div>
         </div>
