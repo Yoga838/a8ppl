@@ -1,11 +1,13 @@
-/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable @next/next/no-img-element */
 import React from 'react'
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import nookies from 'nookies';
-import axios from 'axios';import Router from 'next/router'
-import profil from '@/controller/profil';
+import Link from 'next/link'
+import { useState,useEffect } from 'react';
+import nookies from 'nookies'
+import Router from 'next/router';
+import axios from 'axios'
+import profil from '../../controller/profil';
+import pencatatan from '@/controller/pencatatan';
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -45,35 +47,59 @@ export async function getServerSideProps(ctx){
 }
 
 
-export default function index() {
 
-    const [data,setdata] = useState([]);
-    useEffect(() => {
-      const cookie = nookies.get('token');
-      const cookies = cookie.token;
-      const role = nookies.get('role');
-      const job = role.role
-      async function getdata(){
-        const Get_Profile = new profil()
-        const dat = await Get_Profile.getDataAkun(job,cookies)
-        setdata(dat)
-        }
-        getdata()
-    }, []);
+
+export default function Pencatatan() {
+  function logout(){
+    nookies.destroy(null,'token');
+    nookies.destroy(null,'role');
+    Router.replace('/');
+  }
+  const [tampil2,setTampil2] = useState(false)
+  const pop = () => {
+    setTampil2(true)
+  } 
+  const notpop = () => {
+    setTampil2(false)
+  } 
+
+  const [data,setdata] = useState([]);
+  const [data2,setdata2] = useState([]);
+
+  useEffect(() => {
+    const cookie = nookies.get('token');
+    const cookies = cookie.token;
+    const role = nookies.get('role');
+    const job = role.role
   
+    async function getdata(){
+      const Get_Profile = new profil()
+      const dat = await Get_Profile.getDataAkun(job,cookies)
+      setdata(dat)
+    }
+    async function getcatat(){
+      const get_catat = new pencatatan()
+      const data = await get_catat.pencatatan(cookies)
+      setdata2(data)
+    }
+    getcatat()
+    getdata()
+    }, []);
 
-    function logout(){
-        nookies.destroy(null,'token');
-        nookies.destroy(null,'role');
-        Router.replace('/');
-    }
-    const [tampil2,setTampil2] = useState(false)
-    const pop = () => {
-      setTampil2(true)
-    } 
-    const notpop = () => {
-      setTampil2(false)
-    }
+  const handleButtonClick = (item) => {
+    senddata(item.id,item.nama_pencatatan)
+  };
+  function senddata(setId,setName){
+    Router.push({
+      pathname : "/mitra/detail_pencatatan",
+      query: {
+        id:setId,
+        name:setName
+      }
+    })
+  }
+
+
   return (
     <div>
     <title>Tem.u</title>
@@ -83,29 +109,50 @@ export default function index() {
         <h2 className="ms-3 mt-3 fw-bold poppins text-color-yellow">Tem.u</h2>
         <div className="tombol d-flex gap-4 align-items-center">
           <Link href='/mitra/cuaca'><button className="poppins tombol-nav btn bg-color-yellow rounded-pill  shadow text-dark"  role="button">Cuaca</button></Link>
-          <Link href='/mitra/pencatatan'><button className="poppins tombol-nav btn bg-color-yellow rounded-pill  shadow text-dark"  role="button">Pencatatan</button></Link>
+          <Link href='/mitra/pencatatan'><button className="poppins tombol-nav btn bg-color-yellow rounded-pill text-warning shadow text-white"  role="button">Pencatatan</button></Link>
         </div>
       </div>
     </nav>
     <div className="content">
-      <div className="row">
-        <div className="sidebar-left content1 bg-color-yellow col-md-4  d-flex flex-column align-items-center gap-2">
+      <div className="row ">
+        <div className="sidebar-left bg-color-yellow col-md-4 pb-5 d-flex flex-column align-items-center gap-2">
         <div className='content2 d-flex flex-column align-items-center gap-2'>
           <Link href='/mitra/profil'><div className="circle mt-4" /></Link>
           <h4>{data.name}</h4>
-          <div className="button-item d-flex flex-column align-items-center gap-4">
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow text-warning btn-lg">Home</button>
-            <Link href='/mitra/tambahpegawai'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Pegawai</button></Link>
-            <Link href="/mitra/konfirmasi-pendistribusian"><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button></Link>
-            <Link href='/mitra/tracking'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button></Link>
-            <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Keluar</button>
+          <div className="button-item d-flex pb-2 flex-column align-items-center gap-4">
+          <Link href='tambahpegawai'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Pegawai</button></Link>
+          <Link href='konfirmasi-pendistribusian'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Konfirmasi Pendistribusian</button></Link>
+          <Link href='/mitra'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Tracking</button></Link>
+            <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Keluar</button>
           </div>
-        </div> 
+        </div>
         </div>
         <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
-          {/* isinya data nanti tapi */}
+          <h1 className="poppins fw-bold text-center">Daftar Pencatatan</h1>
+          <div className="d-flex justify-content-between ms-5 mt-5 me-4">
+            <Link href='grafik'><button className="btn btn-lg bg-color-green shadow rounded-pill text-light poppins fw-bold ">Grafik Pencatatan &nbsp;<img src="/images/grafik.png" alt="" /></button></Link>
+            <Link href='/mitra/catat'><button className="btn btn-lg bg-color-green shadow rounded-pill text-light poppins fw-bold ">Pencatatan &nbsp;<img src="/images/plus.png" alt="" /></button></Link>
+          </div>
+          <div className="d-flex flex-column mt-4 gap-4 align-items-center content1-2">
+            {/* content for loop entar */}
+             
+            {data2.map((dat,index) =>(
+            <div key={dat.milik} className=" column-name-pgw d-flex justify-content-between shadow align-items-center  bg-color-yellow rounded-pill poppins fw-bold" onClick={(e) => {
+              e.stopPropagation();
+              handleButtonClick(dat)
+            }}>
+              <p>{dat.nama_pencatatan}</p>
+              <img src="/images/edit.png" alt="" />
+            </div>
+            ))}
+
+
+            {/* end content for loop entar*/}
+          </div>
         </div>
-        {tampil2 &&(  
+      </div>
+    </div>
+    {tampil2 &&(  
             <div className='status'>
               <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">
                 <img src="/images/centang.png" alt="" />
@@ -117,8 +164,6 @@ export default function index() {
               </div>
             </div>
           )}
-      </div>
-    </div>
   </div>
   )
 }

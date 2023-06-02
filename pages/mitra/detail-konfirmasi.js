@@ -122,10 +122,10 @@ export default function index() {
           <Link href='/mitra/profil'><div className="circle mt-4" /></Link>
           <h4>{data.name}</h4>
           <div className="button-item d-flex flex-column align-items-center gap-4">
-            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow text-warning btn-lg">Home</button>
+            <button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Home</button>
             <Link href='/mitra/tambahpegawai'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Pegawai</button></Link>
-            <Link href="/mitra/konfirmasi-pendistribusian"><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button></Link>
-            <Link href='/mitra/tracking'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button></Link>
+            <Link href="/mitra/konfirmasi-pendistribusian"><button type="button" className="btn text-warning btn-admin btn-light poppins rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button></Link>
+            <Link href='/mitra'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button></Link>
             <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Keluar</button>
           </div>
         </div> 

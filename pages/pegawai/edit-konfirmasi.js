@@ -167,7 +167,7 @@ export default function edit_konfirmasi() {
                 <Link href='/pegawai/profil'><div className="circle mt-5" /></Link>
                 <h4>{data.name}</h4>
                 <div className="button-item d-flex pb-2 flex-column align-items-center gap-4">
-                <Link href='/pegawai/konfirmasi'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button></Link>
+                <Link href='/pegawai/konfirmasi'><button type="button" className="btn btn-admin btn-light poppins rounded-pill text-warning shadow btn-lg">Konfirmasi Pendistribusian</button></Link>
                 <Link href='/pegawai'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button></Link>
                 <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Keluar</button>
         </div>
