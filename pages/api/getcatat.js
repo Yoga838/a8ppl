@@ -8,6 +8,7 @@ export default authMiddleware(async function handler(req,res){
             select: {
                 milik: true,
                 nama_pencatatan: true,
+                id:true
               },
               where:{
                 milik:userId

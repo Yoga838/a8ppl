@@ -87,7 +87,7 @@ export default function Pencatatan() {
     }, []);
 
   const handleButtonClick = (item) => {
-    senddata(item.milik,item.nama_pencatatan)
+    senddata(item.id,item.nama_pencatatan)
   };
   function senddata(setId,setName){
     Router.push({
@@ -98,6 +98,7 @@ export default function Pencatatan() {
       }
     })
   }
+
 
   return (
     <div>

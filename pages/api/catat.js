@@ -8,23 +8,14 @@ export default authMiddleware(async function handler(req,res){
         if(!nama||!tanggal||!keterangan||!saldo){
             return res.status(400).json({message:"Data tidak boleh kosong!"})
         }
-        const cari = await prisma.pencatatan.findFirst({where:{nama_pencatatan:nama}})
-        if (cari){
-            return res.status(401).json({message:"nama pencatatan sudah dipakai"})
-        }
         const pencatatan = await prisma.pencatatan.create({
             data:{
                 nama_pencatatan:nama,
                 milik:userId
             }
-            
+        
         })
-        const search = await prisma.pencatatan.findFirst({
-            where:{
-                nama_pencatatan:nama
-            }
-        })
-        const name = search.id
+        const name = pencatatan.id
         const detail = await prisma.detail_pencatatan.create({
             data:{
                 tanggal,
