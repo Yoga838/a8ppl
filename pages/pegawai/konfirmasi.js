@@ -4,7 +4,7 @@ import React from 'react'
 import nookies from 'nookies'
 import { useEffect,useState } from 'react'
 import axios from 'axios'
-import {Router,useRouter} from 'next/router'
+import Router from 'next/router'
 import Link from 'next/link'
 
 export async function getServerSideProps(ctx){
@@ -44,10 +44,8 @@ export async function getServerSideProps(ctx){
   }
 }
 
-export default function detail_tracking() {
+export default function user_page() {
 
-
-  const router = useRouter()
   const [data,setdata] = useState([]);
   const [data2,setdata2] = useState([]);
   useEffect(() => {
@@ -65,29 +63,14 @@ export default function detail_tracking() {
       .catch(error => {
         console.log(error);
       });
-      const {
-        query:{id,nama_pembeli},
-    } = router
-    const props = {
-        nama_pembeli,
-        id
-    }
-    const convertid = parseInt(props.id)
-    const idacc = {id:convertid}
-    async function gettracking (){
-        const pegawai = await fetch("/api/getalltracking",{
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${cookies}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(idacc)
-        })
-        const data = await pegawai.json()
-        setdata2(data)
-    }
-    gettracking()
-  }, [router]);
+    axios.get('/api/getallkonfirmasi' ,{headers} )
+      .then(response => {
+        setdata2(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
 
   function logout(){
       nookies.destroy(null,'token');
@@ -101,13 +84,13 @@ export default function detail_tracking() {
   const notpop = () => {
     setTampil2(false)
   }
-
-  const handleButtonClick = () => {
-    senddata(data2.id,data2.nama_pembeli)
+  //set to move to detail
+  const handleButtonClick = (item) => {
+    senddata(item.id,item.nama_pembeli)
   };
   function senddata(setId,setName){
-    router.push({
-      pathname : "/pegawai/edit-tracking",
+    Router.push({
+      pathname : "/pegawai/detail-konfirmasi",
       query: {
         id:setId,
         name:setName
@@ -129,24 +112,38 @@ export default function detail_tracking() {
               <Link href='/pegawai/profil'><div className="circle mt-5" /></Link>
               <h4>{data.name}</h4>
               <div className="button-item d-flex pb-2 flex-column align-items-center gap-4">
-                <Link  href='/pegawai/konfirmasi'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button></Link>
+                <Link href='/pegawai/konfirmasi'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button></Link>
                 <Link href='/pegawai'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button></Link>
                 <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Keluar</button>
               </div>
             </div>
             </div>
             <div className="col-md-8 pe-5 content1 sidebar-right color-brown pt-5">
-                <h1 className='poppins fw-bold text-center pb-3'>Tracking Produk</h1>
-                <div className='bg-color-yellow p-4 data mt-5'>
-                    <p className="poppins">Nama Pembeli:<strong> {data2.nama_pembeli} </strong></p>
-                    <p className="poppins">Alamat: <strong> {data2.alamat_pembeli} </strong></p>
-                    <p className="poppins">kondisi barang: <strong> {data2.kondisi_barang} </strong></p>
+                <div className="d-flex justify-content-end me-4">
+                   <Link href='/pegawai/konfirmasi-pendistribusian'><button className="poppins fw-bold text-white btn btn-lg bg-color-green shadow rounded-pill ">Konfirmasi Distribusi &nbsp;<img src="/images/plus.png" alt="" /></button></Link>
+                </div>
+                <h1 className="poppins fw-bold text-center mt-4">Konfirmasi Pendistribusian</h1>
+                <div className="d-flex flex-column gap-4 align-items-center">
+                    {/* content for loop entar     */}
+                    {data2.map((dat,index) =>(
+                    <div key={dat.id} className=" column-name-pgw d-flex justify-content-between shadow align-items-center  bg-color-yellow rounded-pill poppins fw-bold" onClick={(e) => {
+                    e.stopPropagation();
+                    handleButtonClick(dat)
+                    }}>
+                    <p>{dat.nama_pembeli}</p>
+                    <img src="/images/man.png" alt="" />
+                    </div>
+                    ))}
+
+                    {/* <div className=" column-name-pgw d-flex justify-content-between shadow align-items-center  bg-color-yellow rounded-pill poppins fw-bold">
+                    <p>Thanos</p>
+                    <img src="/images/item.png" alt="" />
+                    </div> */}
+                {/* end content for loop entar*/}
                 </div>
             </div>
           </div>
         </div>
-        <button onClick={(e)=>{e.stopPropagation,handleButtonClick()}} className="poppins fw-bold button-edit bg-color-yellow btn btn-lg shadow rounded-pill">Edit Tracking&nbsp;<img src="/images/button_icon_edit.png" alt="" /></button>
-
         {tampil2 &&(  
             <div className='status'>
               <div className="d-flex pop-up flex-column py-2  align-items-center container bg-white position-fixed top-50 start-50 translate-middle ">

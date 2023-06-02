@@ -137,8 +137,8 @@ export default function informasi_pembayaran() {
         <div className='container bg-color-yellow p-5 border-pembayaran shadow'>
             <p className='poppins'>No Rekening Admin:</p>
             <h3 className='poppins fw-bold'>5487-4562-3698-2587</h3>
-            <p className='poppins'>harga:</p>
-            <h3 className='poppins fw-bold'>Rp 350.000,00</h3>
+            <p className='poppins'>Harga:</p>
+            <h3 className='poppins fw-bold'>Rp 350.000,00 / 365 hari</h3>
         </div>
         <div className="button-left d-flex justify-content-end mt-5 gap-4 mb-4">
             <button onClick={(e)=>{e.stopPropagation(),Router.back()}} type="button"  className="btn btn-admin bg-color-red poppins text-white shadow rounded-pill  btn-lg">Kembali</button>

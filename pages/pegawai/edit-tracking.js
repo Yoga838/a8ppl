@@ -131,8 +131,8 @@ export default function user_page() {
               <Link href='/pegawai/profil'><div className="circle mt-5" /></Link>
               <h4>{data.name}</h4>
               <div className="button-item d-flex pb-2 flex-column align-items-center gap-4">
-                <Link href='/pegawai'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button></Link>
-                <Link href='/pegawai/tracking'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button></Link>
+                <Link href='/pegawai/konfirmasi'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button></Link>
+                <Link href='/pegawai'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Tracking</button></Link>
                 <button onClick={pop} type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Keluar</button>
               </div>
             </div>
@@ -149,7 +149,7 @@ export default function user_page() {
               </select>
               </div>
                 <div className="tombol d-flex justify-content-end gap-4 mt-5 me-5">
-                    <button  className="btn btn-lg rounded-pill poppins bg-color-red shadow text-white tombol-profil">batal</button>
+                    <button onClick={(e)=>{e.stopPropagation,router.back()}} className="btn btn-lg rounded-pill poppins bg-color-red shadow text-white tombol-profil">batal</button>
                     <button onClick={(e)=>{e.stopPropagation,edit()}} className="btn btn-lg rounded-pill poppins bg-color-green shadow text-white tombol-profil">simpan</button>
                 </div>
             </div>

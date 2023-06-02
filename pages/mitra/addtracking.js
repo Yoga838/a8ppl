@@ -181,7 +181,7 @@ export default function addtracking() {
               <label className="ms-3  pb-1 poppins">Kondisi Barang</label>
               <select value={kondisi_barang} onChange={(e)=>setkondisi(e.target.value)}  className="rounded-pill p-1 ps-3">
                 <option value="">Select an option</option>
-                <option value="Sedang Di kemas">Sedang Di kemas</option>
+                <option value="Sedang Dikemas">Sedang Di kemas</option>
                 <option value="Sedang Dalam Perjalanan">Sedang Dalam Perjalanan</option>
                 <option value="Barang Sudah Diterima">Barang Sudah Diterima</option>
               </select>
