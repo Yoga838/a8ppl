@@ -185,7 +185,7 @@ export default function visitor_page() {
                 <h1 className="poppins fw-bold text-dark">Apakah Anda Ingin Keluar?</h1>
                 <div className='d-flex gap-3 pb-2'>
                 <button className="btn shadow set bg-color-green rounded-pill text-white" onClick={logout}>IYA</button>
-                <button className="btn shadow set bg-color-red rounded-pill text-white" onClick={notpop}>TIDAk</button>
+                <button className="btn shadow set bg-color-red rounded-pill text-white" onClick={notpop}>TIDAK</button>
                 </div>
               </div>
             </div>
