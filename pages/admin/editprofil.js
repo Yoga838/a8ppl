@@ -141,8 +141,8 @@ export default function Profil() {
             </div>
           </div>
           <div className="tombol d-flex justify-content-end gap-4 mt-4 me-5">
-            <button onClick={batal} className="btn btn-lg rounded-pill poppins bg-color-red shadow text-white tombol-profil">batal</button>
-            <button onClick={updateadmin} className="btn btn-lg rounded-pill poppins bg-color-green shadow text-white tombol-profil">simpan</button>
+            <button onClick={batal} className="btn btn-lg rounded-pill poppins bg-color-red shadow text-white tombol-profil">Batal</button>
+            <button onClick={updateadmin} className="btn btn-lg rounded-pill poppins bg-color-green shadow text-white tombol-profil">Simpan</button>
           </div>
         </div>
       </div>

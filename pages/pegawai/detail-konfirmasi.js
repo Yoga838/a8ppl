@@ -148,7 +148,7 @@ export default function Tracking() {
             <div className='isi ps-5'>
                 <p>Nama Pembeli: <br/> <strong> {data2.nama_pembeli} </strong></p>
                 <p>Alamat Pembeli: <br/> <strong> {data2.alamat_pembeli} </strong></p>
-                <p>keterangan: <br/> <strong> {data2.keterangan} </strong></p>
+                <p>Keterangan: <br/> <strong> {data2.keterangan} </strong></p>
             </div>
           </div>
         </div>

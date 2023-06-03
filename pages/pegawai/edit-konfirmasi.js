@@ -185,7 +185,7 @@ export default function edit_konfirmasi() {
               <input value={alamat_pembeli} onChange={(e)=>{setdat2(e.target.value)}} className="rounded-pill p-1 ps-3" type="text" placeholder="Masukkan nama pembeli anda"  />
           </div>
           <div className="input d-flex flex-column mb-2">
-              <label className="ms-3  pb-1 poppins">keterangan</label>
+              <label className="ms-3  pb-1 poppins">Keterangan</label>
               <input value={keterangan} onChange={(e)=>{setdat3(e.target.value)}} className="rounded-pill p-1 ps-3" type="text" placeholder="Masukkan nama pembeli anda"  />
           </div>
           {/* button */}

@@ -169,8 +169,8 @@ export default function visitor_page() {
               <input className="rounded-pill border-0 p-1 ps-2" type="password" value={password} onChange={(e) => setPassword(e.target.value)} onFocus={handleInputFocus}/>
             </div>
             <div className="tombol d-flex justify-content-end gap-4 mt-5 me-5">
-            <button onClick={batal} className="btn btn-lg rounded-pill poppins bg-color-red shadow text-white tombol-profil">batal</button>
-            <button onClick={updateuser} className="btn btn-lg rounded-pill poppins bg-color-green shadow text-white tombol-profil">simpan</button>
+            <button onClick={batal} className="btn btn-lg rounded-pill poppins bg-color-red shadow text-white tombol-profil">Batal</button>
+            <button onClick={updateuser} className="btn btn-lg rounded-pill poppins bg-color-green shadow text-white tombol-profil">Simpan</button>
           </div>
           </div>
             </div>

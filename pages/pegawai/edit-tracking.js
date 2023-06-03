@@ -95,7 +95,7 @@ export default function user_page() {
   const[kondisi_barang,setkondisi] = useState()
   const[tampil,setTampil] = useState(false)
   function success (){
-      router.replace('/pegawai/tracking')
+      router.replace('/pegawai')
     }
     function notsuccess(){
         setTampil(false)
@@ -143,14 +143,14 @@ export default function user_page() {
               <label className="ms-3  pb-1 poppins">Kondisi Barang</label>
               <select value={kondisi_barang} onChange={(e)=>setkondisi(e.target.value)}  className="rounded-pill p-1 ps-3">
                 <option value="">Select an option</option>
-                <option value="Sedang Di kemas">Sedang Di kemas</option>
+                <option value="Sedang Di kemas">Sedang Dikemas</option>
                 <option value="Sedang Dalam Perjalanan">Sedang Dalam Perjalanan</option>
                 <option value="Barang Sudah Diterima">Barang Sudah Diterima</option>
               </select>
               </div>
                 <div className="tombol d-flex justify-content-end gap-4 mt-5 me-5">
-                    <button onClick={(e)=>{e.stopPropagation,router.back()}} className="btn btn-lg rounded-pill poppins bg-color-red shadow text-white tombol-profil">batal</button>
-                    <button onClick={(e)=>{e.stopPropagation,edit()}} className="btn btn-lg rounded-pill poppins bg-color-green shadow text-white tombol-profil">simpan</button>
+                    <button onClick={(e)=>{e.stopPropagation,router.back()}} className="btn btn-lg rounded-pill poppins bg-color-red shadow text-white tombol-profil">Batal</button>
+                    <button onClick={(e)=>{e.stopPropagation,edit()}} className="btn btn-lg rounded-pill poppins bg-color-green shadow text-white tombol-profil">Simpan</button>
                 </div>
             </div>
           </div>

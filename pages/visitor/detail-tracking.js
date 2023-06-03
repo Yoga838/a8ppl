@@ -122,7 +122,7 @@ export default function visitor_page() {
               <div className='bg-color-yellow p-4 data mt-5'>
                 <p className="poppins">Nama Pembeli:<strong> {data2.nama_pembeli} </strong></p>
                 <p className="poppins">Alamat: <strong> {data2.alamat_pembeli} </strong></p>
-                <p className="poppins">kondisi barang: <strong> {data2.kondisi_barang} </strong></p>
+                <p className="poppins">Kondisi barang: <strong> {data2.kondisi_barang} </strong></p>
               </div>
 
             </div>
