@@ -146,7 +146,7 @@ export default function editprofil() {
     const [tampil2,setTampil2] = useState(false)
     const success = () => {
       setTampil(false)
-      router.replace('/mitra/tambahpegawai');
+      router.back()
     }
     const pop = () => {
       setTampil2(true)
