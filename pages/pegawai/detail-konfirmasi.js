@@ -129,7 +129,7 @@ export default function Tracking() {
       <div className="row">
         <div className="sidebar-left content1 bg-color-yellow col-md-4  d-flex flex-column align-items-center gap-2">
         <div className='content2 d-flex flex-column align-items-center gap-2'>
-                <Link href='/pegawai/profil'><div className="circle mt-5" /></Link>
+                <Link href='/pegawai/profil'><div className="circle mt-5 profil"><img src='/images/profil.png'/></div></Link>
                 <h4>{data.name}</h4>
                 <div className="button-item d-flex pb-2 flex-column align-items-center gap-4">
                 <Link href='/pegawai/konfirmasi'><button type="button" className="btn btn-admin btn-light poppins text-warning rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button></Link>

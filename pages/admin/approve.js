@@ -166,7 +166,7 @@ const notsuccess = () => {
       <div className="row">
         <div className="sidebar-left bg-color-yellow col-md-4 pt-5 d-flex flex-column align-items-center gap-2">
         <div className='content2  d-flex flex-column align-items-center gap-2'>
-          <Link href='/admin/profil'><div className="circle mt-5" /></Link>
+          <Link href='/admin/profil'><div className="circle mt-5 profil"><img src='/images/profil.png'/></div></Link>
           <h4>{data.name}</h4>
           <div className="button-item d-flex flex-column align-items-center gap-4">
             <Link href='/admin'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow text-warning  btn-lg">Pengajuan

@@ -96,7 +96,7 @@ export default function mitra_page() {
       <div className="row">
         <div className="sidebar-left content1 bg-color-yellow col-md-4  d-flex flex-column align-items-center gap-2">
         <div className='content2 d-flex flex-column align-items-center gap-2'>
-          <div className="circle mt-4" />
+        <div className="circle mt-4 profil"><img src='/images/profil.png'/></div>
           <h4>{data.name}</h4>
           <div className="button-item d-flex flex-column align-items-center gap-4">
             <Link href='/mitra/tambahpegawai'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Pegawai</button></Link>
@@ -107,7 +107,7 @@ export default function mitra_page() {
         </div> 
         </div>
         <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
-          <div className="circle mx-auto " />
+        <div className="circle mx-auto profil"><img src='/images/profil.png'/></div>
           <h4 className="text-center">{data.name}</h4>
           <p className="poppins">Nama Lengkap:</p>
           <p className="poppins fw-bold">{data.name}</p>

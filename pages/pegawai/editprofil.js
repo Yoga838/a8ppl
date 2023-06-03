@@ -137,7 +137,7 @@ export default function pegawai_page() {
           <div className="row">
             <div className="sidebar-left content1 bg-color-yellow col-md-4 pt-5 pb-5 d-flex flex-column align-items-center gap-2">
             <div className='content2  d-flex flex-column align-items-center gap-2'>
-             <Link href='/visitor/profil'> <div className="circle mt-5" /></Link>
+             <Link href='/visitor/profil'> <div className="circle mt-5 profil"><img src='/images/profil.png'/></div></Link>
               <h4>{data.name}</h4>
               <div className="button-item d-flex pb-2 flex-column align-items-center gap-4">
               <Link href='/pegawai/konfirmasi'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Konfirmasi Pendistribusian</button></Link>
@@ -147,7 +147,7 @@ export default function pegawai_page() {
             </div>
             </div>
             <div className="col-md-8 pe-5 sidebar-right color-brown pt-5">
-              <div className="circle mx-auto" />
+            <div className="circle mx-auto profil"><img src='/images/profil.png'/></div>
               <div className="content mt-4">
             <div className="inp d-flex flex-column gap-1">
               <label className="poppins" htmlFor>Nama Lengkap</label>

@@ -120,7 +120,7 @@ export default function Profil() {
       <div className="row">
         <div className="sidebar-left bg-color-yellow col-md-4 pt-5 d-flex flex-column align-items-center gap-2">
           <div className='content2 d-flex flex-column align-items-center gap-2'>
-            <div className="circle mt-5" />
+          <div className="circle mt-5 profil"><img src='/images/profil.png'/></div>
             <h4 >{data.name}</h4>
             <div className="button-item d-flex flex-column align-items-center gap-4">
               <Link href='/admin'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow btn-lg">Pengajuan
@@ -132,7 +132,7 @@ export default function Profil() {
           </div>
         </div>
         <div className="col-md-8 pe-5 content1 sidebar-right color-brown pt-5">
-          <div className="circle mx-auto " />
+        <div className="circle mt-5 profil mx-auto"><img src='/images/profil.png'/></div>
           <h4 className="text-center">{data.name}</h4>
           <div className="content mt-4 ms-5">
             <div className="inp d-flex flex-column gap-1">

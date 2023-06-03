@@ -145,7 +145,7 @@ const [data2,setdata2] = useState([]);
       <div className="row">
         <div className="sidebar-left content1 bg-color-yellow col-md-4 pb-5 d-flex flex-column align-items-center gap-2">
         <div className='content2 d-flex flex-column align-items-center gap-2'>
-          <Link href='/mitra/profil'><div className="circle mt-4" /></Link>
+          <Link href='/mitra/profil'><div className="circle mt-4 profil"><img src='/images/profil.png'/></div></Link>
           <h4>{data.name}</h4>
           <div className="button-item d-flex pb-2 flex-column align-items-center gap-4">
           <Link href='tambahpegawai'><button type="button" className="btn btn-admin btn-light poppins rounded-pill shadow  btn-lg">Pegawai</button></Link>
