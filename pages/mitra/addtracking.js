@@ -103,6 +103,14 @@ export default function addtracking() {
     const [alamat_pembeli,setalamat] = useState('')
     const [kondisi_barang,setkondisi]  = useState('')
     
+    const datahandleID = (e)=>{
+      setid(e.target.value),
+      setnama('');
+    }
+    const datahandleName = (e)=>{
+      setnama(e.target.value),
+      setid('');
+    }
     //data to json
     const dat = {
       "nama_pembeli":nama_pembeli,
@@ -166,11 +174,11 @@ export default function addtracking() {
           <div className='input-tracking ms-5 me-5'>
           <div className="input d-flex flex-column mb-2">
               <label className="ms-3  pb-1 poppins">ID Pembeli</label>
-              <input value={id_pembeli} onChange={(e)=>setid(e.target.value)} className="rounded-pill p-1 ps-3" type="number" placeholder="Masukkan ID pembeli anda(jika ada)"  />
+              <input value={id_pembeli} onChange={datahandleID} disabled={nama_pembeli !== ''} className="rounded-pill p-1 ps-3" type="number" placeholder="Masukkan ID pembeli anda(jika ada)"  />
           </div>
           <div className="input d-flex flex-column mb-2">
               <label className="ms-3  pb-1 poppins">Nama Pembeli</label>
-              <input value={nama_pembeli} onChange={(e)=>setnama(e.target.value)} className="rounded-pill p-1 ps-3" type="text" placeholder="Masukkan nama pembeli anda"  />
+              <input value={nama_pembeli} onChange={datahandleName} disabled={id_pembeli !== ''} className="rounded-pill p-1 ps-3" type="text" placeholder="Masukkan nama pembeli anda"  />
           </div>
           <div className="input d-flex flex-column mb-2">
               <label className="ms-3  pb-1 poppins">Alamat Pembeli</label>
