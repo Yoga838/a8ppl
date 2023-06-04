@@ -11,6 +11,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import Link from 'next/link'
 import profil from '@/controller/profil'
+import MenuPengajuanPremium from '@/controller/MenuPengajuanPremium'
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -64,14 +65,8 @@ export default function cuaca() {
     }
     getdata()
     async function getpremium(){
-      const response = await fetch("/api/ispremium",{
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${cookies}`,
-          'Content-Type': 'application/json'
-        }
-      })
-      const dat2 = await response.json();
+      const premi = new MenuPengajuanPremium()
+      const dat2 = await premi.AkunPremium(cookies)
       setdata2(dat2)
       if(navigator.geolocation){
         navigator.geolocation.getCurrentPosition((position)=>{

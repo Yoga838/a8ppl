@@ -7,6 +7,8 @@ import axios from 'axios'
 import { useRouter,Router } from 'next/router'
 import Link from 'next/link'
 import { ro } from 'date-fns/locale'
+import profil from '@/controller/profil'
+import MenuTracking from '@/controller/MenuTracking'
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -54,6 +56,8 @@ export default function visitor_page() {
   useEffect(() => {
     const cookie = nookies.get('token');
     const cookies = cookie.token;
+    const roles = nookies.get('role')
+    const role = roles.role
     const {
         query:{id,name},
     } = router
@@ -67,20 +71,18 @@ export default function visitor_page() {
       'Authorization': `Bearer ${cookies}`,
       'Content-Type': 'application/json',
     };
-    axios.get('/api/getuser' ,{headers} )
-      .then(response => {
-        setdata(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    axios.post('/api/visitorgetdat',idacc ,{headers})
-    .then(response => {
-        setdata2(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    async function getprofil (){
+      const dat = new profil()
+      const data = await dat.getDataAkun(role,cookies)
+      setdata(data)
+    }
+    async function getdata(){
+      const dat = new MenuTracking()
+      const data = await dat.TrackingDipilih(cookies,idacc,role)
+      setdata2(data)
+    }
+    getdata()
+    getprofil()
   }, [router]);
 
   function logout(){

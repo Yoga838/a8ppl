@@ -7,6 +7,7 @@ import nookies from 'nookies'
 import Router from 'next/router';
 import axios from 'axios'
 import profil from '@/controller/profil';
+import MenuPegawai from '@/controller/MenuPegawai';
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -80,14 +81,13 @@ const [data2,setdata2] = useState([]);
       const dat = await Get_Profile.getDataAkun(job,cookies)
       setdata(dat)
     }
+    async function getmenu (){
+      const menu = new MenuPegawai()
+      const data = await menu.MenuPegawai(cookies)
+      setdata2(data)
+    }
+    getmenu()
     getdata()
-    axios.get('/api/addpegawai' ,{headers} )
-      .then(response => {
-        setdata2(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
   }, []);
 
   const handleButtonClick = (item) => {

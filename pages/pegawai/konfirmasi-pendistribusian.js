@@ -6,6 +6,8 @@ import { useEffect,useState } from 'react'
 import axios from 'axios'
 import Router from 'next/router'
 import Link from 'next/link'
+import profil from '@/controller/profil'
+import Konfirmasi from '@/controller/Konfirmasi'
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -50,18 +52,15 @@ export default function user_page() {
   useEffect(() => {
     const cookie = nookies.get('token');
     const cookies = cookie.token;
-  
-    const headers ={
-      'Authorization': `Bearer ${cookies}`,
-      'Content-Type': 'application/json',
-    };
-    axios.get('/api/getpegawai' ,{headers} )
-      .then(response => {
-        setdata(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    const roles = nookies.get('role')
+    const role = roles.role
+
+    async function getprofil(){
+      const dat = new profil()
+      const data = await dat.getDataAkun(role,cookies)
+      setdata(data)
+    }
+    getprofil()  
   }, []);
   const cookie = nookies.get('token');
   const cookies = cookie.token;
@@ -92,15 +91,8 @@ export default function user_page() {
   }
   // operasi tambah
   async function tambah (){
-    const response = await fetch("/api/addkonfirmasi",{
-      method:"POST",
-      headers:{
-        'Authorization': `Bearer ${cookies}`,
-        'Content-Type': 'application/json',
-      },
-      body:JSON.stringify(send)
-    })
-    const data = await response.json()
+    const dat = new Konfirmasi()
+    const data = await dat.Buat(cookies,send)
     setpesan(data.message)
     settampil(true)
   }

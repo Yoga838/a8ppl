@@ -7,6 +7,7 @@ import nookies from 'nookies';
 import axios from 'axios';import Router from 'next/router'
 import profil from '@/controller/profil';
 import { useRouter } from 'next/router';
+import Konfirmasi from '@/controller/Konfirmasi';
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -82,15 +83,8 @@ export default function edit_konfirmasi() {
         setdata(dat)
       }
       async function gettracking(){
-        const dat = await fetch("/api/getallkonfirmasi",{
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${cookies}`,
-            'Content-Type': 'application/json'
-          },
-          body:JSON.stringify(idacc)
-        })
-        const data = await dat.json()
+        const dat = new Konfirmasi()
+        const data = await dat.KonfirmasiPendistribusianDipilih(cookies,idacc)
         setdata2(data)
         console.log(data)
       }
@@ -130,15 +124,8 @@ export default function edit_konfirmasi() {
 
     //function save
     async function simpan(){
-      const response = await fetch("/api/addkonfirmasi",{
-        method:"PATCH",
-        headers:{
-          'Authorization': `Bearer ${cookies}`,
-          'Content-Type': 'application/json'
-        },
-        body:JSON.stringify(send)
-      })
-      const data = await response.json()
+      const dat = new Konfirmasi()
+      const data = await dat.simpan(cookies,send)
       setpesan(data.message)
       settampil(true)
     }

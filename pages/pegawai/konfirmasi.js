@@ -6,6 +6,8 @@ import { useEffect,useState } from 'react'
 import axios from 'axios'
 import Router from 'next/router'
 import Link from 'next/link'
+import profil from '@/controller/profil'
+import Konfirmasi from '@/controller/Konfirmasi'
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -51,25 +53,21 @@ export default function user_page() {
   useEffect(() => {
     const cookie = nookies.get('token');
     const cookies = cookie.token;
+    const roles = nookies.get('role')
+    const role = roles.role
   
-    const headers ={
-      'Authorization': `Bearer ${cookies}`,
-      'Content-Type': 'application/json',
-    };
-    axios.get('/api/getpegawai' ,{headers} )
-      .then(response => {
-        setdata(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    axios.get('/api/getallkonfirmasi' ,{headers} )
-      .then(response => {
-        setdata2(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    async function getprofil(){
+      const dat = new profil()
+      const data = await dat.getDataAkun(role,cookies)
+      setdata(data)
+    }
+    async function getdata(){
+      const dat = new  Konfirmasi()
+      const data = await dat.MenuKonfirmasiPendistribusian(cookies,role)
+      setdata2(data)
+    }
+    getdata()
+    getprofil()
   }, []);
 
   function logout(){

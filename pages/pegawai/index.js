@@ -6,6 +6,7 @@ import Link from 'next/link';
 import nookies from 'nookies';
 import axios from 'axios';import Router from 'next/router'
 import profil from '@/controller/profil';
+import MenuTracking from '@/controller/MenuTracking';
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -61,14 +62,8 @@ export default function Tracking() {
         setdata(dat)
       }
       async function gettracking(){
-        const response = await fetch("/api/getalltracking",{
-          method: 'PUT',
-          headers: {
-            'Authorization': `Bearer ${cookies}`,
-            'Content-Type': 'application/json'
-          }
-        })
-        const data = await response.json();
+        const response = new MenuTracking()
+        const data = await response.MenuTracking(cookies,job)
         setdata3(data)
       }
       gettracking()

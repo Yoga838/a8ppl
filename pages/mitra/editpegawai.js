@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import {Router,useRouter} from 'next/router'
 import profil from '../../controller/profil'
+import MenuPegawai from '@/controller/MenuPegawai'
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -80,16 +81,11 @@ export default function editprofil() {
           nama,
           id
       }
-      const idacc = parseInt(props.id)
+      const convertid = parseInt(props.id)
+      const idacc = {id:convertid}
       async function GetPegawai (){
-        const pegawai = await axios.post("/api/getpegawai",
-          {"id":idacc},
-          {headers: {
-            'Authorization': `Bearer ${cookies}`,
-            'Content-Type': 'application/json',
-          }}
-        )
-        const data = await pegawai.data
+        const pegawai = new MenuPegawai()
+        const data = await pegawai.PegawaiDipilih(idacc,cookies)
         setdata2(data)
       }
       GetPegawai()
@@ -106,14 +102,8 @@ export default function editprofil() {
         const isValidPhoneNumber = phoneNumberRegex.test(final_no);
         if(isValidPhoneNumber){ 
           async function update(){
-            const response = await axios.put("/api/editpegawai",
-            {name:final_name,no:final_no,id:idacc},
-            {headers: {
-              'Authorization': `Bearer ${cookies}`,
-              'Content-Type': 'application/json'
-            }}
-            )
-            const dat = await response.data
+            const send = new MenuPegawai()
+            const dat = await send.Simpan({name:final_name,no:final_no,id:idacc},cookies)
             console.log(dat)
             setPesan(dat.message)
             setTampil(true)

@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import {Router,useRouter} from 'next/router'
 import profil from '../../controller/profil'
+import MenuPegawai from '@/controller/MenuPegawai'
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -81,16 +82,9 @@ export default function mitra_page() {
     const convertid = parseInt(props.id)
     const idacc = {id:convertid}
     async function getpegawai (){
-        const pegawai = await fetch("/api/getpegawai",{
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${cookies}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(idacc)
-        })
-        const data = await pegawai.json()
-        setdata2(data)
+      const show = new MenuPegawai()
+      const data = await show.PegawaiDipilih(idacc,cookies)
+      setdata2(data)
     }
     getpegawai()
   }, [router]);

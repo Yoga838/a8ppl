@@ -6,6 +6,8 @@ import Link from 'next/link';
 import nookies from 'nookies';
 import axios from 'axios';import Router from 'next/router'
 import profil from '@/controller/profil';
+import MenuPengajuanPremium from '@/controller/MenuPengajuanPremium';
+import MenuTracking from '@/controller/MenuTracking';
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -62,14 +64,8 @@ export default function addtracking() {
         setdata(dat)
       }
       async function getpremium(){
-        const response = await fetch("/api/ispremium",{
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${cookies}`,
-            'Content-Type': 'application/json'
-          }
-        })
-        const dat2 = await response.json();
+        const premi = new MenuPengajuanPremium()
+        const dat2 = await premi.AkunPremium(cookies)
         if (dat2.status){
           setdata2(dat2)
         }
@@ -119,15 +115,8 @@ export default function addtracking() {
       "id_pembeli":Number(id_pembeli)}
     //function to api
     async function tambah(){
-      const response = await fetch("/api/addtracking",{
-        method:"POST",
-        headers: {
-          'Authorization': `Bearer ${cookies}`,
-          'Content-Type': 'application/json'
-        },
-        body:JSON.stringify(dat)
-      })
-      const data = await response.json()
+      const add = new MenuTracking()
+      const data = await add.buat(cookies,dat)
       setpesan(data.message)
       setpopup(true)
     }

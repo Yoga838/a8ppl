@@ -6,6 +6,8 @@ import { useEffect,useState } from 'react'
 import axios from 'axios'
 import {Router,useRouter} from 'next/router'
 import Link from 'next/link'
+import profil from '@/controller/profil'
+import MenuTracking from '@/controller/MenuTracking'
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -63,18 +65,15 @@ export default function user_page() {
   useEffect(() => {
     const cookie = nookies.get('token');
     const cookies = cookie.token;
+    const roles = nookies.get('role')
+    const role = roles.role 
+    async function getprofil(){
+      const dat = new profil()
+      const data = await dat.getDataAkun(role,cookies)
+      setdata(data)
+    }
+    getprofil()
     
-    const headers ={
-      'Authorization': `Bearer ${cookies}`,
-      'Content-Type': 'application/json',
-    };
-    axios.get('/api/getpegawai' ,{headers} )
-      .then(response => {
-        setdata(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
       
     
   }, []);
@@ -105,15 +104,8 @@ export default function user_page() {
       "id":convertid
     }
     async function edit (){
-      const response = await fetch("/api/edit-tracking",{
-          method:"POST",
-          headers:{
-              'Authorization': `Bearer ${cookies}`,
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(datasend)
-      })
-      const data = await response.json();
+      const dat = new MenuTracking()
+      const data = await dat.simpan(cookies,datasend)
       setpesan(data.message)
       setTampil(true)
     }

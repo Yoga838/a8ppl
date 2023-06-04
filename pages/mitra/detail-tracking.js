@@ -8,6 +8,8 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import {Router,useRouter} from 'next/router'
 import profil from '../../controller/profil'
+import MenuPengajuanPremium from '@/controller/MenuPengajuanPremium'
+import MenuTracking from '@/controller/MenuTracking'
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -70,6 +72,14 @@ export default function detail_tracking() {
       const dat = await Get_Profile.getDataAkun(job,cookies)
       setdata(dat)
     }
+    async function getpremium(){
+      const premi = new MenuPengajuanPremium()
+      const dat2 = await premi.AkunPremium(cookies)
+      if (!dat2.status){
+        router.replace('/mitra/informasi-pembayaran')
+      }
+    }
+    getpremium()
     getdata()
     const {
         query:{id,nama_pembeli},
@@ -81,15 +91,8 @@ export default function detail_tracking() {
     const convertid = parseInt(props.id)
     const idacc = {id:convertid}
     async function gettracking (){
-        const pegawai = await fetch("/api/getalltracking",{
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${cookies}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(idacc)
-        })
-        const data = await pegawai.json()
+        const track = new MenuTracking()
+        const data = await track.TrackingDipilih(cookies,idacc)
         setdata2(data)
     }
     gettracking()

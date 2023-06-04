@@ -7,6 +7,7 @@ import nookies from 'nookies';
 import axios from 'axios';import Router from 'next/router'
 import profil from '@/controller/profil';
 import { el } from 'date-fns/locale';
+import MenuPengajuanPremium from '@/controller/MenuPengajuanPremium';
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -93,31 +94,17 @@ export default function informasi_pembayaran() {
               alert("link salah harap masukkan link yang benar!")
             }
             else{
-              const response = await fetch("/api/premium",{
-                method: 'POST',
-                headers: {
-                  'Authorization': `Bearer ${cookies}`,
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(bukti)
-              })
-            const data = await response.json();
-            setPesan(data.message)
-            pop1()
+              const pengajuan = new MenuPengajuanPremium()
+              const data = await pengajuan.SendDataPembayaran(cookies,bukti);
+              setPesan(data.message)
+              pop1()
             }
         }
         else{
-          const response = await fetch("/api/premium",{
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${cookies}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(null)
-          })
-        const data = await response.json();
-        setPesan(data.message)
-        pop1()
+          const pengajuan = new MenuPengajuanPremium()
+          const data = await pengajuan.SendDataPembayaran(cookies,null);
+          setPesan(data.message)
+          pop1()
         }
     }
     function pindah (){

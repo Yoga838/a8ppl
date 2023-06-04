@@ -6,6 +6,7 @@ import Link from 'next/link';
 import nookies from 'nookies';
 import axios from 'axios';import Router from 'next/router'
 import profil from '@/controller/profil';
+import Konfirmasi from '@/controller/Konfirmasi';
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -55,33 +56,18 @@ export default function Konfirmasi_pendistribusian() {
       const role = nookies.get('role');
       const job = role.role
 
-      const headers ={
-        'Authorization': `Bearer ${cookies}`,
-        'Content-Type': 'application/json',
-      };
       async function getdata(){
         const Get_Profile = new profil()
         const dat = await Get_Profile.getDataAkun(job,cookies)
         setdata(dat)
       }
       async function getallkonfirmasi(){
-        const response = await fetch("/api/getallkonfirmasi",{
-          method:"PUT",
-          headers
-        })
-        const data = await response.json()
+        const konfirmasi = new Konfirmasi()
+        const data = await konfirmasi.MenuKonfirmasiPendistribusian(cookies)
         setdata2(data)
-        console.log(data)
       }
       getallkonfirmasi()
       getdata()
-      // axios.put('/api/getallkonfirmasi' ,{headers} )
-      // .then(response => {
-      //   setdata2(response.data);
-      // })
-      // .catch(error => {
-      //   console.log(error);
-      // });
     }, []);
   
 

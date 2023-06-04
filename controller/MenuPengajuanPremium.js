@@ -50,6 +50,29 @@ class MenuPengajuanPremium {
         const data = await response.json();
         return data
     }
+    async SendDataPembayaran(cookies,payload){
+        const response = await fetch("/api/premium",{
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${cookies}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        })
+        const data = await response.json();
+        return data
+    }
+    async AkunPremium (cookies){
+      const response = await fetch("/api/ispremium",{
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${cookies}`,
+          'Content-Type': 'application/json'
+        }
+      })
+      const data = await response.json();
+      return data
+    }
 
 }
 

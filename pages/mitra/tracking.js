@@ -6,6 +6,8 @@ import Link from 'next/link';
 import nookies from 'nookies';
 import axios from 'axios';import Router from 'next/router'
 import profil from '@/controller/profil';
+import MenuPengajuanPremium from '@/controller/MenuPengajuanPremium';
+import MenuTracking from '@/controller/MenuTracking';
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -61,14 +63,8 @@ export default function Tracking() {
         setdata(dat)
       }
       async function getpremium(){
-        const response = await fetch("/api/ispremium",{
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${cookies}`,
-            'Content-Type': 'application/json'
-          }
-        })
-        const dat2 = await response.json();
+        const premi = new MenuPengajuanPremium()
+        const dat2 = await premi.AkunPremium(cookies)
         if (dat2.status){
           setdata2(dat2)
         }
@@ -77,14 +73,8 @@ export default function Tracking() {
         }
       }
       async function gettracking(){
-        const response = await fetch("/api/getalltracking",{
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${cookies}`,
-            'Content-Type': 'application/json'
-          }
-        })
-        const data = await response.json();
+        const datatracking = new MenuTracking()
+        const data = await datatracking.MenuTracking(cookies)
         setdata3(data)
       }
       gettracking()

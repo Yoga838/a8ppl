@@ -7,6 +7,7 @@ import Link from 'next/link';
 import nookies from 'nookies';
 import axios from 'axios';import Router from 'next/router'
 import profil from '@/controller/profil';
+import Konfirmasi from '@/controller/Konfirmasi';
 
 export async function getServerSideProps(ctx){
   const cookies = nookies.get(ctx)
@@ -74,18 +75,11 @@ export default function index() {
         setdata(dat)
         }
         async function gettracking(){
-            const dat = await fetch("/api/getallkonfirmasi",{
-                method: 'POST',
-                headers: {
-                'Authorization': `Bearer ${cookies}`,
-                'Content-Type': 'application/json'
-                },
-                body:JSON.stringify(idacc)
-            })
-            const data = await dat.json()
-            setdata2(data)
-            }
-            gettracking()
+          const choose = new Konfirmasi()
+          const data = await choose.KonfirmasiPendistribusianDipilih(cookies,idacc)
+          setdata2(data)
+        }
+        gettracking()
         getdata()
     }, [router]);
   
