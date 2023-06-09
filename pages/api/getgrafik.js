@@ -4,6 +4,8 @@ import catat from "./catat";
 
 export default authMiddleware(async function handler(req,res){
     if (req.method === "GET"){
+        const userId = req.user.userId;
+        const id = Number(userId)
         const data = await prisma.$queryRaw`
             SELECT
             p.nama_pencatatan,
@@ -14,7 +16,7 @@ export default authMiddleware(async function handler(req,res){
             pencatatan p
             LEFT JOIN detail_pencatatan dp ON p.id = dp.detail_dari
             WHERE
-            dp.tanggal > NOW() - INTERVAL '1 year'
+            dp.tanggal > NOW() - INTERVAL '1 year'AND p.id = ${id}
             GROUP BY
             p.id
             ORDER BY
