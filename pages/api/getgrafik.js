@@ -16,7 +16,7 @@ export default authMiddleware(async function handler(req,res){
             pencatatan p
             LEFT JOIN detail_pencatatan dp ON p.id = dp.detail_dari
             WHERE
-            dp.tanggal > NOW() - INTERVAL '1 year'AND p.id = ${id}
+            dp.tanggal > NOW() - INTERVAL '1 year'AND p.milik = ${id}
             GROUP BY
             p.id
             ORDER BY
