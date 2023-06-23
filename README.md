@@ -13,6 +13,10 @@
   - Vercel (Jika ingin Di deploy Secara gratis)   
   <img src="https://assets.vercel.com/image/upload/v1588805858/repositories/vercel/logo.png" width='15px'>
 </div>
+<div style="display":flex>
+  - Railway (Jika ingin DB postgreSql gratis)   
+  <img src="https://camo.githubusercontent.com/df61f4b2e2cc40922b5290ed53040485ab7167836872ce1aa88d88462e9816ce/68747470733a2f2f7261696c7761792e6170702f6272616e642f6c6f676f2d6c696768742e706e67" width='15px'>
+</div>
 <h1>Cara Clone Web ini untuk di Local Kalian</h1>
 - pertama clone menggunakan command ini
 <pre>
