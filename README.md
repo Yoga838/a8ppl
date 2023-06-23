@@ -20,7 +20,7 @@
 <h1>Cara Clone Web ini untuk di Local Kalian</h1>
 - pertama clone menggunakan command ini
 <pre>
-  git clone git@github.com:Yoga838/a8ppl.git
+  https://github.com/Yoga838/a8ppl.git
 </pre>
 - setelah itu jika kalian menggunakan npm silahkan download semua package libnrari yang dibutuhkan 
 <pre>
