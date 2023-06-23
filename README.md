@@ -1,38 +1,41 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<img src='https://i.ibb.co/nmhbnsf/Logo-Tem-U.png' width=100px tittle='Tem.u'>
+<a href="https://a8ppl.vercel.app">Link Tester Web</a>
+<h1>Technologi Yang digunakan</h1>
+<div style="display":flex>
+  - NextJs   
+  <img src="https://seeklogo.com/images/N/next-js-icon-logo-EE302D5DBD-seeklogo.com.png" width='15px'>
+</div>
+<div style="display":flex>
+  - PostgreSql   
+  <img src="https://i.ibb.co/VLXdkXM/icons8-postgresql-48.png" width='15px'>
+</div>
+<div style="display":flex>
+  - Vercel (Jika ingin Di deploy Secara gratis)   
+  <img src="https://assets.vercel.com/image/upload/v1588805858/repositories/vercel/logo.png" width='15px'>
+</div>
+<h1>Cara Clone Web ini untuk di Local Kalian</h1>
+- pertama clone menggunakan command ini
+<pre>
+  git clone git@github.com:Yoga838/a8ppl.git
+</pre>
+- setelah itu jika kalian menggunakan npm silahkan download semua package libnrari yang dibutuhkan 
+<pre>
+  npm install
+</pre>
+- edit database dengan posgresql database mu sendiri di .env sesuain port dan nama databasenya
+<pre>
+  DATABASE_URL="postgresql://localhost:5432/nama_database"
+</pre>
+- setelah itu lakukan migrate database terlebih dahulu menggunakan command:
+<pre>
+  npx prisma migrate dev
+</pre>
+- program bisa di run dengan command
+<pre>
+  npm run dev
+</pre>
+- web berjalan pada url
+<pre>
+  https://localhost:3000
+</pre>
+<h1>Enjoy your day 😄</h1>
