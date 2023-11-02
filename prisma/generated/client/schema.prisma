@@ -1,0 +1,130 @@
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+model Visitor {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  alamat    String
+  no        String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tracking  tracking[]
+}
+model tracking {
+  id Int @id @default(autoincrement())
+  nama_pembeli String ?
+  alamat_pembeli String 
+  kondisi_barang String
+  id_pembeli Int ?
+  id_mitra Int
+  id_pegawai Int ?
+  visitor Visitor ? @relation(fields: [id_pembeli],references: [id])
+  pegawai pegawai ? @relation(fields: [id_pegawai],references: [id])
+  mitra Mitra @relation(fields: [id_mitra],references: [id])
+}
+
+model Mitra {
+  id              Int       @id @default(autoincrement())
+  name            String
+  email           String    @unique
+  password        String
+  no              String
+  alamat          String
+  usaha           String
+  pribadi         String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  aproval         aproval[]
+  pegawai         pegawai[]
+  pencatatan      pencatatan[]
+  bukti_bayar     bukti_bayar[]
+  tracking        tracking[]
+}
+model bukti_bayar{
+  id            Int @id @default(autoincrement())
+  bukti_bayar   String 
+  status        Int @default(0)
+  expire        DateTime?
+  id_mitra      Int @unique
+  mitra         Mitra @relation(fields: [id_mitra],references: [id])
+}
+model konfirmasi {
+  id Int @id @default(autoincrement())
+  nama_pembeli String
+  alamat_pembeli String
+  keterangan String
+  id_pegawai Int
+  pegawai pegawai @relation(fields: [id_pegawai],references: [id])
+}
+model pegawai {
+  id        Int      @id @default(autoincrement())
+  workAt    Int
+  work      Mitra    @relation(fields: [workAt], references: [id])
+  name      String
+  email     String   @unique
+  password  String
+  no        String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tracking tracking[]
+  konfirmasi konfirmasi[]
+}
+model aproval {
+  id            Int   @id @default(autoincrement())
+  accid         Int
+  acc           Mitra @relation(fields: [accid], references: [id])
+  diacc_oleh    Int
+  admin         Admin @relation(fields: [diacc_oleh], references: [id])
+}
+model Rejected {
+  id            Int       @id @default(autoincrement())
+  name          String
+  email         String    
+  password      String
+  createdAt     DateTime  @default(now())
+  rejected_oleh Int
+  reject        Admin @relation(fields: [rejected_oleh], references: [id]) 
+
+}
+
+
+
+model Admin {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  deskripsi String? @default("Tem.U merupakan project adpl + ppl yang dikerjakan oleh kelompok a8 Teknologi Informasi")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  approval  aproval[]
+  rejected  Rejected[]
+}
+
+model detail_pencatatan {
+  id          Int   @id @default(autoincrement())
+  tanggal     DateTime
+  keterangan  String
+  pemasukan   Int
+  pengeluaran Int
+  saldo       Int
+  detail_dari Int
+  catat       pencatatan @relation(fields: [detail_dari],references: [id])
+}
+model pencatatan{
+  id                  Int @id @default(autoincrement())
+  nama_pencatatan     String 
+  milik               Int
+  pemilik             Mitra @relation(fields: [milik], references: [id])
+  detail_pencatatan   detail_pencatatan[]
+}
