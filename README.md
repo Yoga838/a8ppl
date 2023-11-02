@@ -1,6 +1,6 @@
 <img src='https://i.ibb.co/nmhbnsf/Logo-Tem-U.png' width=100px tittle='Tem.u'>
 <a href="https://a8ppl.vercel.app">Link Tester Web</a>
-<h1>Technologi Yang digunakan</h1>
+<h1>Teknologi Yang digunakan</h1>
 <div style="display":flex>
   - NextJs   
   <img src="https://seeklogo.com/images/N/next-js-icon-logo-EE302D5DBD-seeklogo.com.png" width='15px'>
