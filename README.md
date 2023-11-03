@@ -1,5 +1,7 @@
 <img src='https://i.ibb.co/nmhbnsf/Logo-Tem-U.png' width=100px tittle='Tem.u'>
-<a href="https://a8ppl.vercel.app">Link Tester Web</a>
+<a href="https://tem-u.vercel.app">Link Tester Web</a>
+<p>username : admin@tem-u.com</p>
+<p>password : admin</p>
 <h1>Teknologi Yang digunakan</h1>
 <div style="display":flex>
   - NextJs   
